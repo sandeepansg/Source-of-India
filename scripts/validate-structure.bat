@@ -72,6 +72,13 @@ for /L %%i in (12,1,35) do (
     echo. > "includes\articles\article-%%i.tex"
 )
 
+:: Articles with A/B/C/D suffixes in early parts
+echo. > "includes\articles\article-21A.tex"
+echo. > "includes\articles\article-31A.tex"
+echo. > "includes\articles\article-31B.tex"
+echo. > "includes\articles\article-31C.tex"
+echo. > "includes\articles\article-31D.tex"
+
 :: Articles 36-51 (Part IV - Directive Principles)
 for /L %%i in (36,1,51) do (
     echo. > "includes\articles\article-%%i.tex"
@@ -81,6 +88,19 @@ for /L %%i in (36,1,51) do (
 for /L %%i in (52,1,78) do (
     echo. > "includes\articles\article-%%i.tex"
 )
+
+:: Additional articles with suffixes
+echo. > "includes\articles\article-35A.tex"
+echo. > "includes\articles\article-103A.tex"
+echo. > "includes\articles\article-124A.tex"
+echo. > "includes\articles\article-124B.tex"
+echo. > "includes\articles\article-124C.tex"
+echo. > "includes\articles\article-131A.tex"
+echo. > "includes\articles\article-139A.tex"
+echo. > "includes\articles\article-158A.tex"
+echo. > "includes\articles\article-217A.tex"
+echo. > "includes\articles\article-224A.tex"
+echo. > "includes\articles\article-230A.tex"
 
 :: Articles 79-122 (Part V continued - Parliament)
 for /L %%i in (79,1,122) do (
@@ -173,6 +193,26 @@ echo. > "includes\articles\article-368.tex"
 for /L %%i in (369,1,395) do (
     echo. > "includes\articles\article-%%i.tex"
 )
+
+:: More special articles
+echo. > "includes\articles\article-266A.tex"
+echo. > "includes\articles\article-269A.tex"
+echo. > "includes\articles\article-323A.tex"
+echo. > "includes\articles\article-323B.tex"
+echo. > "includes\articles\article-329A.tex"
+echo. > "includes\articles\article-338A.tex"
+echo. > "includes\articles\article-338B.tex"
+echo. > "includes\articles\article-342A.tex"
+echo. > "includes\articles\article-371A.tex"
+echo. > "includes\articles\article-371B.tex"
+echo. > "includes\articles\article-371C.tex"
+echo. > "includes\articles\article-371D.tex"
+echo. > "includes\articles\article-371E.tex"
+echo. > "includes\articles\article-371F.tex"
+echo. > "includes\articles\article-371G.tex"
+echo. > "includes\articles\article-371H.tex"
+echo. > "includes\articles\article-371I.tex"
+echo. > "includes\articles\article-371J.tex"
 
 echo [OK] Created individual article files (1-395 plus special articles)
 
