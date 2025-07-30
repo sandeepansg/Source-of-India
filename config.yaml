@@ -1,0 +1,5 @@
+page_size: a4
+font: libertinus
+compiler: xelatex
+include_cover: true
+include_toc: true
