@@ -1,1 +1,33 @@
-MAIN_TEX
+% Source of India LaTeX Document
+% Main document file
+
+\documentclass[a4paper,12pt]{soi}
+
+% Load configuration
+\input{config}
+
+\begin{document}
+
+% Front matter
+\input{includes/cover}
+\input{includes/preamble}
+\input{includes/toc}
+
+% Parts and Articles
+% Part I - The Union and its Territory
+\input{includes/parts/part-1}
+
+% Part II - Citizenship
+\input{includes/parts/part-2}
+
+% Part III - Fundamental Rights  
+\input{includes/parts/part-3}
+
+% Continue with other parts...
+% Add remaining parts
+
+% Schedules
+\input{includes/schedules/schedule-1}
+% Add remaining schedules
+
+\end{document}
