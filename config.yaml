@@ -1,5 +1,59 @@
-page_size: a4
-font: libertinus
-compiler: xelatex
-include_cover: true
-include_toc: true
+# Source of India LaTeX Class Configuration
+
+# Page layout settings
+page_size: a4                    # Options: a4, a5
+font: libertinus                 # Options: libertinus, latin_modern, noto_serif, times
+compiler: xelatex               # Options: pdflatex, xelatex, lualatex
+
+# Document structure options
+include_cover: true             # Include front and back covers
+include_toc: true              # Include table of contents
+include_preamble: true         # Include constitutional preamble
+include_schedules: true        # Include all schedules
+
+# Typography options
+font_size: 12                  # Base font size in points
+line_spacing: 1.2             # Line spacing multiplier
+margin_top: 2.5               # Top margin in cm (A4)
+margin_bottom: 2.0            # Bottom margin in cm (A4)
+margin_left: 2.5              # Left margin in cm (A4)
+margin_right: 2.0             # Right margin in cm (A4)
+
+# Amendment display options
+show_amendment_footnotes: true  # Show amendment footnotes
+show_inline_amendments: true   # Show inline amendment markers
+amendment_style: footnote      # Options: footnote, margin, inline
+
+# Article numbering options
+validate_article_numbers: true # Validate article number format
+auto_cross_reference: true    # Enable automatic cross-referencing
+
+# Compilation options
+fast_mode: false              # Enable fast compilation (draft mode)
+debug_mode: false             # Enable debug output
+show_warnings: true           # Display LaTeX warnings
+
+# Output options
+pdf_bookmarks: true           # Generate PDF bookmarks
+pdf_metadata: true            # Include PDF metadata
+hyperlinks: true              # Enable hyperlinks in PDF
+
+# Advanced options
+memory_optimization: false    # Enable memory optimization for large documents
+parallel_compilation: false  # Enable parallel processing (if supported)
+cache_fonts: true            # Cache font loading
+
+# Custom paths (optional)
+custom_font_path: ""         # Path to custom fonts directory
+custom_template_path: ""     # Path to custom templates
+output_directory: "output"   # Output directory name
+
+# Localization options
+language: english            # Primary language
+date_format: "dd/mm/yyyy"   # Date format for document metadata
+number_format: indian       # Number formatting style
+
+# Quality assurance
+spell_check: false          # Enable spell checking (if available)
+grammar_check: false       # Enable grammar checking (if available)
+citation_validation: true  # Validate legal citations
