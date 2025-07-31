@@ -1,110 +1,127 @@
-%% Source of India (SoI) LaTeX Class
-%% Version 1.0
-%% A specialized LaTeX class for typesetting the Constitution of India
+%% Source of India (SoI) LaTeX Document Class
+%% Copyright (c) 2025 Sandeepan Sengupta
 %% 
-%% This class provides structured commands for constitutional documents
-%% with proper formatting, amendment tracking, and cross-referencing
+%% This class provides specialized formatting for the Constitution of India
+%% and similar legal documents with proper structure, amendment tracking,
+%% and cross-referencing capabilities.
+%%
+%% Licensed under the BSD 3-Clause License
 
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{soi}[2025/01/31 v1.0 Source of India Constitution Class]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesClass{soi}[2025/01/31 v1.0 Source of India Constitutional Document Class]
 
-%% ================================================================
-%% CLASS OPTIONS
-%% ================================================================
+%% ============================================================================
+%% CLASS OPTIONS DECLARATION
+%% ============================================================================
+
+% Boolean flags for options
+\newif\if@afoursizepaper\@afoursizepapertrue
+\newif\if@afivesizepaper\@afivesizepaperfalse
+\newif\if@tenpointsize\@tenpointsizefalse
+\newif\if@elevenpointsize\@elevenpointsizefalse
+\newif\if@twelvepointsize\@twelvepointsizetrue
+\newif\if@showamendments\@showamendmentstrue
+\newif\if@draftmode\@draftmodefalse
 
 % Paper size options
-\newif\if@afoursizepaper\@afoursizepaperfalse
-\newif\if@afivesizepaper\@afivesizepaperfalse
-
 \DeclareOption{a4paper}{\@afoursizepapertrue\@afivesizepaperfalse}
 \DeclareOption{a5paper}{\@afivesizepapertrue\@afoursizepaperfalse}
 
 % Font size options
-\newif\if@tenpointsize\@tenpointsizefalse
-\newif\if@elevenpointsize\@elevenpointsizefalse
-\newif\if@twelvepointsize\@twelvepointsizefalse
-
 \DeclareOption{10pt}{\@tenpointsizetrue\@elevenpointsizefalse\@twelvepointsizefalse}
 \DeclareOption{11pt}{\@elevenpointsizetrue\@tenpointsizefalse\@twelvepointsizefalse}
 \DeclareOption{12pt}{\@twelvepointsizetrue\@tenpointsizefalse\@elevenpointsizefalse}
 
 % Amendment display options
-\newif\if@showamendments\@showamendmentstrue
-\DeclareOption{hideamendments}{\@showamendmentsfalse}
 \DeclareOption{showamendments}{\@showamendmentstrue}
+\DeclareOption{hideamendments}{\@showamendmentsfalse}
 
-% Draft mode
-\newif\if@draftmode\@draftmodefalse
+% Draft mode options
 \DeclareOption{draft}{\@draftmodetrue}
 \DeclareOption{final}{\@draftmodefalse}
 
-% Default options
-\ExecuteOptions{a4paper,12pt,showamendments,final}
+% Pass unknown options to article class
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+
+% Process options
 \ProcessOptions\relax
 
-%% ================================================================
-%% BASE CLASS AND PACKAGES
-%% ================================================================
+%% ============================================================================
+%% LOAD BASE CLASS AND REQUIRED PACKAGES
+%% ============================================================================
 
 % Load base article class
-\if@tenpointsize
-  \LoadClass[10pt]{article}
-\else\if@elevenpointsize
-  \LoadClass[11pt]{article}
-\else
-  \LoadClass[12pt]{article}
-\fi\fi
+\LoadClass{article}
 
-% Essential packages
+% Engine detection and font setup
 \RequirePackage{iftex}
-\RequirePackage{etoolbox}
-\RequirePackage{xstring}
-\RequirePackage{needspace}
-\RequirePackage{fancyhdr}
-\RequirePackage{geometry}
-\RequirePackage{titletoc}
-\RequirePackage{hyperref}
 
-%% ================================================================
-%% FONT CONFIGURATION
-%% ================================================================
+% Core packages
+\RequirePackage{etoolbox}     % Advanced macro programming
+\RequirePackage{xstring}      % String manipulation
+\RequirePackage{needspace}    % Page break control
+\RequirePackage{fancyhdr}     % Headers and footers
+\RequirePackage{geometry}     % Page layout
+\RequirePackage{titletoc}     % Table of contents formatting
+\RequirePackage{hyperref}     % Cross-references and bookmarks
+\RequirePackage{forloop}      % Loop constructs
 
-% Font setup based on engine
+% Font and encoding setup based on engine
 \ifXeTeX
     \RequirePackage{fontspec}
     \RequirePackage{polyglossia}
     \setmainlanguage{english}
-    % Try to load Libertinus Serif, fallback to Latin Modern
-    \IfFontExistsTF{Libertinus Serif}{%
-        \setmainfont{Libertinus Serif}%
-        \setsansfont{Libertinus Sans}%
-    }{%
-        \setmainfont{Latin Modern Roman}%
-        \setsansfont{Latin Modern Sans}%
-    }%
+    % Try to use Libertinus Serif, fallback to Latin Modern
+    \IfFontExistsTF{Libertinus Serif}{
+        \setmainfont{Libertinus Serif}[
+            Ligatures=TeX,
+            Numbers=OldStyle
+        ]
+        \setsansfont{Libertinus Sans}[
+            Ligatures=TeX
+        ]
+    }{
+        \setmainfont{Latin Modern Roman}[
+            Ligatures=TeX
+        ]
+        \setsansfont{Latin Modern Sans}[
+            Ligatures=TeX
+        ]
+    }
 \else\ifLuaTeX
     \RequirePackage{fontspec}
     \RequirePackage{polyglossia}
     \setmainlanguage{english}
-    \IfFontExistsTF{Libertinus Serif}{%
-        \setmainfont{Libertinus Serif}%
-        \setsansfont{Libertinus Sans}%
-    }{%
-        \setmainfont{Latin Modern Roman}%
-        \setsansfont{Latin Modern Sans}%
-    }%
+    % Similar font setup for LuaTeX
+    \IfFontExistsTF{Libertinus Serif}{
+        \setmainfont{Libertinus Serif}[
+            Ligatures=TeX,
+            Numbers=OldStyle
+        ]
+        \setsansfont{Libertinus Sans}[
+            Ligatures=TeX
+        ]
+    }{
+        \setmainfont{Latin Modern Roman}[
+            Ligatures=TeX
+        ]
+        \setsansfont{Latin Modern Sans}[
+            Ligatures=TeX
+        ]
+    }
 \else
-    % pdfLaTeX fallback
+    % pdfLaTeX setup
     \RequirePackage[utf8]{inputenc}
     \RequirePackage[T1]{fontenc}
     \RequirePackage{lmodern}
     \RequirePackage{microtype}
 \fi\fi
 
-%% ================================================================
-%% PAGE LAYOUT
-%% ================================================================
+%% ============================================================================
+%% PAGE LAYOUT CONFIGURATION
+%% ============================================================================
 
+% Configure page geometry based on paper size
 \if@afoursizepaper
     \geometry{
         a4paper,
@@ -116,7 +133,9 @@
         headsep=0.5cm,
         footskip=1cm
     }
-\else\if@afivesizepaper
+\fi
+
+\if@afivesizepaper
     \geometry{
         a5paper,
         top=2cm,
@@ -127,13 +146,30 @@
         headsep=0.4cm,
         footskip=0.8cm
     }
-\fi\fi
+\fi
 
-%% ================================================================
-%% COUNTERS AND VARIABLES
-%% ================================================================
+%% ============================================================================
+%% FONT SIZE CONFIGURATION
+%% ============================================================================
 
-% Main structural counters
+% Apply font size settings
+\if@tenpointsize
+    \renewcommand{\normalsize}{\fontsize{10}{12}\selectfont}
+\fi
+
+\if@elevenpointsize
+    \renewcommand{\normalsize}{\fontsize{11}{13}\selectfont}
+\fi
+
+\if@twelvepointsize
+    \renewcommand{\normalsize}{\fontsize{12}{14}\selectfont}
+\fi
+
+%% ============================================================================
+%% COUNTER SYSTEM
+%% ============================================================================
+
+% Document structure counters
 \newcounter{partcounter}
 \newcounter{chaptercounter}[partcounter]
 \newcounter{articlecounter}
@@ -143,144 +179,162 @@
 \newcounter{schedulecounter}
 \newcounter{amendmentcounter}
 
-% Counter formatting
-\renewcommand{\theclausecounter}{(\arabic{clausecounter})}
-\renewcommand{\thesubclausecounter}{(\alph{subclausecounter})}
-\renewcommand{\thesubsubclausecounter}{(\roman{subsubclausecounter})}
+% Loop counter for utilities
+\newcounter{articleloop}
 
-% Current context variables
+%% ============================================================================
+%% INTERNAL VARIABLES
+%% ============================================================================
+
+% Current document element tracking
 \newcommand{\currentpart}{}
 \newcommand{\currentchapter}{}
 \newcommand{\currentarticle}{}
 
-%% ================================================================
+%% ============================================================================
+%% DRAFT MODE CONFIGURATION
+%% ============================================================================
+
+\if@draftmode
+    \RequirePackage{draftwatermark}
+    \SetWatermarkText{DRAFT}
+    \SetWatermarkScale{1}
+    \SetWatermarkColor{gray}
+    \overfullrule=5pt
+\fi
+
+%% ============================================================================
+%% TYPOGRAPHY AND SPACING COMMANDS
+%% ============================================================================
+
+% Internal formatting commands
+\newcommand{\soi@parttitle}[1]{%
+    \fontsize{18}{22}\selectfont\bfseries\MakeUppercase{#1}%
+}
+
+\newcommand{\soi@chaptertitle}[1]{%
+    \fontsize{14}{18}\selectfont\bfseries\MakeUppercase{#1}%
+}
+
+\newcommand{\soi@articletitle}[1]{%
+    \fontsize{11}{14}\selectfont\bfseries#1%
+}
+
+\newcommand{\soi@articletext}[1]{%
+    \fontsize{10}{13}\selectfont#1%
+}
+
+%% ============================================================================
 %% DOCUMENT STRUCTURE COMMANDS
-%% ================================================================
+%% ============================================================================
 
 % Part command
 \newcommand{\Part}[2]{%
+    \needspace{8\baselineskip}%
     \addtocounter{partcounter}{1}%
     \setcounter{chaptercounter}{0}%
     \renewcommand{\currentpart}{Part \Roman{partcounter}: #2}%
-    \soipart{\Roman{partcounter}}{#2}%
+    \vspace{2\baselineskip}%
+    \begin{center}%
+        \soi@parttitle{Part \Roman{partcounter}}\\[0.5\baselineskip]%
+        \soi@parttitle{#2}%
+    \end{center}%
+    \vspace{1.5\baselineskip}%
     \addcontentsline{toc}{part}{Part \Roman{partcounter}: #2}%
-    \markboth{Part \Roman{partcounter}}{#2}%
 }
 
-% Chapter command
+% Chapter command (optional within parts)
 \newcommand{\Chapter}[2]{%
+    \needspace{6\baselineskip}%
     \addtocounter{chaptercounter}{1}%
     \renewcommand{\currentchapter}{Chapter \Roman{chaptercounter}: #2}%
-    \soichapter{\Roman{chaptercounter}}{#2}%
-    \addcontentsline{toc}{chapter}{Chapter \Roman{chaptercounter}: #2}%
-}
-
-% Article command
-\newcommand{\Article}[3]{%
-    \renewcommand{\currentarticle}{Article #1}%
-    \soiarticle{#1}{#2}{#3}%
-    \addcontentsline{toc}{section}{Article #1: #2}%
-}
-
-% Group and SubGroup commands
-\newcommand{\Group}[1]{\soigroup{#1}}
-\newcommand{\SubGroup}[1]{\soisubgroup{#1}}
-
-%% ================================================================
-%% TYPOGRAPHY COMMANDS
-%% ================================================================
-
-% Part typography
-\newcommand{\soipart}[2]{%
-    \needspace{10\baselineskip}%
-    \newpage%
+    \vspace{1.5\baselineskip}%
     \begin{center}%
-        {\fontsize{18}{22}\selectfont\bfseries PART #1}\\[0.5em]%
-        {\fontsize{16}{20}\selectfont\bfseries #2}%
+        \soi@chaptertitle{Chapter \Roman{chaptercounter}}\\[0.3\baselineskip]%
+        \soi@chaptertitle{#2}%
     \end{center}%
-    \vspace{2em}%
+    \vspace{1\baselineskip}%
+    \addcontentsline{toc}{section}{Chapter \Roman{chaptercounter}: #2}%
 }
 
-% Chapter typography
-\newcommand{\soichapter}[2]{%
-    \needspace{6\baselineskip}%
-    \vspace{1.5em}%
-    {\fontsize{14}{18}\selectfont\bfseries CHAPTER #1---#2\par}%
-    \vspace{1em}%
-}
-
-% Group typography
-\newcommand{\soigroup}[1]{%
+% Article command - main content unit
+\newcommand{\Article}[3]{%
     \needspace{4\baselineskip}%
-    \vspace{1.5em}%
-    {\fontsize{14}{18}\selectfont\bfseries\centering #1\par}%
-    \vspace{1em}%
+    \renewcommand{\currentarticle}{Article #1}%
+    \setcounter{clausecounter}{0}%
+    \vspace{1\baselineskip}%
+    \noindent%
+    \soi@articletitle{#1. #2.}\quad%
+    \soi@articletext{#3}%
+    \par\vspace{0.5\baselineskip}%
+    \addcontentsline{toc}{subsection}{Article #1: #2}%
 }
 
-% SubGroup typography
-\newcommand{\soisubgroup}[1]{%
-    \needspace{3\baselineskip}%
-    \vspace{1em}%
-    {\fontsize{12}{16}\selectfont\bfseries\centering #1\par}%
-    \vspace{0.75em}%
-}
-
-% Article typography
-\newcommand{\soiarticle}[3]{%
-    \needspace{8\baselineskip}%
-    \vspace{0.75em}%
-    {\fontsize{11}{14}\selectfont\bfseries #1. #2.---}%
-    {\fontsize{10}{13}\selectfont #3\par}%
-    \vspace{0.5em}%
-}
-
-%% ================================================================
-%% CLAUSE SYSTEM
-%% ================================================================
-
-% Main clause
+% Clause system for complex articles
 \newcommand{\Clause}[1]{%
     \addtocounter{clausecounter}{1}%
-    \par\vspace{0.5em}%
-    {\fontsize{10}{13}\selectfont \theclausecounter\enskip #1\par}%
+    \par\vspace{0.3em}%
+    \noindent%
+    \makebox[2em][l]{(\arabic{clausecounter})}%
+    \soi@articletext{#1}%
 }
 
-% Sub-clause
 \newcommand{\SubClause}[1]{%
     \addtocounter{subclausecounter}{1}%
-    \par\vspace{0.25em}%
-    {\fontsize{10}{13}\selectfont \hspace{1em}\thesubclausecounter\enskip #1\par}%
+    \par\vspace{0.2em}%
+    \noindent%
+    \makebox[1em]{}%
+    \makebox[2em][l]{(\alph{subclausecounter})}%
+    \soi@articletext{#1}%
 }
 
-% Sub-sub-clause
 \newcommand{\SubSubClause}[1]{%
     \addtocounter{subsubclausecounter}{1}%
-    \par\vspace{0.25em}%
-    {\fontsize{10}{13}\selectfont \hspace{2em}\thesubsubclausecounter\enskip #1\par}%
+    \par\vspace{0.2em}%
+    \noindent%
+    \makebox[2em]{}%
+    \makebox[2em][l]{(\roman{subsubclausecounter})}%
+    \soi@articletext{#1}%
 }
 
-%% ================================================================
-%% SCHEDULE SYSTEM
-%% ================================================================
+% Group and SubGroup for organizational headings
+\newcommand{\Group}[1]{%
+    \needspace{4\baselineskip}%
+    \vspace{1.5\baselineskip}%
+    \begin{center}%
+        \fontsize{12}{15}\selectfont\bfseries\MakeUppercase{#1}%
+    \end{center}%
+    \vspace{1\baselineskip}%
+}
 
-% Schedule command
+\newcommand{\SubGroup}[1]{%
+    \needspace{3\baselineskip}%
+    \vspace{1\baselineskip}%
+    \begin{center}%
+        \fontsize{11}{14}\selectfont\bfseries#1%
+    \end{center}%
+    \vspace{0.5\baselineskip}%
+}
+
+% Schedule command for appendices
 \newcommand{\Schedule}[2]{%
+    \needspace{6\baselineskip}%
     \addtocounter{schedulecounter}{1}%
     \newpage%
     \begin{center}%
-        {\fontsize{16}{20}\selectfont\bfseries SCHEDULE \Roman{schedulecounter}}\\[0.5em]%
-        {\fontsize{14}{18}\selectfont\bfseries #2}%
+        \soi@parttitle{Schedule \Roman{schedulecounter}}\\[0.5\baselineskip]%
+        \soi@parttitle{#1}%
     \end{center}%
-    \addcontentsline{toc}{part}{Schedule \Roman{schedulecounter}: #2}%
-    \markboth{Schedule \Roman{schedulecounter}}{#2}%
-    \vspace{2em}%
+    \vspace{1.5\baselineskip}%
+    \soi@articletext{#2}%
+    \addcontentsline{toc}{part}{Schedule \Roman{schedulecounter}: #1}%
 }
 
-%% ================================================================
+%% ============================================================================
 %% AMENDMENT SYSTEM
-%% ================================================================
+%% ============================================================================
 
-% Amendment footnote
+% Amendment footnote command
 \newcommand{\AmendmentFootnote}[2]{%
     \if@showamendments%
         \footnote{#2}%
@@ -296,224 +350,259 @@
     \fi%
 }
 
-% Amendment insertion
+% Amendment status indicator
 \newcommand{\Amendment}[2]{%
     \if@showamendments%
-        \ifstrequal{#2}{[omitted]}{%
-            \textit{[Article #1 omitted by amendment]}%
-        }{%
-            \textit{[#2]}%
-        }%
+        \marginpar{\tiny Amendment #1}%
+        \footnote{#2}%
     \fi%
 }
 
-%% ================================================================
-%% FRONT MATTER
-%% ================================================================
+%% ============================================================================
+%% FRONT MATTER COMMANDS
+%% ============================================================================
 
-% Front cover
+% Front cover command
 \newcommand{\soifrontcover}{%
-    \newpage\thispagestyle{empty}%
-    \begin{center}%
-        \vspace*{3cm}%
-        {\fontsize{24}{30}\selectfont\bfseries THE CONSTITUTION}\\[1em]%
-        {\fontsize{20}{25}\selectfont\bfseries OF}\\[1em]%
-        {\fontsize{24}{30}\selectfont\bfseries INDIA}\\[2em]%
-        {\fontsize{14}{18}\selectfont\itshape As amended up to the 105th Amendment Act, 2021}\\[4cm]%
-        {\fontsize{12}{15}\selectfont\bfseries GOVERNMENT OF INDIA}\\[0.5em]%
-        {\fontsize{12}{15}\selectfont\bfseries MINISTRY OF LAW AND JUSTICE}\\[0.5em]%
-        {\fontsize{12}{15}\selectfont\bfseries LEGISLATIVE DEPARTMENT}%
-    \end{center}%
-    \newpage%
+    \begin{titlepage}%
+        \centering%
+        \vspace*{2cm}%
+        {\Huge\bfseries THE CONSTITUTION}\\[0.5cm]%
+        {\huge\bfseries OF}\\[0.5cm]%
+        {\Huge\bfseries INDIA}\\[2cm]%
+        \vfill%
+        {\large As on \today}%
+    \end{titlepage}%
+    \cleardoublepage%
 }
 
-% Back cover
-\newcommand{\soibackcover}{%
-    \newpage\thispagestyle{empty}%
-    \null\vfill%
-    \begin{center}%
-        {\footnotesize This document was typeset using the Source of India LaTeX class.\\%
-            Available at: https://github.com/source-of-india/soi-latex}%
-    \end{center}%
-    \newpage%
-}
-
-% Preamble
+% Preamble command
 \newcommand{\soipreamble}{%
-    \newpage%
+    \chapter*{PREAMBLE}%
+    \addcontentsline{toc}{chapter}{PREAMBLE}%
     \begin{center}%
-        {\fontsize{16}{20}\selectfont\bfseries PREAMBLE}%
+        \textit{WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens:}%
+        
+        \vspace{1em}%
+        
+        \textit{JUSTICE, social, economic and political;}%
+        
+        \vspace{0.5em}%
+        
+        \textit{LIBERTY of thought, expression, belief, faith and worship;}%
+        
+        \vspace{0.5em}%
+        
+        \textit{EQUALITY of status and of opportunity;}%
+        
+        \vspace{0.5em}%
+        
+        \textit{and to promote among them all}%
+        
+        \vspace{0.5em}%
+        
+        \textit{FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation;}%
+        
+        \vspace{1em}%
+        
+        \textit{IN OUR CONSTITUENT ASSEMBLY this twenty-sixth day of November, 1949, do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.}%
     \end{center}%
-    \vspace{2em}%
-    
-    \begin{center}%
-        {\fontsize{11}{15}\selectfont%
-            WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a\\%
-            SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens:\\[1em]%
-            
-            JUSTICE, social, economic and political;\\[0.5em]%
-            LIBERTY of thought, expression, belief, faith and worship;\\[0.5em]%
-            EQUALITY of status and of opportunity;\\[0.5em]%
-            and to promote among them all\\[0.5em]%
-            FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation;\\[1em]%
-            
-            IN OUR CONSTITUENT ASSEMBLY this twenty-sixth day of November, 1949, do\\%
-            HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.%
-        }%
-    \end{center}%
-    \newpage%
+    \cleardoublepage%
 }
 
-% Table of contents
+% Table of contents command
 \newcommand{\soitableofcontents}{%
-    \newpage%
-    \begin{center}%
-        {\fontsize{18}{22}\selectfont\bfseries CONTENTS}%
-    \end{center}%
-    \vspace{2em}%
     \tableofcontents%
-    \newpage%
+    \cleardoublepage%
 }
 
-%% ================================================================
+% Back cover command
+\newcommand{\soibackcover}{%
+    \cleardoublepage%
+    \thispagestyle{empty}%
+    \vspace*{\fill}%
+    \begin{center}%
+        {\Large\bfseries THE CONSTITUTION OF INDIA}\\[1cm]%
+        {\large Generated using the Source of India \LaTeX\ Class}\\[0.5cm]%
+        {\normalsize \today}%
+    \end{center}%
+    \vspace*{\fill}%
+}
+
+%% ============================================================================
 %% HEADER AND FOOTER SETUP
-%% ================================================================
+%% ============================================================================
 
 \pagestyle{fancy}
-\fancyhf{}
+\fancyhf{} % Clear all header and footer fields
 
-% Headers
-\fancyhead[LE]{\small\currentpart}
-\fancyhead[RO]{\small\currentarticle}
-\fancyhead[LO]{\small Constitution of India}
-\fancyhead[RE]{\small Constitution of India}
+% Header setup
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
 
-% Footers
-\fancyfoot[LE,RO]{\thepage}
+% Footer setup (empty by default)
+\fancyfoot{}
 
-% Header rule
+% Redefine plain page style for chapter pages
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+}
+
+% Header rule width
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
-% Plain page style for chapter/part starts
-\fancypagestyle{plain}{%
-    \fancyhf{}%
-    \fancyfoot[LE,RO]{\thepage}%
-    \renewcommand{\headrulewidth}{0pt}%
+%% ============================================================================
+%% HYPERREF CONFIGURATION
+%% ============================================================================
+
+\hypersetup{
+    pdftitle={The Constitution of India},
+    pdfauthor={Source of India LaTeX Class},
+    pdfsubject={Constitutional Document},
+    pdfkeywords={Constitution, India, Legal Document},
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true
 }
 
-%% ================================================================
-%% ARTICLE INCLUSION UTILITIES
-%% ================================================================
+%% ============================================================================
+%% UTILITY COMMANDS AND VALIDATION
+%% ============================================================================
 
-% Include single article
-\newcommand{\includeArticle}[1]{%
-    \IfFileExists{includes/articles/article-#1.tex}{%
-        \input{includes/articles/article-#1.tex}%
-    }{%
-        \PackageWarning{soi}{Article #1 file not found}%
-    }%
-}
-
-% Include article range
-\RequirePackage{forloop}
-\newcounter{articleloop}
-\newcommand{\includeArticleRange}[2]{%
-    \forloop{articleloop}{#1}{\value{articleloop} < #2}{%
-        \includeArticle{\arabic{articleloop}}%
-    }%
-}
-
-%% ================================================================
-%% INPUT VALIDATION
-%% ================================================================
-
-% Validate article number format
+% Article number validation (basic)
 \newcommand{\validatearticlenumber}[1]{%
     \IfInteger{#1}{}{%
         \IfEndWith{#1}{A}{}{%
             \IfEndWith{#1}{B}{}{%
-                \IfEndWith{#1}{C}{}{%
-                    \IfEndWith{#1}{D}{}{%
-                        \PackageWarning{soi}{%
-                            Unusual article number format: #1
-                        }%
-                    }%
+                \PackageWarning{soi}{%
+                    Unusual article number format: #1. %
+                    Expected format: number, numberA, numberB, etc.%
                 }%
             }%
         }%
     }%
 }
 
-%% ================================================================
-%% DISABLE STANDARD SECTIONING
-%% ================================================================
-
-% Disable standard LaTeX sectioning to enforce structure
-\renewcommand{\section}[1]{%
-    \PackageError{soi}{%
-        Use \string\Part, \string\Chapter, or \string\Article\space instead of \string\section
+% File existence check for includes
+\newcommand{\soi@inputifexists}[1]{%
+    \IfFileExists{#1}{%
+        \input{#1}%
     }{%
-        Standard sectioning commands are disabled in the soi class.%
-        Use \string\Part{}{} for parts, \string\Chapter{}{} for chapters, %
-        or \string\Article{}{}{} for articles.
+        \PackageWarning{soi}{File #1 not found. Creating placeholder.}%
+        \vspace{1em}%
+        \noindent\textit{[Content for #1 not available]}%
+        \vspace{1em}%
     }%
 }
 
-\renewcommand{\subsection}[1]{%
-    \PackageError{soi}{%
-        Use \string\Group, \string\SubGroup, or \string\Clause\space instead of \string\subsection
-    }{%
-        Standard sectioning commands are disabled in the soi class.
-    }%
-}
+%% ============================================================================
+%% TABLE OF CONTENTS CUSTOMIZATION
+%% ============================================================================
 
-\renewcommand{\subsubsection}[1]{%
-    \PackageError{soi}{%
-        Use \string\SubClause\space or \string\SubSubClause\space instead of \string\subsubsection
-    }{%
-        Standard sectioning commands are disabled in the soi class.
-    }%
-}
+% Customize TOC formatting
+\renewcommand{\contentsname}{CONTENTS}
 
-%% ================================================================
-%% HYPERREF CONFIGURATION
-%% ================================================================
+% Part entries in TOC
+\titlecontents{part}[0em]
+    {\addvspace{1em}\large\bfseries}
+    {}
+    {}
+    {\titlerule*[0.5em]{.}\contentspage}
 
-\hypersetup{
-    pdftitle={Constitution of India},
-    pdfauthor={Government of India},
-    pdfsubject={Constitutional Law},
-    pdfkeywords={Constitution, India, Law, Government},
-    colorlinks=true,
-    linkcolor=black,
-    urlcolor=blue,
-    citecolor=black,
-    bookmarks=true,
-    bookmarksnumbered=true,
-    pdfstartview=FitH
-}
+% Section entries in TOC (Chapters)
+\titlecontents{section}[1.5em]
+    {\addvspace{0.5em}\normalsize\bfseries}
+    {}
+    {}
+    {\titlerule*[0.5em]{.}\contentspage}
 
-%% ================================================================
-%% DRAFT MODE FEATURES
-%% ================================================================
+% Subsection entries in TOC (Articles)
+\titlecontents{subsection}[3em]
+    {\addvspace{0.25em}\small}
+    {}
+    {}
+    {\titlerule*[0.5em]{.}\contentspage}
 
+%% ============================================================================
+%% ERROR HANDLING AND DEBUGGING
+%% ============================================================================
+
+% Debug information in draft mode
 \if@draftmode
-    \RequirePackage{draftwatermark}
-    \SetWatermarkText{DRAFT}
-    \SetWatermarkScale{1}
-    \SetWatermarkColor[gray]{0.8}
-    
-    % Show overfull boxes
-    \overfullrule=5pt
-    
-    % Fast mode - disable some features
-    \renewcommand{\soifrontcover}{\newpage}
-    \renewcommand{\soibackcover}{\newpage}
+    \AtBeginDocument{%
+        \typeout{SoI Class: Draft mode enabled}%
+        \typeout{SoI Class: Paper size: \if@afoursizepaper A4\fi\if@afivesizepaper A5\fi}%
+        \typeout{SoI Class: Font size: \if@tenpointsize 10pt\fi\if@elevenpointsize 11pt\fi\if@twelvepointsize 12pt\fi}%
+        \typeout{SoI Class: Amendments: \if@showamendments shown\else hidden\fi}%
+    }%
 \fi
 
-%% ================================================================
-%% END OF CLASS
-%% ================================================================
+% Warning for missing soi.cls features
+\AtEndDocument{%
+    \if@draftmode%
+        \typeout{SoI Class: Document compiled successfully in draft mode}%
+    \fi%
+}
 
+%% ============================================================================
+%% COMPATIBILITY AND FINAL SETUP
+%% ============================================================================
+
+% Ensure proper spacing after class loading
+\AtBeginDocument{%
+    \normalsize%
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0.5em plus 0.1em minus 0.1em}%
+}
+
+% End of class file
 \endinput
+
+%% ============================================================================
+%% DOCUMENTATION
+%% ============================================================================
+%%
+%% This class provides the following main commands:
+%%
+%% Document Structure:
+%%   \Part{number}{title}                 - Create a constitutional part
+%%   \Chapter{number}{title}              - Create a chapter within a part
+%%   \Article{number}{title}{content}     - Create an article
+%%   \Clause{content}                     - Create a numbered clause
+%%   \SubClause{content}                  - Create a sub-clause
+%%   \SubSubClause{content}               - Create a sub-sub-clause
+%%   \Group{title}                        - Create a group heading
+%%   \SubGroup{title}                     - Create a subgroup heading
+%%   \Schedule{title}{content}            - Create a schedule
+%%
+%% Front Matter:
+%%   \soifrontcover                       - Generate front cover
+%%   \soipreamble                         - Generate preamble
+%%   \soitableofcontents                  - Generate table of contents
+%%   \soibackcover                        - Generate back cover
+%%
+%% Amendment System:
+%%   \AmendmentFootnote{number}{text}     - Add amendment footnote
+%%   \AmendText{text}{amendment}          - Mark amended text
+%%   \Amendment{number}{description}      - Show amendment status
+%%
+%% Class Options:
+%%   a4paper, a5paper                     - Paper size
+%%   10pt, 11pt, 12pt                     - Font size
+%%   showamendments, hideamendments       - Amendment display
+%%   draft, final                         - Draft mode
+%%
+%% For detailed usage instructions, see the User Guide.
+%% For technical implementation details, see the Developer Guide.
+%%
+%% ============================================================================
