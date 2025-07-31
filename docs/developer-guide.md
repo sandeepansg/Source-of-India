@@ -382,7 +382,7 @@ Each test generates:
 
 #### Primary Build Script
 ```bash
-./scripts/setup-project.sh
+./scripts/setup-or-validate-project.sh
 ```
 
 This script:
@@ -393,13 +393,13 @@ This script:
 
 #### Python Build Script
 ```python
-# scripts/setup-project.py
+# scripts/setup-or-validate-project.py
 # Provides cross-platform build support
 ```
 
 #### Windows Batch Script
 ```batch
-# scripts/setup-project.bat
+# scripts/setup-or-validate-project.cmd
 # Windows-specific build commands
 ```
 
