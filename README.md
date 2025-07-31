@@ -392,7 +392,6 @@ soi-latex/
 │   ├── changes.yaml           # Amendment database
 │   └── footnotes.tex          # Amendment footnotes
 ├── scripts/                   # Build and utility scripts
-│   ├── setup-project.bat      # Project skeleton generation (on Windows)
 │   ├── setup-project.sh       # Project skeleton generation
 │   ├── build-all.sh           # Main build and batch compilation script
 │   ├── validate-structure.py  # Structure validation
