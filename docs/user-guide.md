@@ -585,4 +585,316 @@ A: Advanced users can modify `amendments/changes.yaml`, but this requires unders
 **Q: How do I create custom article numbering?**
 A: The class supports complex numbering like "21A", "371G", etc. Just use the appropriate number in the `\Article{}{}{}` command.
 
-**Q: Can I disable the table 
+**Q: Can I disable the table of contents?**
+A: You can skip the table of contents by omitting the `\soitableofcontents` command from your document.
+
+**Q: How do I handle articles with complex numbering like "21A" or "371G"?**
+A: Simply use the full number including letters in the Article command: `\Article{21A}{Title}{Content}` or `\Article{371G}{Title}{Content}`.
+
+**Q: Can I include only specific articles or parts?**
+A: Yes, you can selectively include content. Use the provided utility commands:
+```latex
+\includeArticle{356}  % Include only Article 356
+\includeArticleRange{1}{10}  % Include Articles 1-9
+```
+
+**Q: How do I handle very long articles?**
+A: For lengthy articles, break them into logical clauses using `\Clause{}`, `\SubClause{}`, and `\SubSubClause{}` commands for better readability.
+
+### Formatting Questions
+
+**Q: Can I change the font throughout the document?**
+A: Yes, but do it before `\begin{document}`:
+```latex
+\documentclass{soi}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}  % XeLaTeX/LuaLaTeX only
+\begin{document}
+...
+```
+
+**Q: How do I adjust line spacing?**
+A: Add this after `\documentclass{soi}`:
+```latex
+\usepackage{setspace}
+\onehalfspacing  % or \doublespacing
+```
+
+**Q: Can I change the page orientation?**
+A: Yes, add this configuration:
+```latex
+\usepackage{geometry}
+\geometry{landscape}
+```
+
+**Q: How do I control page breaks?**
+A: The class automatically handles page breaks, but you can force them:
+```latex
+\newpage          % Force new page
+\clearpage        % Force new page and clear floats
+\needspace{5cm}   % Ensure 5cm space or break page
+```
+
+### Content Questions
+
+**Q: How do I add footnotes to articles?**
+A: Use standard LaTeX footnotes:
+```latex
+\Article{21}{Right to Life}{
+    No person shall be deprived of life\footnote{This is a fundamental right.} 
+    except according to procedure established by law.
+}
+```
+
+**Q: Can I cross-reference articles?**
+A: Yes, use labels and references:
+```latex
+\Article{21}{Right to Life\label{art:life}}{Content...}
+
+% Later in document:
+As mentioned in Article \ref{art:life}...
+```
+
+**Q: How do I handle schedules with tables?**
+A: Use standard LaTeX table environments within schedules:
+```latex
+\Schedule{States and Union Territories}{
+    \begin{tabular}{|l|l|}
+    \hline
+    State & Capital \\
+    \hline
+    Andhra Pradesh & Amaravati \\
+    \hline
+    \end{tabular}
+}
+```
+
+**Q: Can I add images or diagrams?**
+A: Yes, use the `graphicx` package:
+```latex
+\usepackage{graphicx}
+% In document:
+\includegraphics[width=0.8\textwidth]{diagram.pdf}
+```
+
+### Advanced Usage Questions
+
+**Q: How do I create a custom document based on this class?**
+A: Create your own structure following the SoI pattern:
+```latex
+\documentclass{soi}
+\begin{document}
+
+\soifrontcover  % Optional
+% Your custom content using \Part, \Article commands
+\soibackcover   % Optional
+
+\end{document}
+```
+
+**Q: Can I modify the class behavior permanently?**
+A: Yes, but it requires creating a custom `.cls` file or using the configuration options. See the developer guide for details.
+
+**Q: How do I create bilingual documents?**
+A: Use packages like `babel` or `polyglossia`:
+```latex
+\usepackage[hindi,english]{babel}
+% Switch languages with \selectlanguage{hindi}
+```
+
+**Q: Can I generate multiple output formats from the same source?**
+A: Yes, use different compilation commands:
+```bash
+xelatex document.tex     # For high-quality PDF
+pdflatex document.tex    # For compatibility
+lualatex document.tex    # For advanced typography
+```
+
+### Performance Questions
+
+**Q: Why is compilation slow?**
+A: Large documents with many cross-references require multiple passes. To speed up development:
+- Use draft mode: `\documentclass[draft]{soi}`
+- Comment out `\soitableofcontents` during editing
+- Use `\includeonly{}` to compile specific parts
+
+**Q: How can I reduce PDF file size?**
+A: Several options:
+- Use A5 paper: `\documentclass[a5paper]{soi}`
+- Optimize images before inclusion
+- Use PDF compression tools after generation
+
+**Q: Can I compile incrementally?**
+A: Use the `\includeonly{}` command:
+```latex
+\documentclass{soi}
+\includeonly{part1,part2}  % Only compile these parts
+```
+
+### Troubleshooting Questions
+
+**Q: I get "Undefined control sequence" errors**
+A: Check that you're using SoI-specific commands correctly:
+- Use `\Article{}{}{}` not `\section{}`
+- Use `\Part{}{}` not `\part{}`
+- Ensure proper command syntax
+
+**Q: Fonts look wrong or missing**
+A: Font issues usually indicate:
+- Missing font files (install Libertinus fonts)
+- Wrong LaTeX engine (try XeLaTeX instead of pdfLaTeX)
+- Outdated TeX distribution
+
+**Q: Cross-references show "??" instead of numbers**
+A: Run LaTeX twice:
+```bash
+xelatex document.tex
+xelatex document.tex  # Second run resolves references
+```
+
+**Q: Amendment footnotes don't appear**
+A: Ensure you're using the `showamendments` option:
+```latex
+\documentclass[showamendments]{soi}
+```
+
+**Q: Page numbering is incorrect**
+A: The class automatically handles page numbering. If issues persist:
+- Check for conflicting packages
+- Ensure proper document structure
+- Review any custom modifications
+
+## Advanced Customization
+
+### Custom Layouts
+
+For specialized layouts, you can override default settings:
+
+```latex
+\documentclass{soi}
+
+% Custom margins
+\usepackage{geometry}
+\geometry{
+    top=3.5cm,
+    bottom=3cm,
+    left=3cm,
+    right=2.5cm
+}
+
+% Custom fonts
+\usepackage{fontspec}
+\setmainfont{Crimson Text}
+\setsansfont{Source Sans Pro}
+
+% Custom line spacing
+\usepackage{setspace}
+\setstretch{1.15}
+
+\begin{document}
+% Your content
+\end{document}
+```
+
+### Integration with Other Classes
+
+The SoI class can inspire custom document classes for other legal documents:
+
+```latex
+% Create custom-legal.cls based on soi.cls
+\LoadClass{soi}
+\renewcommand{\soifrontcover}{%
+    % Custom cover for your document type
+}
+```
+
+### Automation and Scripting
+
+For large projects, consider automation:
+
+```bash
+#!/bin/bash
+# Build script for multiple documents
+for file in *.tex; do
+    xelatex "$file"
+    xelatex "$file"  # Second pass for references
+done
+```
+
+### Version Control
+
+When using version control with LaTeX documents:
+
+```gitignore
+# .gitignore for LaTeX projects
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.pdf  # Optional: exclude generated PDFs
+```
+
+## Contributing to the Project
+
+### Reporting Issues
+
+When reporting problems:
+
+1. Specify your LaTeX distribution and version
+2. Include the exact error message
+3. Provide a minimal example that reproduces the issue
+4. Mention your operating system
+
+### Suggesting Improvements
+
+The project welcomes contributions:
+
+- Documentation improvements
+- Bug fixes
+- New features for constitutional documents
+- Better font support
+- Performance optimizations
+
+### Testing Changes
+
+Before submitting changes:
+
+1. Test with multiple LaTeX engines
+2. Verify on different operating systems
+3. Check backward compatibility
+4. Include appropriate tests
+
+## Conclusion
+
+The Source of India LaTeX class provides a comprehensive solution for typesetting constitutional and legal documents with professional formatting and structure. Its flexible design accommodates various document types while maintaining consistent, high-quality output.
+
+For the most current information, additional examples, and community support, visit the project repository and documentation resources.
+
+### Quick Reference Card
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `\Part{num}{title}` | Create document part | `\Part{I}{THE UNION}` |
+| `\Chapter{num}{title}` | Create chapter | `\Chapter{I}{EXECUTIVE}` |
+| `\Article{num}{title}{text}` | Create article | `\Article{1}{Name}{India...}` |
+| `\Clause{text}` | Create numbered clause | `\Clause{First condition}` |
+| `\SubClause{text}` | Create sub-clause | `\SubClause{Sub-condition}` |
+| `\Group{title}` | Create group heading | `\Group{GENERAL}` |
+| `\Schedule{title}{content}` | Create schedule | `\Schedule{FIRST}{Content}` |
+
+### Essential Class Options
+
+| Option | Effect |
+|--------|--------|
+| `a4paper` | A4 page size (default) |
+| `a5paper` | A5 page size |
+| `10pt,11pt,12pt` | Font size (12pt default) |
+| `showamendments` | Show amendment footnotes (default) |
+| `hideamendments` | Hide amendment footnotes |
+| `draft` | Draft mode with watermark |
+| `final` | Final mode (default) |
+
+This completes the comprehensive user guide for the Source of India LaTeX class, providing users with all necessary information to effectively use the class for constitutional and legal document typesetting. 
