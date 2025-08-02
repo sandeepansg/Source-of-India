@@ -1,0 +1,84 @@
+%% Minimal working example for the Source of India LaTeX class
+%% This demonstrates basic usage with a few articles
+
+\documentclass[a4paper,12pt,showamendments]{soi}
+
+\begin{document}
+
+% Simple title page
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\Huge \textbf{Constitution of India}} \\[1cm]
+{\Large Minimal Example} \\[2cm]
+{\large Demonstrating SoI LaTeX Class}
+\vfill
+{\large \today}
+\end{titlepage}
+
+% Simple table of contents
+\tableofcontents
+\newpage
+
+% Preamble (simplified)
+\phantomsection
+\addcontentsline{toc}{part}{Preamble}
+\begin{center}
+{\LARGE \textbf{PREAMBLE}}
+\end{center}
+
+\vspace{1cm}
+
+WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN DEMOCRATIC REPUBLIC...
+
+\newpage
+
+% Part III - Fundamental Rights (sample)
+\Part{III}{FUNDAMENTAL RIGHTS}
+
+\SubGroup{Right to Equality}
+
+% Article 14
+\DeclareArticle{14}{}{}
+\Article{Equality before law}{%
+    The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India.
+}
+
+% Article 21A with amendment
+\DeclareArticle{21}{A}{}
+\Article{Right to education}{%
+    \Amendment{The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine.}{Inserted by the Constitution (Eighty-sixth Amendment) Act, 2002, s. 2 (w.e.f. 1-4-2010)}%
+}
+
+% Example of article with clauses
+\DeclareArticle{19}{}{}
+\Article{Protection of certain rights regarding freedom of speech, etc.}{%
+    All citizens shall have the right---
+    
+    \Clause{to freedom of speech and expression;}
+    
+    \Clause{to assemble peaceably and without arms;}
+    
+    \Clause{to form associations or unions;}
+    
+    \Clause{to move freely throughout the territory of India;}
+    
+    \Clause{to reside and settle in any part of the territory of India;}
+    
+    \Clause{to practise any profession, or to carry on any occupation, trade or business.}
+}
+
+% Example schedule
+\Schedule{I}{THE STATES}
+
+\SchedulePart{A}{THE STATES}
+
+\begin{enumerate}
+\item Andhra Pradesh
+\item Assam  
+\item Bihar
+\item Gujarat
+\item ... (other states)
+\end{enumerate}
+
+\end{document}

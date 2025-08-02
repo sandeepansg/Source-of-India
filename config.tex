@@ -1,0 +1,162 @@
+%% Configuration file for Source of India LaTeX class
+%% This file contains user-customizable settings for the document
+
+%% ============================================================================
+%% AMENDMENT DISPLAY CONTROL
+%% ============================================================================
+
+% Show or hide amendments
+% \showamendmentsfalse  % Uncomment to hide all amendments
+% \showamendmentstrue   % Default: show amendments
+
+%% ============================================================================
+%% FOOTNOTE NUMBERING CONTROL
+%% ============================================================================
+
+% Global vs per-page footnote numbering
+% \globalfootnotesfalse % Uncomment for per-page numbering
+% \globalfootnotestrue  % Default: global numbering
+
+%% ============================================================================
+%% DRAFT MODE CONTROL
+%% ============================================================================
+
+% Enable draft mode features (shows counters in footer)
+% \draftmodetrue        % Uncomment to enable draft mode
+% \draftmodefalse       % Default: final mode
+
+%% ============================================================================
+%% TYPOGRAPHY CUSTOMIZATION
+%% ============================================================================
+
+% Size customization (uncomment and modify as needed)
+% \renewcommand{\partsize}{\huge}
+% \renewcommand{\chaptersize}{\LARGE}
+% \renewcommand{\articlesize}{\large}
+% \renewcommand{\groupsize}{\Large}
+% \renewcommand{\subgroupsize}{\large}
+% \renewcommand{\headingsize}{\large}
+% \renewcommand{\subheadingsize}{\normalsize}
+% \renewcommand{\schedulesize}{\huge}
+
+%% ============================================================================
+%% AMENDMENT BRACKET CUSTOMIZATION
+%% ============================================================================
+
+% Amendment bracket style (default is square brackets)
+% \renewcommand{\amendmentopen}{[}
+% \renewcommand{\amendmentclose}{]}
+
+% Alternative bracket styles:
+% \renewcommand{\amendmentopen}{\{} % Curly braces
+% \renewcommand{\amendmentclose}{\}}
+% \renewcommand{\amendmentopen}{<} % Angle brackets  
+% \renewcommand{\amendmentclose}{>}
+% \renewcommand{\amendmentopen}{(} % Parentheses
+% \renewcommand{\amendmentclose}{)}
+
+%% ============================================================================
+%% PAGE LAYOUT CUSTOMIZATION
+%% ============================================================================
+
+% Modify page geometry (uncomment to customize)
+% \geometry{
+%     top=3cm,
+%     bottom=3cm,
+%     left=3.5cm,
+%     right=3cm,
+%     headheight=15pt,
+%     headsep=25pt,
+%     footskip=30pt
+% }
+
+%% ============================================================================
+%% HYPERLINK CUSTOMIZATION
+%% ============================================================================
+
+% Customize hyperlink colors (uncomment to modify)
+% \hypersetup{
+%     linkcolor=darkblue,
+%     urlcolor=darkred,
+%     filecolor=darkgreen,
+%     citecolor=darkmagenta
+% }
+
+%% ============================================================================
+%% PARAGRAPH AND LINE SPACING
+%% ============================================================================
+
+% Customize paragraph spacing (uncomment to modify)
+% \setlength{\parskip}{0.8em plus 0.2em minus 0.1em}
+% \setlength{\parindent}{1em} % Default is 0pt for legal documents
+
+% Line spacing adjustment (uncomment to modify)
+% \renewcommand{\baselinestretch}{1.2}
+
+%% ============================================================================
+%% FOOTNOTE CUSTOMIZATION  
+%% ============================================================================
+
+% Footnote separator line customization (uncomment to modify)
+% \renewcommand{\footnoterule}{%
+%     \kern-5pt%
+%     \hrule width 0.5\columnwidth height 0.5pt%
+%     \kern 4pt%
+% }
+
+% Footnote numbering style (uncomment to modify)
+% \renewcommand{\thefootnote}{\roman{footnote}}    % Roman numerals
+% \renewcommand{\thefootnote}{\alph{footnote}}     % Letters
+% \renewcommand{\thefootnote}{\fnsymbol{footnote}} % Symbols
+
+%% ============================================================================
+%% TABLE OF CONTENTS CUSTOMIZATION
+%% ============================================================================
+
+% TOC depth control (uncomment to modify)
+% \setcounter{tocdepth}{3} % Show up to subsubsection level
+
+%% ============================================================================
+%% CUSTOM COMMANDS AND SHORTCUTS
+%% ============================================================================
+
+% Define custom shortcuts for commonly used phrases
+\newcommand{\constit}{Constitution}
+\newcommand{\india}{India}
+\newcommand{\article}[1]{Article~#1}
+\newcommand{\part}[1]{Part~#1}
+\newcommand{\schedule}[1]{Schedule~#1}
+
+% Amendment citation shortcuts
+\newcommand{\inserted}[1]{Inserted by #1}
+\newcommand{\substituted}[2]{Substituted for ``#1'' by #2}
+\newcommand{\omitted}[1]{Omitted by #1}
+
+%% ============================================================================
+%% LANGUAGE AND LOCALIZATION
+%% ============================================================================
+
+% Date formatting for amendments (Indian format)
+\newcommand{\indiandate}[3]{#1-#2-#3} % dd-mm-yyyy format
+
+% Common amendment phrases
+\newcommand{\wef}{w.e.f.~} % "with effect from"
+\newcommand{\amen}{Amendment~} % "Amendment"
+\newcommand{\act}{Act,~} % "Act,"
+\newcommand{\section}{s.~} % "section"
+
+%% ============================================================================
+%% DOCUMENT-SPECIFIC SETTINGS
+%% ============================================================================
+
+% Set document title for headers and PDF metadata
+\newcommand{\documenttitle}{The Constitution of India}
+\newcommand{\documentsubtitle}{As Amended}
+\newcommand{\documentversion}{Current Version with Amendments}
+
+%% ============================================================================
+%% END OF CONFIGURATION
+%% ============================================================================
+
+% Note: This configuration file is loaded by main.tex
+% Modify these settings according to your requirements

@@ -1,0 +1,35 @@
+%% Table of Contents for the Constitution of India
+
+\phantomsection
+\addcontentsline{toc}{part}{Table of Contents}
+
+\begin{center}
+{\LARGE \textbf{TABLE OF CONTENTS}}
+\end{center}
+
+\vspace{1cm}
+
+% Generate automatic table of contents
+\tableofcontents
+
+% Add some spacing
+\vspace{2cm}
+
+% Optional: List of amendments (if in draft mode)
+\if@draftmode
+\begin{center}
+{\large \textbf{Document Statistics}}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent
+Total Articles: \thetotalarticles \\
+Total Parts: \thepartcounter \\  
+Total Schedules: \theschedulecounter \\
+Total Amendments Displayed: \thetotalamendments \\
+
+\vspace{1cm}
+\fi
+
+\cleardoublepage
