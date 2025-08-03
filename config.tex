@@ -54,40 +54,6 @@
 \newcommand{\PartRef}[1]{Part~#1}
 \newcommand{\ScheduleRef}[1]{Schedule~#1}
 
-%% Constitutional formatting helpers
-\newcommand{\Proviso}[1]{\par\textit{Provided that} #1}
-\newcommand{\Explanation}[1]{\par\textit{Explanation.---}#1}
-\newcommand{\Exception}[1]{\par\textit{Exception.---}#1}
-
-%% List environment customization for constitutional text
-\RequirePackage{enumitem}
-\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em}
-\setlist[enumerate,2]{label=(\alph*), leftmargin=2em}
-\setlist[enumerate,3]{label=(\roman*), leftmargin=2em}
-
-%% Special constitutional symbols and abbreviations
-\newcommand{\etc}{\textit{etc.}}
-\newcommand{\viz}{\textit{viz.}}
-\newcommand{\ie}{\textit{i.e.}}
-\newcommand{\eg}{\textit{e.g.}}
-
-%% Date formatting for constitutional amendments
-\newcommand{\wef}[1]{(w.e.f.~#1)}  % "with effect from"
-
-%% Custom page styles for different sections
-\fancypagestyle{partpage}{%
-    \fancyhf{}%
-    \fancyfoot[C]{\thepage}%
-    \renewcommand{\headrulewidth}{0pt}%
-}
-
-\fancypagestyle{schedulepage}{%
-    \fancyhf{}%
-    \fancyhead[L]{\small\leftmark}%
-    \fancyhead[R]{\small\itshape Schedules}%
-    \fancyfoot[C]{\thepage}%
-}
-
 %% Amendment citation standards
 \newcommand{\ConstitutionAmendment}[3]{%
     Constitution (#1 Amendment) Act, #2, s.~#3%
@@ -139,5 +105,81 @@
         \marginpar{\tiny\textcolor{red}{#1}}%
     \fi
 }
+
+%% Custom page styles for different sections
+\RequirePackage{fancyhdr}
+
+\fancypagestyle{partpage}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+}
+
+\fancypagestyle{schedulepage}{%
+    \fancyhf{}%
+    \fancyhead[L]{\small\leftmark}%
+    \fancyhead[R]{\small\itshape Schedules}%
+    \fancyfoot[C]{\thepage}%
+}
+
+%% Enhanced page management settings
+\RequirePackage{needspace}
+
+%% Prevent page breaks within constitutional elements
+\newcommand{\keepwithfootnote}[1]{%
+    \needspace{3\baselineskip}%
+    #1%
+}
+
+%% Enhanced footnote management for amendments
+\makeatletter
+\renewcommand\@makefntext[1]{%
+    \parindent 1em%
+    \noindent
+    \hb@xt@1.8em{\hss\@makefnmark}%
+    \raggedright #1%
+}
+\makeatother
+
+%% Ensure amendments and their footnotes stay together
+\newcommand{\amendmentwithfootnote}[2]{%
+    \needspace{2\baselineskip}%
+    #1\footnote{#2}%
+}
+
+%% Page layout optimization for text-footnote balance
+\RequirePackage{geometry}
+\geometry{
+    footnotesep=0.7em,
+    marginparsep=0.5em
+}
+
+%% Enhanced list formatting for constitutional elements
+\RequirePackage{enumitem}
+\setlist{nosep, leftmargin=2em}
+\setlist[enumerate,1]{label=(\arabic*)}
+\setlist[enumerate,2]{label=(\alph*)}
+\setlist[enumerate,3]{label=(\roman*)}
+
+%% Special handling for long constitutional provisions
+\newenvironment{longprovision}
+    {\par\needspace{4\baselineskip}\begin{adjustwidth}{1em}{1em}\small}
+    {\end{adjustwidth}\par}
+
+%% Enhanced amendment tracking
+\newcounter{amendmentcount}
+\newcommand{\trackamendment}[1]{%
+    \stepcounter{amendmentcount}%
+    \label{amendment:\theamendmentcount}%
+}
+
+%% Ensure proper spacing around constitutional elements
+\newcommand{\constitutionalspacing}{%
+    \setlength{\parskip}{0.6em plus 0.2em minus 0.1em}%
+    \setlength{\itemsep}{0.3em plus 0.1em minus 0.1em}%
+}
+
+%% Apply constitutional spacing
+\AtBeginDocument{\constitutionalspacing}
 
 %% End of configuration

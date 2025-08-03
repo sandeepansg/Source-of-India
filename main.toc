@@ -1,0 +1,18 @@
+\contentsline {part}{PART I: THE UNION AND ITS TERRITORY}{1}{section*.1}%
+\contentsline {subsection}{Article 1. Name and territory of the Union}{1}{section*.2}%
+\contentsline {subsection}{Article 2. Admission or establishment of new States}{1}{section*.2}%
+\contentsline {subsection}{Article 3. Formation of new States and alteration of areas, boundaries or names of existing States}{1}{section*.2}%
+\contentsline {part}{PART II: CITIZENSHIP}{2}{section*.2}%
+\contentsline {subsection}{Article 5. Citizenship at the commencement of the Constitution}{2}{section*.3}%
+\contentsline {subsection}{Article 6. Rights of citizenship of certain persons who have migrated to India from Pakistan}{2}{section*.3}%
+\contentsline {subsection}{Article 7. Rights of citizenship of certain migrants to Pakistan}{3}{section*.3}%
+\contentsline {part}{PART III: FUNDAMENTAL RIGHTS}{4}{section*.3}%
+\contentsline {subsection}{Article 12. Definition}{4}{section*.4}%
+\contentsline {subsection}{Article 13. Laws inconsistent with or in derogation of the fundamental rights}{4}{section*.5}%
+\contentsline {subsection}{Article 14. Equality before law}{5}{section*.6}%
+\contentsline {subsection}{Article 15. Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth}{5}{section*.6}%
+\contentsline {subsection}{Article 19. Protection of certain rights regarding freedom of speech, etc.}{6}{section*.7}%
+\contentsline {subsection}{Article 21. Protection of life and personal liberty}{6}{section*.8}%
+\contentsline {subsection}{Article 21A. Right to education}{6}{section*.8}%
+\contentsline {section}{FIRST SCHEDULE: THE STATES}{9}{table.2}%
+\contentsfinish 

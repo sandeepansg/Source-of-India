@@ -1,17 +1,143 @@
 %% Minimal working example for SoI LaTeX class
-\documentclass{soi}
+%% Completely monolithic - no external file dependencies
+%% Everything defined in this single file
+\documentclass[showamendments]{soi}
 
 \begin{document}
 
-\Part{I}{SAMPLE PART}
+%% Simple title
+{\centering\Large\bfseries Minimal Constitution Sample\par}
+\vspace{2em}
 
-\DeclareArticle{1}{}{sample}
-\Article{Sample Article}{%
-    This is a minimal example demonstrating the SoI LaTeX class.
+%% PART I - THE UNION AND ITS TERRITORY
+\Part{I}{THE UNION AND ITS TERRITORY}
+
+\DeclareArticle{1}{}{union-territory}
+\Article{Name and territory of the Union}{%
+    \Clause{India, that is Bharat, shall be a Union of States.}
     
-    \Clause{This is the first clause of the article.}
+    \Clause{The States and the territories thereof shall be as specified in the First Schedule.}
     
-    \Clause{This is the second clause with an amendment: \Amendment{amended text}{Constitution (Sample Amendment) Act, 2025, s. 1}.}
+    \Clause{The territory of India shall comprise---}
+    
+    \SubClause{the territories of the States;}
+    
+    \SubClause{the Union territories specified in the First Schedule; and}
+    
+    \SubClause{such other territories as may be acquired.}
 }
+
+\DeclareArticle{2}{}{union-territory}
+\Article{Admission or establishment of new States}{%
+    Parliament may by law admit into the Union, or establish, new States on such terms and conditions as it thinks fit.
+}
+
+%% PART III - FUNDAMENTAL RIGHTS
+\Part{III}{FUNDAMENTAL RIGHTS}
+
+\section*{General}
+
+\DeclareArticle{12}{}{fundamental-rights}
+\Article{Definition}{%
+    In this Part, unless the context otherwise requires, "the State" includes the Government and Parliament of India and the Government and the Legislature of each of the States and all local or other authorities within the territory of India or under the control of the Government of India.
+}
+
+\section*{Right to Equality}
+
+\DeclareArticle{14}{}{fundamental-rights}
+\Article{Equality before law}{%
+    The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India.
+}
+
+\DeclareArticle{15}{}{fundamental-rights}
+\Article{Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth}{%
+    \Clause{The State shall not discriminate against any citizen on grounds only of religion, race, caste, sex, place of birth or any of them.}
+    
+    \Clause{No citizen shall, on grounds only of religion, race, caste, sex, place of birth or any of them, be subject to any disability, liability, restriction or condition with regard to---}
+    
+    \SubClause{access to shops, public restaurants, hotels and places of public entertainment; or}
+    
+    \SubClause{the use of wells, tanks, bathing ghats, roads and places of public resort maintained wholly or partly out of State funds or dedicated to the use of the general public.}
+    
+    \Clause{Nothing in this article shall prevent the State from making any special provision for women and children.}
+    
+    \Clause{\Inserted{Constitution (First Amendment) Act, 1951, s. 2 \wef{18-6-1951}}{Nothing in this article or in clause (2) of article 29 shall prevent the State from making any special provision for the advancement of any socially and educationally backward classes of citizens or for the Scheduled Castes and the Scheduled Tribes.}}
+}
+
+\section*{Right to Life and Personal Liberty}
+
+\DeclareArticle{21}{}{fundamental-rights}
+\Article{Protection of life and personal liberty}{%
+    No person shall be deprived of his life or personal liberty except according to procedure established by law.
+}
+
+\DeclareArticle{21}{A}{fundamental-rights}
+\Article{Right to education}{%
+    \Inserted{Constitution (Eighty-sixth Amendment) Act, 2002, s. 2 \wef{1-4-2010}}{The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine.}
+}
+
+%% Example of omitted article
+\DeclareArticle{31}{}{fundamental-rights}
+\Article{Right to property}{%
+    \Omitted{Constitution (Forty-fourth Amendment) Act, 1978, s. 6 \wef{20-6-1979}}
+}
+
+%% SCHEDULES
+\clearpage
+\appendix
+
+\Schedule{FIRST}{THE STATES}{%
+    \section*{I. THE STATES}
+    
+    \begin{longtable}{p{0.1\textwidth}p{0.4\textwidth}p{0.4\textwidth}}
+    \toprule
+    \textbf{No.} & \textbf{Name} & \textbf{Territories} \\
+    \midrule
+    \endhead
+    
+    1. & Andhra Pradesh & The territories specified in sub-section (1) of section 3 of the Andhra Pradesh Reorganisation Act, 2014. \\
+    
+    2. & \Substituted{Assam}{Assam}{Constitution (One Hundred and First Amendment) Act, 2016, s. 15 \wef{16-9-2016}} & The territories which immediately before the commencement of this Constitution were comprised in the Province of Assam, the Khasi States and the Assam Tribal Areas. \\
+    
+    3. & Bihar & The territories which immediately before the commencement of this Constitution were comprised in the Province of Bihar. \\
+    
+    \bottomrule
+    \end{longtable}
+    
+    \section*{II. THE UNION TERRITORIES}
+    
+    \begin{longtable}{p{0.1\textwidth}p{0.4\textwidth}p{0.4\textwidth}}
+    \toprule
+    \textbf{No.} & \textbf{Name} & \textbf{Territories} \\
+    \midrule
+    \endhead
+    
+    1. & \Substituted{Andaman and Nicobar Islands}{Andaman and Nicobar Islands}{Constitution (One Hundred and First Amendment) Act, 2016, s. 15 \wef{16-9-2016}} & The territory which immediately before the commencement of this Constitution was known as the Andaman and Nicobar Islands. \\
+    
+    2. & Chandigarh & The territory specified in section 4 of the Punjab Reorganisation Act, 1966. \\
+    
+    3. & \Inserted{Dadra and Nagar Haveli and Daman and Diu (Merger of Union Territories) Act, 2019, s. 3 \wef{26-1-2020}}{Dadra and Nagar Haveli and Daman and Diu} & \Inserted{Dadra and Nagar Haveli and Daman and Diu (Merger of Union Territories) Act, 2019, s. 3 \wef{26-1-2020}}{The territories which immediately before the commencement of the Dadra and Nagar Haveli and Daman and Diu (Merger of Union Territories) Act, 2019 were the Union territories of Dadra and Nagar Haveli and Daman and Diu.} \\
+    
+    \bottomrule
+    \end{longtable}
+}
+
+%% Built-in helper commands demonstration
+\section*{Constitutional Formatting Examples}
+
+\subsection*{Special Provisions}
+\Proviso{this demonstrates how provisos are formatted in constitutional documents.}
+
+\Explanation{This shows the formatting for constitutional explanations and clarifications.}
+
+\Exception{This demonstrates how exceptions to general rules are formatted.}
+
+\subsection*{Amendment Types Demonstrated}
+\begin{itemize}
+\item \textbf{Inserted text}: Shows new provisions added by amendments
+\item \textbf{Substituted text}: Shows text that replaced original provisions  
+\item \textbf{Omitted articles}: Shows provisions that were removed
+\item \textbf{Complex numbering}: Articles like 21A with suffix support
+\end{itemize}
 
 \end{document}

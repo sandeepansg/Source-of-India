@@ -1,0 +1,59 @@
+%% Sample schedule demonstrating modular schedule usage
+%% This file shows how to work with schedule files and their amendments
+\documentclass[showamendments]{soi}
+
+%% Load configuration
+\input{config}
+
+\begin{document}
+
+%% Title
+{\centering\Large\bfseries Schedule Demonstration\par}
+\vspace{1em}
+
+%% Include schedule using modular structure
+\input{content/schedules/schedule_i}
+
+%% Additional schedule examples (if they existed)
+% \input{content/schedules/schedule_ii}
+% \input{content/schedules/schedule_iii}
+
+%% Documentation
+\clearpage
+\section*{Schedule Features Demonstrated}
+
+This sample shows:
+
+\subsection*{Schedule Structure}
+\begin{itemize}
+\item Proper schedule formatting with \texttt{\textbackslash{}Schedule\{\}\{\}\{\}}
+\item Table-based content with \texttt{longtable} for page breaks
+\item Amendment tracking within schedule content
+\item Proper sectioning within schedules
+\end{itemize}
+
+\subsection*{Amendment Types in Schedules}
+\begin{itemize}
+\item State/territory name changes using \texttt{\textbackslash{}Substituted}
+\item New states/territories using \texttt{\textbackslash{}Inserted}
+\item Territory reorganization tracking
+\item Merger of territories demonstration
+\end{itemize}
+
+\subsection*{Table Management}
+\begin{itemize}
+\item \texttt{longtable} for multi-page schedules
+\item Proper column formatting for legal content
+\item Header repetition across pages
+\item Amendment footnotes within table cells
+\end{itemize}
+
+\subsection*{File Organization}
+\begin{itemize}
+\item Individual schedule files in \texttt{content/schedules/}
+\item Reusable schedule components
+\item Easy maintenance and updates
+\item Version control friendly structure
+\end{itemize}
+
+\end{document>

@@ -1,0 +1,67 @@
+%% Sample article demonstrating modular structure and amendment features
+%% This file shows how to use the actual project structure with real article files
+\documentclass[showamendments]{soi}
+
+%% Load configuration (demonstrates config usage)
+\input{config}
+
+\begin{document}
+
+%% Table of Contents
+\tableofcontents
+\clearpage
+
+%% Preamble using modular file
+\input{content/preamble}
+
+%% Main content
+\pagenumbering{arabic}
+
+%% PART I - Using modular part file
+\input{content/parts/part_i}
+
+%% PART II - Using modular part file  
+\input{content/parts/part_ii}
+
+%% PART III - Using modular part file (demonstrates complex amendments)
+\input{content/parts/part_iii}
+
+%% Schedules using modular files
+\clearpage
+\appendix
+\input{content/schedules/schedule_i}
+
+%% Documentation
+\clearpage
+\section*{Modular Structure Demonstration}
+
+This sample demonstrates:
+
+\subsection*{Modular Files Used}
+\begin{itemize}
+\item \texttt{config.tex} - Configuration loaded at start
+\item \texttt{content/preamble.tex} - Preamble with amendments
+\item \texttt{content/parts/part\_i.tex} - Part I structure
+\item \texttt{content/parts/part\_ii.tex} - Part II structure  
+\item \texttt{content/parts/part\_iii.tex} - Part III structure
+\item \texttt{content/articles/article\_*.tex} - Individual articles
+\item \texttt{content/schedules/schedule\_i.tex} - First Schedule
+\end{itemize}
+
+\subsection*{Amendment Features Shown}
+\begin{itemize}
+\item \texttt{\textbackslash{}Inserted\{\}\{\}} - New text insertions
+\item \texttt{\textbackslash{}Substituted\{\}\{\}\{\}} - Text replacements
+\item \texttt{\textbackslash{}Omitted\{\}} - Removed provisions
+\item \texttt{\textbackslash{}Amendment\{\}\{\}} - General amendments
+\end{itemize}
+
+\subsection*{Page Management}
+\begin{itemize}
+\item Articles stay together with their footnotes
+\item Intelligent page breaking for constitutional elements
+\item Optimized space sharing between text and footnotes
+\item Prevents orphaned clauses and amendments
+\end{itemize}
+
+\end{document}

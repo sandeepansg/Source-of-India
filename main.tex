@@ -1,13 +1,11 @@
 %% Main document for Constitution of India
 %% Using Source of India LaTeX Class v1.0
+%% This is the main working document - NOT a sample
 
 \documentclass[a4paper,12pt,showamendments]{soi}
 
 %% Load configuration
 \input{config}
-
-%% Load table of contents configuration
-\input{content/toc}
 
 %% Document metadata
 \title{The Constitution of India}
@@ -28,11 +26,11 @@
     
     \vspace{2cm}
     
-    {\Large Sample Edition}
+    {\Large As Amended}
     
     \vspace{1cm}
     
-    {\large Demonstrating SoI LaTeX Class v1.0}
+    {\large (Showing all Constitutional Amendments)}
     
     \vspace{3cm}
     
@@ -47,6 +45,10 @@
     \vspace{1cm}
     
     {\large NEW DELHI}
+    
+    \vspace{0.5cm}
+    
+    {\normalsize \today}
 \end{titlepage}
 
 %% Table of Contents
@@ -55,65 +57,114 @@
 
 %% Preamble
 \input{content/preamble}
-\clearpage
 
 %% Main content - switch to Arabic numbering
 \pagenumbering{arabic}
 
-%% Sample Parts - Only including a few for demonstration
-%% PART I - THE UNION AND ITS TERRITORY
-\input{content/parts/part_i}
+%% Include all Parts using modular structure
+\ifcompilepart
+    %% PART I - THE UNION AND ITS TERRITORY
+    \input{content/parts/part_i}
+    
+    %% PART II - CITIZENSHIP  
+    \input{content/parts/part_ii}
+    
+    %% PART III - FUNDAMENTAL RIGHTS
+    \input{content/parts/part_iii}
+    
+    %% TODO: Add remaining parts as they are completed
+    % \input{content/parts/part_iv}     % Directive Principles of State Policy
+    % \input{content/parts/part_iva}    % Fundamental Duties
+    % \input{content/parts/part_v}      % The Union
+    % \input{content/parts/part_vi}     % The States
+    % \input{content/parts/part_vii}    % [Repealed]
+    % \input{content/parts/part_viii}   % The Union Territories
+    % \input{content/parts/part_ix}     % The Panchayats
+    % \input{content/parts/part_ixa}    % The Municipalities
+    % \input{content/parts/part_ixb}    % The Co-operative Societies
+    % \input{content/parts/part_x}      % The Scheduled and Tribal Areas
+    % \input{content/parts/part_xi}     % Relations between the Union and the States
+    % \input{content/parts/part_xii}    % Finance, Property, Contracts and Suits
+    % \input{content/parts/part_xiii}   % Trade, Commerce and Intercourse
+    % \input{content/parts/part_xiv}    % Services Under the Union and the States
+    % \input{content/parts/part_xiva}   % Tribunals
+    % \input{content/parts/part_xv}     % Elections
+    % \input{content/parts/part_xvi}    % Special Provisions for Certain Classes
+    % \input{content/parts/part_xvii}   % Official Language
+    % \input{content/parts/part_xviii}  % Emergency Provisions
+    % \input{content/parts/part_xix}    % Miscellaneous
+    % \input{content/parts/part_xx}     % Amendment of the Constitution
+    % \input{content/parts/part_xxi}    % Temporary, Transitional and Special Provisions
+    % \input{content/parts/part_xxii}   % Short Title, Commencement, Authoritative Text in Hindi and Repeals
+\fi
 
-%% PART II - CITIZENSHIP
-\input{content/parts/part_ii}
+%% Include all Schedules using modular structure
+\ifcompileschedules
+    \clearpage
+    \appendix
+    
+    %% All Schedules
+    \input{content/schedules/schedule_i}    % The States
+    
+    %% TODO: Add remaining schedules as they are completed
+    % \input{content/schedules/schedule_ii}   % [Provisions as to the President and the Governors]
+    % \input{content/schedules/schedule_iii}  % Forms of Oaths or Affirmations
+    % \input{content/schedules/schedule_iv}   % Allocation of seats in the Council of States
+    % \input{content/schedules/schedule_v}    % Provisions as to the Administration and Control of Scheduled Areas and Scheduled Tribes
+    % \input{content/schedules/schedule_vi}   % Provisions as to the Administration of Tribal Areas in the States of Assam, Meghalaya, Tripura and Mizoram
+    % \input{content/schedules/schedule_vii}  % Union, State and Concurrent Lists
+    % \input{content/schedules/schedule_viii} % Languages
+    % \input{content/schedules/schedule_ix}   % Validation of certain Acts and Regulations
+    % \input{content/schedules/schedule_x}    % [Provisions as to Disqualification on ground of defection]
+    % \input{content/schedules/schedule_xi}   % Powers, authority and responsibilities of Panchayats
+    % \input{content/schedules/schedule_xii}  % Powers, authority and responsibilities of Municipalities
+\fi
 
-%% PART III - FUNDAMENTAL RIGHTS (Sample articles only)
-\input{content/parts/part_iii}
-
-%% Schedules - Sample only
-\clearpage
-\appendix
-
-%% First Schedule - The States (Sample entries)
-\input{content/schedules/schedule_i}
-
-%% End note
-\clearpage
-\section*{About This Sample}
-This document demonstrates the Source of India (SoI) LaTeX document class v1.0 for typesetting constitutional documents. This sample includes:
-
-\subsection*{Parts Included}
-\begin{itemize}
-\item Part I (The Union and Its Territory) - Articles 1, 2, 3
-\item Part II (Citizenship) - Articles 5, 6, 7
-\item Part III (Fundamental Rights) - Articles 12, 13, 14, 15, 19, 21, 21A
-\end{itemize}
-
-\subsection*{Schedules Included}
-\begin{itemize}
-\item First Schedule (The States) - Sample entries with amendments
-\end{itemize}
-
-\subsection*{Features Demonstrated}
-\begin{itemize}
-\item Professional constitutional document formatting
-\item Comprehensive amendment tracking with footnotes
-\item Modular structure with separate files for parts and articles
-\item Automatic numbering and cross-referencing
-\item Table of contents with proper formatting
-\item Support for complex article suffixes (e.g., Article 21A)
-\end{itemize}
-
-The class supports comprehensive amendment tracking, professional legal formatting, and modular document structure. For complete documentation, see the accompanying guides in the \texttt{docs/} directory.
-
-\subsection*{Class Options Used}
-This document was compiled with:
-\begin{itemize}
-\item \texttt{showamendments} - Display amendment footnotes
-\item \texttt{a4paper} - A4 paper size
-\item \texttt{12pt} - 12-point base font size
-\end{itemize}
-
-To hide amendments, use \texttt{hideamendments} class option.
+%% Document completion status and notes
+\ifcompilepart
+    \clearpage
+    \section*{Document Status}
+    
+    \subsection*{Compilation Status}
+    This document is a work in progress. Current status:
+    
+    \subsubsection*{Completed Parts}
+    \begin{itemize}
+    \item Part I: The Union and Its Territory (Articles 1-4)
+    \item Part II: Citizenship (Articles 5-11)  
+    \item Part III: Fundamental Rights (Articles 12-35) - Partially completed
+    \end{itemize}
+    
+    \subsubsection*{Completed Schedules}
+    \begin{itemize}
+    \item First Schedule: The States (Partially completed)
+    \end{itemize}
+    
+    \subsubsection*{Remaining Work}
+    \begin{itemize}
+    \item Parts IV through XXII (19 parts remaining)
+    \item Schedules II through XII (11 schedules remaining) 
+    \item Complete article content for existing parts
+    \item Full amendment tracking and citations
+    \item Cross-references and indexing
+    \end{itemize}
+    
+    \subsection*{Usage Notes}
+    \begin{itemize}
+    \item Use \texttt{showamendments} class option to display amendment footnotes
+    \item Use \texttt{hideamendments} class option to hide amendment information
+    \item Set \texttt{\textbackslash{}compilepartfalse} in config.tex to skip parts during compilation
+    \item Set \texttt{\textbackslash{}compileschedulesfalse} in config.tex to skip schedules during compilation
+    \end{itemize}
+    
+    \subsection*{Contributing}
+    To add new articles, parts, or schedules:
+    \begin{enumerate}
+    \item Create the appropriate .tex file in the correct directory
+    \item Use the \texttt{\textbackslash{}DeclareArticle}, \texttt{\textbackslash{}Article}, \texttt{\textbackslash{}Part}, or \texttt{\textbackslash{}Schedule} commands
+    \item Include the file in the appropriate part file using \texttt{\textbackslash{}input}
+    \item Add amendment information using \texttt{\textbackslash{}Amendment}, \texttt{\textbackslash{}Inserted}, \texttt{\textbackslash{}Substituted}, etc.
+    \end{enumerate}
+\fi
 
 \end{document}

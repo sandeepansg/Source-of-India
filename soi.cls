@@ -58,7 +58,6 @@
 \RequirePackage{geometry}
 \RequirePackage{xparse}
 \RequirePackage{fancyhdr}
-\RequirePackage{needspace}
 \RequirePackage{array}
 \RequirePackage{longtable}
 \RequirePackage{booktabs}
@@ -69,8 +68,13 @@
 \RequirePackage{afterpage}
 \RequirePackage{changepage}
 \RequirePackage{calc}
+\RequirePackage{enumitem}
+\RequirePackage{titletoc}
+\RequirePackage{needspace}
+\RequirePackage{footmisc}
+\RequirePackage{perpage}
 
-%% Page geometry
+%% Page geometry with optimized footnote space
 \geometry{
     top=2.5cm,
     bottom=2.5cm,
@@ -78,13 +82,34 @@
     right=2.5cm,
     headheight=14pt,
     headsep=20pt,
-    footskip=25pt
+    footskip=25pt,
+    heightrounded
 }
 
 %% Typography settings
 \setlength{\parskip}{0.6em plus 0.1em minus 0.1em}
 \setlength{\parindent}{0pt}
 \renewcommand{\baselinestretch}{1.1}
+
+%% Footnote configuration for optimal page space usage
+\setlength{\footnotesep}{0.7em}
+\setlength{\skip\footins}{1em plus 0.3em minus 0.1em}
+\renewcommand{\footnoterule}{%
+    \kern-3pt
+    \hrule width 0.4\columnwidth
+    \kern 2.6pt
+}
+
+%% Footnote numbering per page for amendments
+\if@globalfootnotes
+    % Global footnote numbering (default)
+\else
+    \MakePerPage{footnote}
+\fi
+
+%% Enhanced footnote formatting for amendments
+\renewcommand{\footnotelayout}{\footnotesize\raggedright}
+\setlength{\footnotemargin}{1em}
 
 %% Counters
 \newcounter{articlenumber}
@@ -118,6 +143,11 @@
     \or XXI\or XXII\else\@ctrerr\fi%
 }
 
+%% Page break management for constitutional elements
+\newcommand{\constitutionalbreak}[1]{%
+    \needspace{#1\baselineskip}%
+}
+
 %% Article declaration system
 \newcommand{\DeclareArticle}[3]{%
     \stepcounter{totalarticles}%
@@ -128,10 +158,12 @@
     \else
         \def\@currentarticledisplay{Article #1#2}%
     \fi
+    % Reset clause counters for each article
+    \setcounter{clausecounter}{0}%
 }
 
 %% Part declaration system
-\newcommand{\DeclarePart}[3]{%
+\newcommand{\DeclarePart}[2]{%
     \stepcounter{partnumber}%
     \def\@currentparttitle{#2}%
 }
@@ -141,7 +173,7 @@
     \stepcounter{schedulenumber}%
 }
 
-%% Amendment system
+%% Enhanced amendment system with page management
 \newcommand{\Amendment}[3][]{%
     \if@showamendments
         #2\footnote{#3}%
@@ -153,16 +185,16 @@
 
 \newcommand{\Inserted}[2]{%
     \if@showamendments
-        \amendmentopen#1\amendmentclose\footnote{Inserted by #2}%
+        \amendmentopen#2\amendmentclose\footnote{Inserted: #1}%
         \stepcounter{totalamendments}%
     \else
-        #1%
+        #2%
     \fi
 }
 
 \newcommand{\Substituted}[3]{%
     \if@showamendments
-        \amendmentopen#1\amendmentclose\footnote{Substituted for "#2" by #3}%
+        \amendmentopen#1\amendmentclose\footnote{Substituted for ``#2'' by #3}%
         \stepcounter{totalamendments}%
     \else
         #1%
@@ -171,62 +203,70 @@
 
 \newcommand{\Omitted}[1]{%
     \if@showomitted
-        \textit{Omitted by #1}%
+        \textit{[Omitted by #1]}%
         \stepcounter{totalomitted}%
     \fi
 }
 
 \newcommand{\Repealed}[1]{%
     \if@showomitted
-        \textit{Repealed by #1}%
+        \textit{[Repealed by #1]}%
         \stepcounter{totalomitted}%
     \fi
 }
 
-%% Structural commands
-\newcommand{\Part}[3][]{%
-    \needspace{5\baselineskip}%
+%% Structural commands with enhanced page management
+\newcommand{\Part}[2]{%
+    \clearpage%
+    \constitutionalbreak{5}%
     \vspace{2\baselineskip}%
     {\centering\partsize\bfseries PART #1\\[0.5\baselineskip]#2\par}%
     \vspace{\baselineskip}%
     \def\@currentparttitle{#2}%
     \markboth{PART #1: #2}{PART #1: #2}%
+    \addcontentsline{toc}{part}{PART #1: #2}%
 }
 
-\newcommand{\Article}[3][]{%
-    \needspace{3\baselineskip}%
+\newcommand{\Article}[2]{%
+    \constitutionalbreak{4}%
     \vspace{\baselineskip}%
     {\articlesize\bfseries\@currentarticledisplay. #1}\par%
     \vspace{0.5\baselineskip}%
     #2\par%
     \def\@currentarticletitle{#1}%
     \markright{\@currentarticledisplay: #1}%
+    \addcontentsline{toc}{subsection}{\@currentarticledisplay. #1}%
 }
 
-\newcommand{\Schedule}[4][]{%
-    \needspace{5\baselineskip}%
+\newcommand{\Schedule}[3]{%
+    \clearpage%
+    \constitutionalbreak{5}%
     \vspace{2\baselineskip}%
     {\centering\partsize\bfseries #1 SCHEDULE\\[0.5\baselineskip]#2\par}%
     \vspace{\baselineskip}%
     #3\par%
+    \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
 }
 
-%% Clause and sub-clause commands
-\newcounter{clausecounter}[articlenumber]
+%% Clause and sub-clause commands with page management
+\newcounter{clausecounter}
 \newcounter{subclausecounter}[clausecounter]
 \newcounter{subsubclausecounter}[subclausecounter]
 
 \newcommand{\Clause}[1]{%
+    \constitutionalbreak{2}%
     \stepcounter{clausecounter}%
     \par(\theclausecounter) #1\par%
 }
 
 \newcommand{\SubClause}[1]{%
+    \constitutionalbreak{2}%
     \stepcounter{subclausecounter}%
     \par(\alph{subclausecounter}) #1\par%
 }
 
 \newcommand{\SubSubClause}[1]{%
+    \constitutionalbreak{2}%
     \stepcounter{subsubclausecounter}%
     \par(\roman{subsubclausecounter}) #1\par%
 }
@@ -246,51 +286,52 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
-%% Footnote configuration
-\if@globalfootnotes
-    % Global footnote numbering (default)
-\else
-    \@addtoreset{footnote}{page}
-\fi
-
 %% Table of contents customization
 \renewcommand{\contentsname}{Contents}
 \setcounter{tocdepth}{2}
 
+%% Part entries in TOC
+\titlecontents{part}[0pt]
+    {\addvspace{1.5pc}\large\bfseries}
+    {PART \thecontentslabel\quad}
+    {}
+    {\hfill\contentspage}
+    [\addvspace{0.5pc}]
+
+%% Section entries (for schedules)
+\titlecontents{section}[1.5em]
+    {\addvspace{0.5pc}\normalsize\bfseries}
+    {\contentslabel{1.5em}}
+    {\hspace*{-1.5em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%% Subsection entries (for articles)
+\titlecontents{subsection}[3.8em]
+    {\normalsize}
+    {\contentslabel{3.8em}}
+    {\hspace*{-3.8em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
 %% Hyperref setup
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=black,
-    urlcolor=black,
-    citecolor=black,
-    pdfpagemode=UseNone,
-    pdfstartview=FitH,
-    pdftitle={Constitution of India},
-    pdfauthor={Government of India},
-    pdfsubject={Constitutional Document},
-    pdfkeywords={Constitution, India, Law, Legal}
+\AtEndOfClass{%
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=black,
+        filecolor=black,
+        urlcolor=black,
+        citecolor=black,
+        pdfpagemode=UseNone,
+        pdfstartview=FitH,
+        pdftitle={Constitution of India},
+        pdfauthor={Government of India},
+        pdfsubject={Constitutional Document},
+        pdfkeywords={Constitution, India, Law, Legal}
+    }
 }
 
 %% Warning and error commands
 \newcommand{\soiwarning}[1]{\ClassWarning{soi}{#1}}
 \newcommand{\soierror}[2]{\ClassError{soi}{#1}{#2}}
-
-%% File inclusion helpers
-\newcommand{\articlefilename}[2]{%
-    \StrLower{#2}[\lowersuffix]%
-    article_#1\lowersuffix.tex%
-}
-
-\newcommand{\partfilename}[2]{%
-    \StrLower{#1#2}[\lowerpart]%
-    part_\lowerpart.tex%
-}
-
-\newcommand{\schedulefilename}[1]{%
-    \StrLower{#1}[\lowerschedule]%
-    schedule_\lowerschedule.tex%
-}
 
 %% Boolean flags for user control
 \newif\ifshowamendments
@@ -299,5 +340,47 @@
 % Initialize based on class options
 \if@showamendments\showamendmentstrue\else\showamendmentsfalse\fi
 \if@showomitted\showomittedtrue\else\showomittedfalse\fi
+
+%% Special constitutional formatting helpers
+\newcommand{\Proviso}[1]{%
+    \constitutionalbreak{2}%
+    \par\textit{Provided that} #1%
+}
+
+\newcommand{\Explanation}[1]{%
+    \constitutionalbreak{2}%
+    \par\textit{Explanation.---}#1%
+}
+
+\newcommand{\Exception}[1]{%
+    \constitutionalbreak{2}%
+    \par\textit{Exception.---}#1%
+}
+
+%% Special constitutional symbols and abbreviations
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\viz}{\textit{viz.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+
+%% Date formatting for constitutional amendments
+\newcommand{\wef}[1]{(w.e.f.~#1)}  % "with effect from"
+
+%% List environment customization for constitutional text
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em}
+\setlist[enumerate,2]{label=(\alph*), leftmargin=2em}
+\setlist[enumerate,3]{label=(\roman*), leftmargin=2em}
+
+%% Enhanced page break control for footnotes
+\interfootnotelinepenalty=10000
+
+%% Widow and orphan control
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+%% Enhanced space management between text and footnotes
+\addtolength{\textheight}{-\footskip}
+\addtolength{\textheight}{\footnotesep}
 
 %% End of class
