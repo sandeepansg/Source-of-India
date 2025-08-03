@@ -1,8 +1,8 @@
-%% Sample article demonstrating modular structure and amendment features
-%% This file shows how to use the actual project structure with real article files
-\documentclass[showamendments]{soi}
+%% Sample article demonstrating modular structure and fixed amendment features
+%% This file shows how to use the actual project structure with corrected article files
+\documentclass[showamendments,twoside]{soi}
 
-%% Load configuration (demonstrates config usage)
+%% Load enhanced configuration
 \input{config}
 
 \begin{document}
@@ -11,7 +11,7 @@
 \tableofcontents
 \clearpage
 
-%% Preamble using modular file
+%% Preamble using corrected amendment syntax
 \input{content/preamble}
 
 %% Main content
@@ -23,7 +23,7 @@
 %% PART II - Using modular part file  
 \input{content/parts/part_ii}
 
-%% PART III - Using modular part file (demonstrates complex amendments)
+%% PART III - Using enhanced part file with constitutional sections (modular)
 \input{content/parts/part_iii}
 
 %% Schedules using modular files
@@ -31,37 +31,38 @@
 \appendix
 \input{content/schedules/schedule_i}
 
-%% Documentation
+%% Documentation of fixes
 \clearpage
-\section*{Modular Structure Demonstration}
+\section*{Document Improvements Demonstrated}
 
-This sample demonstrates:
+This fixed sample demonstrates:
 
-\subsection*{Modular Files Used}
+\subsection*{Amendment System Corrections}
 \begin{itemize}
-\item \texttt{config.tex} - Configuration loaded at start
-\item \texttt{content/preamble.tex} - Preamble with amendments
-\item \texttt{content/parts/part\_i.tex} - Part I structure
-\item \texttt{content/parts/part\_ii.tex} - Part II structure  
-\item \texttt{content/parts/part\_iii.tex} - Part III structure
-\item \texttt{content/articles/article\_*.tex} - Individual articles
-\item \texttt{content/schedules/schedule\_i.tex} - First Schedule
+\item \textbf{Corrected Logic}: Amendment text now appears in main document, citations in footnotes
+\item \textbf{Proper Positioning}: Footnote mark positioned at top-left of opening bracket
+\item \textbf{Clause Insertions}: New \texttt{\textbackslash{}InsertedClause} command handles clause numbering properly
+\item \textbf{Citation Format}: Footnotes now show "Inserted by:" or "Substituted for... by:" format
 \end{itemize}
 
-\subsection*{Amendment Features Shown}
+\subsection*{Layout Enhancements}
 \begin{itemize}
-\item \texttt{\textbackslash{}Inserted\{\}\{\}} - New text insertions
-\item \texttt{\textbackslash{}Substituted\{\}\{\}\{\}} - Text replacements
-\item \texttt{\textbackslash{}Omitted\{\}} - Removed provisions
-\item \texttt{\textbackslash{}Amendment\{\}\{\}} - General amendments
+\item \textbf{Two-sided Layout}: Document uses proper two-sided formatting with binding offset
+\item \textbf{Enhanced Headers}: Article names appear on outer margins (opposite to binding)
+\item \textbf{Section Headings}: "Right to Equality" etc. use \texttt{\textbackslash{}ConstitutionalSection} for proper size and spacing
+\item \textbf{Page Management}: Headings stay with their articles using enhanced page break control
 \end{itemize}
 
-\subsection*{Page Management}
+\subsection*{Typography Improvements}
 \begin{itemize}
-\item Articles stay together with their footnotes
-\item Intelligent page breaking for constitutional elements
-\item Optimized space sharing between text and footnotes
-\item Prevents orphaned clauses and amendments
+\item \textbf{Footnote Spacing}: Enhanced spacing above and below footnote separator line
+\item \textbf{Consistent Spacing}: Automatic calculation of spacing for better readability
+\item \textbf{Section Typography}: Properly sized and centered section headings  
+\item \textbf{Page Breaks}: Intelligent page breaking to keep related content together
 \end{itemize}
 
-\end{document}
+\subsection*{Before vs After Examples}
+
+\textbf{OLD (Incorrect):}
+\begin{verbatim}
+[actual text]³

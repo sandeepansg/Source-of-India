@@ -1,10 +1,10 @@
-%% Source of India LaTeX Document Class v1.0
+%% Source of India LaTeX Document Class v1.1
 %% For typesetting the Constitution of India
 %% Author: Sandeepan Sengupta
 %% License: LaTeX Project Public License v1.3c
 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{soi}[2023/08/01 v1.0 Source of India Constitution Class]
+\ProvidesClass{soi}[2023/08/01 v1.1 Source of India Constitution Class - Fixed Version]
 
 %% Class options processing
 \newif\if@showamendments\@showamendmentstrue
@@ -24,8 +24,8 @@
 
 \ProcessOptions\relax
 
-%% Load base class
-\LoadClass[12pt,a4paper]{article}
+%% Load base class with two-sided layout
+\LoadClass[12pt,a4paper,twoside]{article}
 
 %% Engine detection and font setup
 \RequirePackage{iftex}
@@ -74,12 +74,14 @@
 \RequirePackage{footmisc}
 \RequirePackage{perpage}
 
-%% Page geometry with optimized footnote space
+%% Two-sided page geometry with binding offset
 \geometry{
+    twoside,
+    bindingoffset=0.5cm,
+    inner=3cm,
+    outer=2.5cm,
     top=2.5cm,
     bottom=2.5cm,
-    left=3cm,
-    right=2.5cm,
     headheight=14pt,
     headsep=20pt,
     footskip=25pt,
@@ -91,12 +93,16 @@
 \setlength{\parindent}{0pt}
 \renewcommand{\baselinestretch}{1.1}
 
-%% Footnote configuration for optimal page space usage
-\setlength{\footnotesep}{0.7em}
-\setlength{\skip\footins}{1em plus 0.3em minus 0.1em}
+%% Enhanced footnote configuration with improved spacing
+\setlength{\footnotesep}{0.8em}
+\setlength{\skip\footins}{1.2em plus 0.4em minus 0.2em}
+
+%% Improved footnote rule with proper spacing
 \renewcommand{\footnoterule}{%
     \kern-3pt
-    \hrule width 0.4\columnwidth
+    \vspace{0.5em}%
+    \hrule width 0.4\columnwidth height 0.4pt
+    \vspace{0.3em}%
     \kern 2.6pt
 }
 
@@ -143,7 +149,7 @@
     \or XXI\or XXII\else\@ctrerr\fi%
 }
 
-%% Page break management for constitutional elements
+%% Enhanced page break management for constitutional elements
 \newcommand{\constitutionalbreak}[1]{%
     \needspace{#1\baselineskip}%
 }
@@ -173,7 +179,9 @@
     \stepcounter{schedulenumber}%
 }
 
-%% Enhanced amendment system with page management
+%% FIXED AMENDMENT SYSTEM - Corrected logic and positioning
+
+%% General amendment command
 \newcommand{\Amendment}[3][]{%
     \if@showamendments
         #2\footnote{#3}%
@@ -183,36 +191,49 @@
     \fi
 }
 
+%% Fixed Inserted command - text in main, citation in footnote
 \newcommand{\Inserted}[2]{%
     \if@showamendments
-        \amendmentopen#2\amendmentclose\footnote{Inserted: #1}%
-        \stepcounter{totalamendments}%
-    \else
-        #2%
-    \fi
-}
-
-\newcommand{\Substituted}[3]{%
-    \if@showamendments
-        \amendmentopen#1\amendmentclose\footnote{Substituted for ``#2'' by #3}%
+        \footnote{Inserted by: #2}\textsuperscript{\thefootnote}\amendmentopen#1\amendmentclose%
         \stepcounter{totalamendments}%
     \else
         #1%
     \fi
 }
 
+%% Fixed Substituted command - new text in main, old text and citation in footnote
+\newcommand{\Substituted}[3]{%
+    \if@showamendments
+        \footnote{Substituted for ``#2'' by: #3}\textsuperscript{\thefootnote}\amendmentopen#1\amendmentclose%
+        \stepcounter{totalamendments}%
+    \else
+        #1%
+    \fi
+}
+
+%% Fixed Omitted command - shows only citation in footnote when showing omitted
 \newcommand{\Omitted}[1]{%
     \if@showomitted
-        \textit{[Omitted by #1]}%
+        \footnote{Omitted by: #1}\textsuperscript{\thefootnote}\amendmentopen\textit{Omitted}\amendmentclose%
         \stepcounter{totalomitted}%
     \fi
 }
 
+%% Fixed Repealed command
 \newcommand{\Repealed}[1]{%
     \if@showomitted
-        \textit{[Repealed by #1]}%
+        \footnote{Repealed by: #1}\textsuperscript{\thefootnote}\amendmentopen\textit{Repealed}\amendmentclose%
         \stepcounter{totalomitted}%
     \fi
+}
+
+%% Constitutional section heading command with proper spacing and typography
+\newcommand{\ConstitutionalSection}[1]{%
+    \needspace{4\baselineskip}%
+    \vspace{1em plus 0.3em minus 0.2em}%
+    {\centering\normalsize\bfseries #1\par}%
+    \nopagebreak[4]%
+    \vspace{0.7em plus 0.2em minus 0.1em}%
 }
 
 %% Structural commands with enhanced page management
@@ -227,10 +248,12 @@
     \addcontentsline{toc}{part}{PART #1: #2}%
 }
 
+%% Enhanced Article command with better page break management
 \newcommand{\Article}[2]{%
-    \constitutionalbreak{4}%
+    \needspace{6\baselineskip}% Ensure article and potential heading stay together
     \vspace{\baselineskip}%
     {\articlesize\bfseries\@currentarticledisplay. #1}\par%
+    \nopagebreak[4]%
     \vspace{0.5\baselineskip}%
     #2\par%
     \def\@currentarticletitle{#1}%
@@ -248,39 +271,68 @@
     \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
 }
 
-%% Clause and sub-clause commands with page management
+%% Clause and sub-clause commands with enhanced page management
 \newcounter{clausecounter}
 \newcounter{subclausecounter}[clausecounter]
 \newcounter{subsubclausecounter}[subclausecounter]
 
 \newcommand{\Clause}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{3\baselineskip}%
     \stepcounter{clausecounter}%
     \par(\theclausecounter) #1\par%
 }
 
 \newcommand{\SubClause}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{2\baselineskip}%
     \stepcounter{subclausecounter}%
     \par(\alph{subclausecounter}) #1\par%
 }
 
 \newcommand{\SubSubClause}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{2\baselineskip}%
     \stepcounter{subsubclausecounter}%
     \par(\roman{subsubclausecounter}) #1\par%
 }
 
-%% Header and footer setup
+%% Special amendment commands for clauses with bracket positioning
+
+%% Inserted clause with clause number in brackets
+\newcommand{\InsertedClause}[2]{%
+    \if@showamendments
+        \needspace{3\baselineskip}%
+        \stepcounter{clausecounter}%
+        \footnote{Inserted by: #2}\textsuperscript{\thefootnote}\amendmentopen(\theclausecounter)\amendmentclose\ #1\par%
+        \stepcounter{totalamendments}%
+    \else
+        \Clause{#1}%
+    \fi
+}
+
+%% Omitted clause showing clause number in brackets
+\newcommand{\OmittedClause}[1]{%
+    \if@showomitted
+        \needspace{2\baselineskip}%
+        \stepcounter{clausecounter}%
+        \footnote{Omitted by: #1}\textsuperscript{\thefootnote}\amendmentopen(\theclausecounter)\amendmentclose\par%
+        \stepcounter{totalomitted}%
+    \fi
+}
+
+%% Two-sided header and footer setup
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\leftmark}
-\fancyhead[R]{\small\itshape Constitution of India}
+
+%% Two-sided headers with article names on outer margins
+\fancyhead[LE]{\small\leftmark}    % Left header on even pages (part info)
+\fancyhead[RO]{\small\rightmark}   % Right header on odd pages (article info)
+\fancyhead[LO,RE]{\small\itshape Constitution of India}  % Inner headers
+
+%% Footer with page numbers
 \fancyfoot[C]{\thepage}
 
 \if@draftmode
-    \fancyfoot[L]{\tiny Articles: \thetotalarticles}
-    \fancyfoot[R]{\tiny Amendments: \thetotalamendments}
+    \fancyfoot[LE]{\tiny Articles: \thetotalarticles}
+    \fancyfoot[RO]{\tiny Amendments: \thetotalamendments}
 \fi
 
 \renewcommand{\headrulewidth}{0.4pt}
@@ -343,17 +395,17 @@
 
 %% Special constitutional formatting helpers
 \newcommand{\Proviso}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{3\baselineskip}%
     \par\textit{Provided that} #1%
 }
 
 \newcommand{\Explanation}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{3\baselineskip}%
     \par\textit{Explanation.---}#1%
 }
 
 \newcommand{\Exception}[1]{%
-    \constitutionalbreak{2}%
+    \needspace{3\baselineskip}%
     \par\textit{Exception.---}#1%
 }
 
@@ -374,7 +426,7 @@
 %% Enhanced page break control for footnotes
 \interfootnotelinepenalty=10000
 
-%% Widow and orphan control
+%% Enhanced widow and orphan control
 \clubpenalty=10000
 \widowpenalty=10000
 \displaywidowpenalty=10000
