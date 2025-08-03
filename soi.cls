@@ -136,7 +136,7 @@
 \newcommand{\soiAmendment}[1]{%
     \if@soishowamendments
         \stepcounter{soiamendmentfootnote}%
-        [{#1}\footnotemark[\thesoiamendmentfootnote]%
+        [{#1}\footnotemark[\thesoiamendmentfootnote]]%
     \else
         #1%
     \fi
@@ -194,7 +194,7 @@
 }
 
 %% Schedule command with header updating
-\newcommand{\soiSchedule}[2]{%
+\newcommand{\soiSchedule}[3]{%
     \cleardoublepage
     \stepcounter{soischedulenumber}%
     \def\@soicurrentschedule{Sch. \soiToRoman{\thesoischedulenumber}}%
@@ -203,6 +203,7 @@
     \vspace*{2\baselineskip}%
     {\centering\LARGE\bfseries #1 SCHEDULE\\[0.5\baselineskip]#2\par}%
     \vspace{\baselineskip}%
+    #3\par%
     \markboth{#1 SCHEDULE}{#1 SCHEDULE}%
     \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
 }

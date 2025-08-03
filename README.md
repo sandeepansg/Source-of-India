@@ -21,27 +21,6 @@ A specialized LaTeX document class for typesetting the Constitution of India wit
 ## Project Structure
 
 ```
-source-of-india/
-├── README.md
-├── LICENSE
-├── soi.cls
-├── main.tex
-├── config.tex
-├── toc.tex
-├── content/
-│   ├── parts/
-│   │   ├── part_01.tex
-│   │   ├── part_03.tex
-│   │   └── part_04.tex
-│   ├── articles/
-│   │   ├── article_001.tex
-│   │   ├── article_014.tex
-│   │   ├── article_015.tex
-│   │   ├── article_021a.tex
-│   │   └── article_045.tex
-│   └── schedules/
-│       ├── schedule_01.tex
-│       └── schedule_12.tex
 ```
 
 ## Key Features Implemented
