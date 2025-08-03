@@ -21,28 +21,28 @@
 \setlength{\clausespacing}{0.75\baselineskip}
 
 %% Custom formatting for special constitutional terms
-\newcommand{\soiConstitutionTerm}[1]{\textsc{#1}}
-\newcommand{\soiActCitation}[1]{\textit{#1}}
+\providecommand{\soiConstitutionTerm}[1]{\textsc{#1}}
+\providecommand{\soiActCitation}[1]{\textit{#1}}
 
 %% Header customization
-\newcommand{\soiHeaderFont}{\small\itshape}
+\providecommand{\soiHeaderFont}{\small\itshape}
 
 %% Page layout fine adjustments
 \addtolength{\textheight}{0.5cm}
 \addtolength{\textwidth}{0.25cm}
 
 %% Constitutional document metadata
-\newcommand{\soiConstitutionTitle}{THE CONSTITUTION OF INDIA}
-\newcommand{\soiConstitutionSubtitle}{As amended up to the One Hundred and Fifth Amendment Act, 2021}
-\newcommand{\soiConstitutionDate}{26th November, 1949}
+\providecommand{\soiConstitutionTitle}{THE CONSTITUTION OF INDIA}
+\providecommand{\soiConstitutionSubtitle}{As amended up to the One Hundred and Fifth Amendment Act, 2021}
+\providecommand{\soiConstitutionDate}{26th November, 1949}
 
 %% Amendment citation formatting
-\newcommand{\soiAmendmentCite}[2]{%
+\providecommand{\soiAmendmentCite}[2]{%
     Constitution (#1 Amendment) Act, #2%
 }
 
 %% Effective date formatting
-\newcommand{\soiEffectiveDate}[1]{%
+\providecommand{\soiEffectiveDate}[1]{%
     \textit{w.e.f.} #1%
 }
 
@@ -63,12 +63,12 @@
 \setcounter{tocdepth}{3}
 
 %% Cross-reference formatting
-\newcommand{\soiArtRef}[1]{Article~\ref{art:#1}}
-\newcommand{\soiPartRef}[1]{Part~\ref{part:#1}}
-\newcommand{\soiSchedRef}[1]{Schedule~\ref{sched:#1}}
+\providecommand{\soiArtRef}[1]{Article~\ref{art:#1}}
+\providecommand{\soiPartRef}[1]{Part~\ref{part:#1}}
+\providecommand{\soiSchedRef}[1]{Schedule~\ref{sched:#1}}
 
 %% Special constitutional formatting
-\newcommand{\soiPreambleFormat}{\centering\large\itshape}
-\newcommand{\soiSignatureFormat}{\raggedleft\normalsize}
+\providecommand{\soiPreambleFormat}{\centering\large\itshape}
+\providecommand{\soiSignatureFormat}{\raggedleft\normalsize}
 
 %% End of configuration

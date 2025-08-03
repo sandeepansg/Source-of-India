@@ -2,11 +2,12 @@
 %% Can be compiled independently from any directory level
 
 % Path-aware configuration loading
-\@ifundefined{documentclass}{
+\ifx\documentclass\undefined\else
     \documentclass[a4paper,showamendments]{soi}
     \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
     \begin{document}
-}{}
+    \def\soistandalone{true}
+\fi
 
 \soiArticle{Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth}{%
     \soiClause{The State shall not discriminate against any citizen on grounds only of religion, race, caste, sex, place of birth or any of them.}
@@ -25,4 +26,4 @@
     \soiClause{\soiAmendment{Nothing in this article or in clause (2) of article 29 or in clause (3) of article 30 shall prevent the State from making any provision for the reservation of appointments or posts in favour of any backward class of citizens which, in the opinion of the State, is not adequately represented in the services under the State.}\soiAmendmentData{Constitution (One Hundred and Third Amendment) Act, 2019, s. 2 \soiWef{14-1-2019}}}
 }
 
-\@ifundefined{documentclass}{}{\end{document}}
+\ifdefined\soistandalone\end{document}\fi

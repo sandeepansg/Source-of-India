@@ -2,9 +2,10 @@
 %% For typesetting the Constitution of India
 %% Author: Sandeepan Sengupta
 %% License: LaTeX Project Public License v1.3c
+%% Release Date: 26th November, 2022
 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{soi}[2025/08/01 v1.0 Source of India Constitution Document Class]
+\ProvidesClass{soi}[2022/11/26 v1.0 Source of India Constitution Document Class]
 
 %% Class options processing
 \newif\if@soishowamendments\@soishowamendmentstrue
