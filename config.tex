@@ -1,1 +1,143 @@
 %% Configuration for SoI LaTeX Class v1.0
+%% This file contains document-wide configuration settings
+
+%% Amendment display settings
+\showamendmentstrue     % Show amendment footnotes
+\showomittedfalse       % Hide omitted articles by default
+
+%% Custom amendment bracket styles (optional)
+% \renewcommand{\amendmentopen}{\{}
+% \renewcommand{\amendmentclose}{\}}
+
+%% Typography customization
+% \renewcommand{\partsize}{\huge}
+% \renewcommand{\articlesize}{\large}
+
+%% Spacing adjustments
+\setlength{\parskip}{0.6em plus 0.1em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+%% Footnote customization
+\setlength{\footnotesep}{0.5em}
+\renewcommand{\footnotesize}{\small}
+
+%% Page break preferences
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+
+%% Development mode settings
+\makeatletter
+\if@draftmode
+    % Additional debug information in draft mode
+    \AtEndDocument{%
+        \clearpage
+        \section*{Document Statistics}
+        \begin{tabular}{ll}
+        Total Articles: & \thetotalarticles \\
+        Total Amendments: & \thetotalamendments \\
+        Omitted Articles: & \thetotalomitted \\
+        \end{tabular}
+    }
+\fi
+\makeatother
+
+%% Table of contents depth
+\setcounter{tocdepth}{3}
+
+%% Custom colors (requires xcolor package if used)
+% \RequirePackage{xcolor}
+% \definecolor{amendmentcolor}{rgb}{0,0,0.8}
+
+%% Custom commands for specific constitutional elements
+\newcommand{\ArticleRef}[1]{Article~#1}
+\newcommand{\PartRef}[1]{Part~#1}
+\newcommand{\ScheduleRef}[1]{Schedule~#1}
+
+%% Constitutional formatting helpers
+\newcommand{\Proviso}[1]{\par\textit{Provided that} #1}
+\newcommand{\Explanation}[1]{\par\textit{Explanation.---}#1}
+\newcommand{\Exception}[1]{\par\textit{Exception.---}#1}
+
+%% List environment customization for constitutional text
+\RequirePackage{enumitem}
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em}
+\setlist[enumerate,2]{label=(\alph*), leftmargin=2em}
+\setlist[enumerate,3]{label=(\roman*), leftmargin=2em}
+
+%% Special constitutional symbols and abbreviations
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\viz}{\textit{viz.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+
+%% Date formatting for constitutional amendments
+\newcommand{\wef}[1]{(w.e.f.~#1)}  % "with effect from"
+
+%% Custom page styles for different sections
+\fancypagestyle{partpage}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+}
+
+\fancypagestyle{schedulepage}{%
+    \fancyhf{}%
+    \fancyhead[L]{\small\leftmark}%
+    \fancyhead[R]{\small\itshape Schedules}%
+    \fancyfoot[C]{\thepage}%
+}
+
+%% Amendment citation standards
+\newcommand{\ConstitutionAmendment}[3]{%
+    Constitution (#1 Amendment) Act, #2, s.~#3%
+}
+
+%% Conditional compilation helpers
+\newif\ifcompilepart
+\newif\ifcompileschedules
+\compileparttrue
+\compileschedulestrue
+
+%% Memory optimization for large documents
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
+
+%% Error handling and validation
+\newcommand{\ValidateArticleNumber}[1]{%
+    \ifnum#1<1\relax
+        \ClassError{soi}{Invalid article number: #1}{Article numbers must be positive integers}%
+    \fi%
+    \ifnum#1>395\relax
+        \ClassWarning{soi}{Article number #1 exceeds known range}%
+    \fi%
+}
+
+%% Cross-reference formatting
+\newcommand{\xref}[1]{\hyperref[#1]{#1}}
+
+%% Special formatting for constitutional quotes
+\newenvironment{constitutionalquote}
+    {\begin{quote}\itshape}
+    {\end{quote}}
+
+%% Amendment history tracking (optional)
+\newcommand{\AmendmentHistory}[1]{%
+    % This could be expanded to track complete amendment history
+    % Currently just passes through to standard Amendment command
+    \Amendment{#1}%
+}
+
+%% Debug mode helpers
+\newcommand{\DebugInfo}[1]{%
+    \if@draftmode
+        \marginpar{\tiny\textcolor{red}{#1}}%
+    \fi
+}
+
+%% End of configuration

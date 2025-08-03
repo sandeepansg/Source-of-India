@@ -1,3 +1,38 @@
-\documentclass{soi}
+%% Sample article demonstrating amendment features
+\documentclass[showamendments]{soi}
+
 \begin{document}
+
+\Part{III}{FUNDAMENTAL RIGHTS}
+
+%% Article demonstrating various amendment types
+\DeclareArticle{21}{A}{fundamental-rights}
+\Article{Right to education}{%
+    \Inserted{The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine.}{Constitution (Eighty-sixth Amendment) Act, 2002, s. 2 \wef{1-4-2010}}
+}
+
+%% Article demonstrating substitution
+\DeclareArticle{19}{}{fundamental-rights}
+\Article{Protection of certain rights regarding freedom of speech, etc.}{%
+    \Clause{All citizens shall have the right---}
+    
+    \SubClause{to freedom of speech and expression;}
+    
+    \SubClause{to assemble peaceably and without arms;}
+    
+    \SubClause{to form associations or unions \Inserted{or co-operative societies}{Constitution (Ninety-seventh Amendment) Act, 2011, s. 2 \wef{12-1-2012}};}
+    
+    \SubClause{to move freely throughout the territory of India;}
+    
+    \SubClause{to reside and settle in any part of the territory of India; and}
+    
+    \SubClause{\Substituted{to practise any profession, or to carry on any occupation, trade or business.}{to acquire, hold and dispose of property; and to practise any profession, or to carry on any occupation, trade or business.}{Constitution (Forty-fourth Amendment) Act, 1978, s. 2 \wef{20-6-1979}}}
+}
+
+%% Example of omitted article
+\DeclareArticle{31}{}{fundamental-rights}
+\Article{Right to property}{%
+    \Omitted{Constitution (Forty-fourth Amendment) Act, 1978, s. 6 \wef{20-6-1979}}
+}
+
 \end{document}

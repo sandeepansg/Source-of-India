@@ -1,4 +1,119 @@
-\documentclass[a4paper,12pt]{soi}
+%% Main document for Constitution of India
+%% Using Source of India LaTeX Class v1.0
+
+\documentclass[a4paper,12pt,showamendments]{soi}
+
+%% Load configuration
+\input{config}
+
+%% Load table of contents configuration
+\input{content/toc}
+
+%% Document metadata
+\title{The Constitution of India}
+\author{Government of India}
+\date{26th November, 1949}
+
 \begin{document}
+
+%% Front matter
+\pagenumbering{roman}
+
+%% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries THE CONSTITUTION\\[0.5cm]OF INDIA}
+    
+    \vspace{2cm}
+    
+    {\Large Sample Edition}
+    
+    \vspace{1cm}
+    
+    {\large Demonstrating SoI LaTeX Class v1.0}
+    
+    \vspace{3cm}
+    
+    % \includegraphics[width=4cm]{emblem}% Ashoka Chakra emblem (if available)
+    
+    \vfill
+    
+    {\large GOVERNMENT OF INDIA\\
+    MINISTRY OF LAW AND JUSTICE\\
+    (LEGISLATIVE DEPARTMENT)}
+    
+    \vspace{1cm}
+    
+    {\large NEW DELHI}
+\end{titlepage}
+
+%% Table of Contents
+\tableofcontents
+\clearpage
+
+%% Preamble
+\input{content/preamble}
+\clearpage
+
+%% Main content - switch to Arabic numbering
+\pagenumbering{arabic}
+
+%% Sample Parts - Only including a few for demonstration
+%% PART I - THE UNION AND ITS TERRITORY
 \input{content/parts/part_i}
+
+%% PART II - CITIZENSHIP
+\input{content/parts/part_ii}
+
+%% PART III - FUNDAMENTAL RIGHTS (Sample articles only)
+\input{content/parts/part_iii}
+
+%% Schedules - Sample only
+\clearpage
+\appendix
+
+%% First Schedule - The States (Sample entries)
+\input{content/schedules/schedule_i}
+
+%% End note
+\clearpage
+\section*{About This Sample}
+This document demonstrates the Source of India (SoI) LaTeX document class v1.0 for typesetting constitutional documents. This sample includes:
+
+\subsection*{Parts Included}
+\begin{itemize}
+\item Part I (The Union and Its Territory) - Articles 1, 2, 3
+\item Part II (Citizenship) - Articles 5, 6, 7
+\item Part III (Fundamental Rights) - Articles 12, 13, 14, 15, 19, 21, 21A
+\end{itemize}
+
+\subsection*{Schedules Included}
+\begin{itemize}
+\item First Schedule (The States) - Sample entries with amendments
+\end{itemize}
+
+\subsection*{Features Demonstrated}
+\begin{itemize}
+\item Professional constitutional document formatting
+\item Comprehensive amendment tracking with footnotes
+\item Modular structure with separate files for parts and articles
+\item Automatic numbering and cross-referencing
+\item Table of contents with proper formatting
+\item Support for complex article suffixes (e.g., Article 21A)
+\end{itemize}
+
+The class supports comprehensive amendment tracking, professional legal formatting, and modular document structure. For complete documentation, see the accompanying guides in the \texttt{docs/} directory.
+
+\subsection*{Class Options Used}
+This document was compiled with:
+\begin{itemize}
+\item \texttt{showamendments} - Display amendment footnotes
+\item \texttt{a4paper} - A4 paper size
+\item \texttt{12pt} - 12-point base font size
+\end{itemize}
+
+To hide amendments, use \texttt{hideamendments} class option.
+
 \end{document}

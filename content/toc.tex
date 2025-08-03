@@ -1,0 +1,135 @@
+%% Table of Contents Configuration for SoI LaTeX Class
+%% This file customizes the appearance and behavior of the table of contents
+
+%% Set table of contents depth
+\setcounter{tocdepth}{3}
+
+%% Customize TOC title
+\renewcommand{\contentsname}{Contents}
+
+%% Custom TOC formatting
+\RequirePackage{titletoc}
+
+%% Part entries in TOC
+\titlecontents{part}[0pt]
+    {\addvspace{1.5pc}\large\bfseries}
+    {PART \thecontentslabel\quad}
+    {}
+    {\hfill\contentspage}
+    [\addvspace{0.5pc}]
+
+%% Section entries (for parts)
+\titlecontents{section}[1.5em]
+    {\addvspace{0.5pc}\normalsize\bfseries}
+    {\contentslabel{1.5em}}
+    {\hspace*{-1.5em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%% Subsection entries (for articles)
+\titlecontents{subsection}[3.8em]
+    {\normalsize}
+    {Article \thecontentslabel.\quad}
+    {\hspace*{-3.8em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%% Custom TOC page style
+\fancypagestyle{tableofcontents}{%
+    \fancyhf{}%
+    \fancyhead[R]{\small\itshape Table of Contents}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0.4pt}%
+}
+
+%% Apply TOC page style
+\AtBeginDocument{%
+    \addtocontents{toc}{\protect\thispagestyle{tableofcontents}}%
+}
+
+%% Add dots to part entries
+\makeatletter
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty{-\@highpenalty}%
+    \addvspace{1.0em \@plus\p@}%
+    \setlength\@tempdima{3em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      {\leavevmode
+       \large \bfseries #1%
+       \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}%
+       \hfill \hb@xt@\@pnumwidth{\hss #2}}\par
+       \nobreak
+         \global\@nobreaktrue
+         \everypar{\global\@nobreakfalse\everypar{}}%
+    \endgroup
+  \fi}
+\makeatother
+
+%% Custom commands for adding entries to TOC
+\newcommand{\addPartToTOC}[2]{%
+    \addcontentsline{toc}{part}{PART #1: #2}%
+}
+
+\newcommand{\addArticleToTOC}[2]{%
+    \addcontentsline{toc}{subsection}{#1. #2}%
+}
+
+\newcommand{\addScheduleToTOC}[2]{%
+    \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
+}
+
+%% Customize spacing in TOC
+\renewcommand{\@dotsep}{2}
+\setlength{\cftpartnumwidth}{4em}
+\setlength{\cftsecnumwidth}{2.5em}
+\setlength{\cftsubsecnumwidth}{4em}
+
+%% Add page numbers to all TOC entries
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+%% Hyperlink colors for TOC (if using hyperref)
+\AtBeginDocument{%
+    \@ifpackageloaded{hyperref}{%
+        \hypersetup{%
+            linktoc=all,%
+            linkcolor=black,%
+            citecolor=black,%
+            urlcolor=black%
+        }%
+    }{}%
+}
+
+%% Custom TOC entry for constitutional parts
+\newcommand{\PartTOCEntry}[2]{%
+    \phantomsection%
+    \addcontentsline{toc}{part}{PART #1: #2}%
+}
+
+%% Custom TOC entry for articles with automatic numbering
+\newcommand{\ArticleTOCEntry}[2]{%
+    \phantomsection%
+    \addcontentsline{toc}{subsection}{Article #1. #2}%
+}
+
+%% Custom TOC entry for schedules
+\newcommand{\ScheduleTOCEntry}[2]{%
+    \phantomsection%
+    \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
+}
+
+%% List of amendments (optional)
+\newcommand{\listofamendments}{%
+    \clearpage%
+    \phantomsection%
+    \addcontentsline{toc}{section}{List of Constitutional Amendments}%
+    \section*{List of Constitutional Amendments}%
+    This section could contain a comprehensive list of all constitutional amendments referenced in the document.%
+}
+
+%% Formatting for appendices in TOC
+\renewcommand{\appendixtocname}{Schedules}
+\renewcommand{\appendixpagename}{Schedules}
+
+%% End of TOC configuration
