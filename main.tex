@@ -1,16 +1,9 @@
-%% Main document for Constitution of India
-%% Using Source of India LaTeX Class v1.1 (Fixed Version)
-%% This is the main working document - NOT a sample
+%% Main compilation file for Constitution of India LaTeX project
+%% This file demonstrates the complete modular structure
+\documentclass[showamendments,twoside]{soi}
 
-\documentclass[a4paper,12pt,showamendments,twoside]{soi}
-
-%% Load enhanced configuration
+%% Load configuration
 \input{config}
-
-%% Document metadata
-\title{The Constitution of India}
-\author{Government of India}
-\date{26th November, 1949}
 
 \begin{document}
 
@@ -18,193 +11,28 @@
 \frontmatter
 \pagenumbering{roman}
 
-%% Title page
-\begin{titlepage}
-    \centering
-    \vspace*{2cm}
-    
-    {\Huge\bfseries THE CONSTITUTION\\[0.5cm]OF INDIA}
-    
-    \vspace{2cm}
-    
-    {\Large As Amended}
-    
-    \vspace{1cm}
-    
-    {\large (Showing all Constitutional Amendments)}
-    
-    \vspace{3cm}
-    
-    % \includegraphics[width=4cm]{emblem}% Ashoka Chakra emblem (if available)
-    
-    \vfill
-    
-    {\large GOVERNMENT OF INDIA\\
-    MINISTRY OF LAW AND JUSTICE\\
-    (LEGISLATIVE DEPARTMENT)}
-    
-    \vspace{1cm}
-    
-    {\large NEW DELHI}
-    
-    \vspace{0.5cm}
-    
-    {\normalsize \today}
-\end{titlepage}
-
 %% Table of Contents
+\input{content/toc}
 \tableofcontents
-\cleardoublepage
+\clearpage
 
-%% Preamble using fixed modular file
-\input{content/preamble}
-
-%% Main content - switch to Arabic numbering
+%% Main content
 \mainmatter
 \pagenumbering{arabic}
 
-%% Include all Parts using modular structure
-\ifcompilepart
-    %% PART I - THE UNION AND ITS TERRITORY
-    \input{content/parts/part_i}
-    
-    %% PART II - CITIZENSHIP  
-    \input{content/parts/part_ii}
-    
-    %% PART III - FUNDAMENTAL RIGHTS (with fixed constitutional sections)
-    \input{content/parts/part_iii}
-    
-    %% TODO: Add remaining parts as they are completed
-    % \input{content/parts/part_iv}     % Directive Principles of State Policy
-    % \input{content/parts/part_iva}    % Fundamental Duties
-    % \input{content/parts/part_v}      % The Union
-    % \input{content/parts/part_vi}     % The States
-    % \input{content/parts/part_vii}    % [Repealed]
-    % \input{content/parts/part_viii}   % The Union Territories
-    % \input{content/parts/part_ix}     % The Panchayats
-    % \input{content/parts/part_ixa}    % The Municipalities
-    % \input{content/parts/part_ixb}    % The Co-operative Societies
-    % \input{content/parts/part_x}      % The Scheduled and Tribal Areas
-    % \input{content/parts/part_xi}     % Relations between the Union and the States
-    % \input{content/parts/part_xii}    % Finance, Property, Contracts and Suits
-    % \input{content/parts/part_xiii}   % Trade, Commerce and Intercourse
-    % \input{content/parts/part_xiv}    % Services Under the Union and the States
-    % \input{content/parts/part_xiva}   % Tribunals
-    % \input{content/parts/part_xv}     % Elections
-    % \input{content/parts/part_xvi}    % Special Provisions for Certain Classes
-    % \input{content/parts/part_xvii}   % Official Language
-    % \input{content/parts/part_xviii}  % Emergency Provisions
-    % \input{content/parts/part_xix}    % Miscellaneous
-    % \input{content/parts/part_xx}     % Amendment of the Constitution
-    % \input{content/parts/part_xxi}    % Temporary, Transitional and Special Provisions
-    % \input{content/parts/part_xxii}   % Short Title, Commencement, Authoritative Text in Hindi and Repeals
-\fi
+%% Preamble
+\input{content/preamble}
 
-%% Include all Schedules using modular structure
-\ifcompileschedules
-    \backmatter
-    \cleardoublepage
-    \appendix
-    
-    %% All Schedules
-    \input{content/schedules/schedule_i}    % The States
-    
-    %% TODO: Add remaining schedules as they are completed
-    % \input{content/schedules/schedule_ii}   % [Provisions as to the President and the Governors]
-    % \input{content/schedules/schedule_iii}  % Forms of Oaths or Affirmations
-    % \input{content/schedules/schedule_iv}   % Allocation of seats in the Council of States
-    % \input{content/schedules/schedule_v}    % Provisions as to the Administration and Control of Scheduled Areas and Scheduled Tribes
-    % \input{content/schedules/schedule_vi}   % Provisions as to the Administration of Tribal Areas in the States of Assam, Meghalaya, Tripura and Mizoram
-    % \input{content/schedules/schedule_vii}  % Union, State and Concurrent Lists
-    % \input{content/schedules/schedule_viii} % Languages
-    % \input{content/schedules/schedule_ix}   % Validation of certain Acts and Regulations
-    % \input{content/schedules/schedule_x}    % [Provisions as to Disqualification on ground of defection]
-    % \input{content/schedules/schedule_xi}   % Powers, authority and responsibilities of Panchayats
-    % \input{content/schedules/schedule_xii}  % Powers, authority and responsibilities of Municipalities
-\fi
+%% Parts
+\input{content/parts/part_i}
+\input{content/parts/part_ii}
+\input{content/parts/part_iii}
 
-%% Document completion status and notes
-\ifcompilepart
-    \cleardoublepage
-    \section*{Document Status}
-    
-    \subsection*{Compilation Status}
-    This document is a work in progress using the enhanced SOI LaTeX Class v1.1. Current status:
-    
-    \subsubsection*{Completed Parts}
-    \begin{itemize}
-    \item Part I: The Union and Its Territory (Articles 1-4)
-    \item Part II: Citizenship (Articles 5-11)  
-    \item Part III: Fundamental Rights (Articles 12-35) - Partially completed with fixed amendment system
-    \end{itemize}
-    
-    \subsubsection*{Completed Schedules}
-    \begin{itemize}
-    \item First Schedule: The States (Partially completed with fixed amendment syntax)
-    \end{itemize}
-    
-    \subsubsection*{Recent Improvements (v1.1)}
-    \begin{itemize}
-    \item \textbf{Fixed Amendment System}: Amendment text now appears in main document with citations in footnotes
-    \item \textbf{Two-sided Layout}: Proper binding offset and outer margin headers
-    \item \textbf{Enhanced Typography}: Constitutional sections properly sized and positioned
-    \item \textbf{Improved Footnotes}: Better spacing above and below separator line
-    \item \textbf{Page Management}: Section headings stay with their articles
-    \end{itemize}
-    
-    \subsubsection*{Remaining Work}
-    \begin{itemize}
-    \item Parts IV through XXII (19 parts remaining)
-    \item Schedules II through XII (11 schedules remaining) 
-    \item Complete article content for existing parts
-    \item Full amendment tracking and citations using fixed syntax
-    \item Cross-references and indexing
-    \end{itemize}
-    
-    \subsection*{Usage Notes}
-    \begin{itemize}
-    \item Use \texttt{showamendments} class option to display corrected amendment footnotes
-    \item Use \texttt{hideamendments} class option to hide amendment information
-    \item Use \texttt{twoside} class option for proper two-sided printing (recommended)
-    \item Set \texttt{\textbackslash{}compilepartfalse} in config.tex to skip parts during compilation
-    \item Set \texttt{\textbackslash{}compileschedulesfalse} in config.tex to skip schedules during compilation
-    \end{itemize}
-    
-    \subsection*{Amendment System Usage (Fixed in v1.1)}
-    \begin{itemize}
-    \item \texttt{\textbackslash{}Inserted\{text\}\{citation\}} - Inserts text in main document, citation in footnote
-    \item \texttt{\textbackslash{}Substituted\{new\}\{old\}\{citation\}} - Shows new text in main, old text and citation in footnote
-    \item \texttt{\textbackslash{}InsertedClause\{text\}\{citation\}} - For inserted clauses with proper numbering
-    \item \texttt{\textbackslash{}Omitted\{citation\}} - Shows omitted content when \texttt{showomitted} option is used
-    \item \texttt{\textbackslash{}ConstitutionalSection\{title\}} - For section headings like "Right to Equality"
-    \end{itemize}
-    
-    \subsection*{Contributing}
-    To add new articles, parts, or schedules using the fixed system:
-    \begin{enumerate}
-    \item Create the appropriate .tex file in the correct directory
-    \item Use the \texttt{\textbackslash{}DeclareArticle}, \texttt{\textbackslash{}Article}, \texttt{\textbackslash{}Part}, or \texttt{\textbackslash{}Schedule} commands
-    \item Include the file in the appropriate part file using \texttt{\textbackslash{}input}
-    \item Add amendment information using the corrected commands with proper parameter order
-    \item Use \texttt{\textbackslash{}ConstitutionalSection} for major section headings within parts
-    \end{enumerate}
-    
-    \subsection*{Compilation}
-    \begin{itemize}
-    \item Use \texttt{pdflatex main.tex} (run twice for cross-references)
-    \item Or use the enhanced compilation script: \texttt{tools/compile\_fixed.sh}
-    \item For cleanup: \texttt{tools/cleanup.sh}
-    \end{itemize}
-    
-    \subsection*{Document Features}
-    \begin{itemize}
-    \item Two-sided layout optimized for binding
-    \item Article names on outer margins (away from binding)
-    \item Proper footnote positioning and spacing
-    \item Constitutional section headings with appropriate typography
-    \item Enhanced page break management
-    \item Corrected amendment display system
-    \end{itemize}
-\fi
+%% Back matter - Schedules
+\backmatter
+\appendix
+
+%% Schedules
+\input{content/schedules/schedule_i}
 
 \end{document}

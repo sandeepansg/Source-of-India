@@ -73,6 +73,8 @@
 \RequirePackage{needspace}
 \RequirePackage{footmisc}
 \RequirePackage{perpage}
+\RequirePackage{lastpage}
+\RequirePackage{xcolor}
 
 %% Two-sided page geometry with binding offset
 \geometry{
@@ -194,7 +196,7 @@
 %% Fixed Inserted command - text in main, citation in footnote
 \newcommand{\Inserted}[2]{%
     \if@showamendments
-        \footnote{Inserted by: #2}\textsuperscript{\thefootnote}\amendmentopen#1\amendmentclose%
+        \amendmentopen#1\amendmentclose\footnote{Inserted by: #2}%
         \stepcounter{totalamendments}%
     \else
         #1%
@@ -204,7 +206,7 @@
 %% Fixed Substituted command - new text in main, old text and citation in footnote
 \newcommand{\Substituted}[3]{%
     \if@showamendments
-        \footnote{Substituted for ``#2'' by: #3}\textsuperscript{\thefootnote}\amendmentopen#1\amendmentclose%
+        \amendmentopen#1\amendmentclose\footnote{Substituted for ``#2'' by: #3}%
         \stepcounter{totalamendments}%
     \else
         #1%
@@ -214,7 +216,7 @@
 %% Fixed Omitted command - shows only citation in footnote when showing omitted
 \newcommand{\Omitted}[1]{%
     \if@showomitted
-        \footnote{Omitted by: #1}\textsuperscript{\thefootnote}\amendmentopen\textit{Omitted}\amendmentclose%
+        \amendmentopen\textit{Omitted}\amendmentclose\footnote{Omitted by: #1}%
         \stepcounter{totalomitted}%
     \fi
 }
@@ -222,7 +224,7 @@
 %% Fixed Repealed command
 \newcommand{\Repealed}[1]{%
     \if@showomitted
-        \footnote{Repealed by: #1}\textsuperscript{\thefootnote}\amendmentopen\textit{Repealed}\amendmentclose%
+        \amendmentopen\textit{Repealed}\amendmentclose\footnote{Repealed by: #1}%
         \stepcounter{totalomitted}%
     \fi
 }
@@ -301,7 +303,7 @@
     \if@showamendments
         \needspace{3\baselineskip}%
         \stepcounter{clausecounter}%
-        \footnote{Inserted by: #2}\textsuperscript{\thefootnote}\amendmentopen(\theclausecounter)\amendmentclose\ #1\par%
+        \par\amendmentopen(\theclausecounter)\amendmentclose\ #1\footnote{Inserted by: #2}\par%
         \stepcounter{totalamendments}%
     \else
         \Clause{#1}%
@@ -313,7 +315,7 @@
     \if@showomitted
         \needspace{2\baselineskip}%
         \stepcounter{clausecounter}%
-        \footnote{Omitted by: #1}\textsuperscript{\thefootnote}\amendmentopen(\theclausecounter)\amendmentclose\par%
+        \par\amendmentopen(\theclausecounter)\amendmentclose\footnote{Omitted by: #1}\par%
         \stepcounter{totalomitted}%
     \fi
 }

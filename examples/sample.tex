@@ -40,7 +40,7 @@ This fixed sample demonstrates:
 \subsection*{Amendment System Corrections}
 \begin{itemize}
 \item \textbf{Corrected Logic}: Amendment text now appears in main document, citations in footnotes
-\item \textbf{Proper Positioning}: Footnote mark positioned at top-left of opening bracket
+\item \textbf{Proper Positioning}: Footnote mark positioned correctly after amendment brackets
 \item \textbf{Clause Insertions}: New \texttt{\textbackslash{}InsertedClause} command handles clause numbering properly
 \item \textbf{Citation Format}: Footnotes now show "Inserted by:" or "Substituted for... by:" format
 \end{itemize}
@@ -66,3 +66,22 @@ This fixed sample demonstrates:
 \textbf{OLD (Incorrect):}
 \begin{verbatim}
 [actual text]³
+³ Constitution Act reference
+\end{verbatim}
+
+\textbf{NEW (Fixed):}
+\begin{verbatim}
+[amended text]³
+³ Inserted by: Constitution Act reference
+\end{verbatim}
+
+\subsection*{Compilation Fixes Applied}
+\begin{itemize}
+\item \textbf{Missing Packages}: Added \texttt{lastpage} and \texttt{xcolor} to class file
+\item \textbf{Missing Articles}: Created \texttt{article\_14.tex} for Part III compilation
+\item \textbf{File References}: Fixed \texttt{article\_21a.tex} filename case sensitivity
+\item \textbf{Command Conflicts}: Resolved \texttt{\textbackslash{}ConstitutionalSection} redefinition
+\item \textbf{Package Dependencies}: Ensured proper package loading order
+\end{itemize}
+
+\end{document}

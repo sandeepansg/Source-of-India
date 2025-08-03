@@ -57,8 +57,7 @@
 \setcounter{tocdepth}{3}
 
 %% Custom colors (requires xcolor package if used)
-% \RequirePackage{xcolor}
-% \definecolor{amendmentcolor}{rgb}{0,0,0.8}
+\definecolor{amendmentcolor}{rgb}{0,0,0.8}
 
 %% Custom commands for specific constitutional elements
 \newcommand{\ArticleRef}[1]{Article~#1}
@@ -226,13 +225,7 @@
     \kern 2.6pt
 }
 
-%% Improved constitutional section command
-\renewcommand{\ConstitutionalSection}[1]{%
-    \needspace{4\baselineskip}%
-    \vspace{1em plus 0.3em minus 0.2em}%
-    {\centering\normalsize\bfseries #1\par}%
-    \nopagebreak[4]%
-    \vspace{0.7em plus 0.2em minus 0.1em}%
-}
+%% Note: ConstitutionalSection is defined in the main class file
+%% No need to redefine here - it's already available
 
 %% End of configuration
