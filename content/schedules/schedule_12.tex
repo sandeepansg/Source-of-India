@@ -1,12 +1,17 @@
 %% Twelfth Schedule: Municipalities
 %% Can be compiled independently from any directory level
 
-% Path-aware configuration loading
-\@ifundefined{documentclass}{
+% Check if this is being compiled as a standalone document
+\ifx\documentclass\undefined\else
     \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \IfFileExists{config.tex}{\input{config.tex}}{%
+        \IfFileExists{../config.tex}{\input{../config.tex}}{%
+            \IfFileExists{../../config.tex}{\input{../../config.tex}}{}%
+        }%
+    }
     \begin{document}
-}{}
+    \def\soistandalone{true}
+\fi
 
 \soiSchedule{TWELFTH}{\soiAmendment{MUNICIPALITIES}\soiAmendmentData{Constitution (Seventy-fourth Amendment) Act, 1992, s. 4 \soiWef{1-6-1993}}}{%
 
@@ -48,4 +53,4 @@
 
 }
 
-\@ifundefined{documentclass}{}{\end{document}}
+\ifdefined\soistandalone\end{document}\fi

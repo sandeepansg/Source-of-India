@@ -1,23 +1,47 @@
 %% Part III: Fundamental Rights
 %% Can be compiled independently from any directory level
 
-% Path-aware configuration loading
-\@ifundefined{documentclass}{
+% Check if this is being compiled as a standalone document
+\ifx\documentclass\undefined\else
     \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \IfFileExists{config.tex}{\input{config.tex}}{%
+        \IfFileExists{../config.tex}{\input{../config.tex}}{%
+            \IfFileExists{../../config.tex}{\input{../../config.tex}}{}%
+        }%
+    }
     \begin{document}
-}{}
+    \def\soistandalone{true}
+\fi
 
 \soiPart{III}{FUNDAMENTAL RIGHTS}
 
 % General provisions - Path-aware article inclusion
-\IfFileExists{articles/article_014.tex}{\input{articles/article_014}}{\IfFileExists{../articles/article_014.tex}{\input{../articles/article_014}}{\input{../../articles/article_014}}}
-\IfFileExists{articles/article_015.tex}{\input{articles/article_015}}{\IfFileExists{../articles/article_015.tex}{\input{../articles/article_015}}{\input{../../articles/article_015}}}
+\IfFileExists{../articles/article_014.tex}{\input{../articles/article_014.tex}}{%
+    \IfFileExists{articles/article_014.tex}{\input{articles/article_014.tex}}{%
+        \IfFileExists{content/articles/article_014.tex}{\input{content/articles/article_014.tex}}{%
+            \ClassWarning{soi}{Cannot find article_014.tex}%
+        }%
+    }%
+}
+
+\IfFileExists{../articles/article_015.tex}{\input{../articles/article_015.tex}}{%
+    \IfFileExists{articles/article_015.tex}{\input{articles/article_015.tex}}{%
+        \IfFileExists{content/articles/article_015.tex}{\input{content/articles/article_015.tex}}{%
+            \ClassWarning{soi}{Cannot find article_015.tex}%
+        }%
+    }%
+}
 
 % Right to life and personal liberty
-\IfFileExists{articles/article_021a.tex}{\input{articles/article_021a}}{\IfFileExists{../articles/article_021a.tex}{\input{../articles/article_021a}}{\input{../../articles/article_021a}}}
+\IfFileExists{../articles/article_021a.tex}{\input{../articles/article_021a.tex}}{%
+    \IfFileExists{articles/article_021a.tex}{\input{articles/article_021a.tex}}{%
+        \IfFileExists{content/articles/article_021a.tex}{\input{content/articles/article_021a.tex}}{%
+            \ClassWarning{soi}{Cannot find article_021a.tex}%
+        }%
+    }%
+}
 
 % Note: Additional articles would be included here
 % Articles 12, 13, 16-20, 21, 22-32 etc.
 
-\@ifundefined{documentclass}{}{\end{document}}
+\ifdefined\soistandalone\end{document}\fi
