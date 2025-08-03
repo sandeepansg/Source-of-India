@@ -30,32 +30,48 @@ The Source of India (SoI) LaTeX document class provides specialized typesetting 
 
 ```
 source-of-india/
-├── README.md
-├── LICENSE
-├── soi.cls                     # Main class file
-├── main.tex                    # Document entry point
-├── config.tex                  # User configuration
+├── README.md                   # This file
+├── LICENSE                     # BSD 3-Clause License
+├── soi.cls                     # Main LaTeX document class
+├── main.tex                    # Main document entry point
+├── config.tex                  # Configuration settings
 │
 ├── content/
-│   ├── parts/                  # Constitutional parts
-│   ├── articles/               # Individual articles
-│   └── schedules/              # Constitutional schedules
-│
+│   ├── covers/
+│   │   ├── front.tex           # Front cover content
+│   │   └── back.tex            # Back cover content
+│   │
+│   ├── preamble.tex            # Constitution Preamble
+│   ├── toc.tex                 # Table of Contents setup
+│   │
+│   ├── parts/
+│   │   ├── part_i.tex          # Part I: The Union and Its Territory
+│   │   └── ...                 # Rest of the parts
+│   │
+│   ├── articles/
+│   │   ├── article_1.tex       # Article 1: Name and territory
+│   │   └── ...                 # Rest of the articles
+│   │
+│   ├── schedules/
+│   │   ├── schedule_i.tex      # First Schedule: States and UTs
+│   │   └── ...                 # Rest of the schedules
+│   │
 ├── examples/
-│   ├── minimal.tex
-│   └── sample_article.tex
+│   ├── sample_article.tex      # Example article with amendments
+│   ├── sample_schedule.tex     # Example schedule structure
+│   └── minimal.tex             # Minimal working example
 │
 ├── docs/
-│   ├── class_reference.md
-│   ├── amendment_guide.md
-│   ├── numbering_guide.md
-│   ├── compilation_guide.md
-│   └── troubleshooting.md
+│   ├── class_reference.md      # Complete command reference
+│   ├── amendment_guide.md      # Guide for adding amendments
+│   ├── numbering_guide.md      # Guide for adding amendments
+│   ├── compilation_guide.md    # Guide for adding amendments
+│   └── troubleshooting.md      # Common issues and solutions
 │
 └── tools/
-    ├── clean.sh
-    ├── compile.sh
-    └── validate.sh
+    ├── validate.sh             # Shell script to validate structure
+    ├── compile.sh              # Compilation helper script
+    └── cleanup.sh              # Cleanup generated files
 ```
 
 ---
@@ -560,6 +576,7 @@ Provides:
 - **Class Version:** 1.0
 - **Release Date:** August 2025
 - **Compatibility:** LaTeX2e 2020/10/01+
+- **Author:** Sandeepan Sengupta
 - **License:** LaTeX Project Public License v1.3c
 
 For additional documentation, see:
