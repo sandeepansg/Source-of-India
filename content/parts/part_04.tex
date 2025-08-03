@@ -1,0 +1,19 @@
+%% Part IV: Directive Principles of State Policy
+%% Can be compiled independently from any directory level
+
+% Path-aware configuration loading
+\@ifundefined{documentclass}{
+    \documentclass[a4paper,showamendments]{soi}
+    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \begin{document}
+}{}
+
+\soiPart{IV}{DIRECTIVE PRINCIPLES OF STATE POLICY}
+
+% Path-aware article inclusion
+\IfFileExists{articles/article_045.tex}{\input{articles/article_045}}{\IfFileExists{../articles/article_045.tex}{\input{../articles/article_045}}{\input{../../articles/article_045}}}
+
+% Note: Additional articles would be included here
+% Articles 36-44, 46-51 etc.
+
+\@ifundefined{documentclass}{}{\end{document}}

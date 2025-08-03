@@ -1,0 +1,23 @@
+%% Part III: Fundamental Rights
+%% Can be compiled independently from any directory level
+
+% Path-aware configuration loading
+\@ifundefined{documentclass}{
+    \documentclass[a4paper,showamendments]{soi}
+    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \begin{document}
+}{}
+
+\soiPart{III}{FUNDAMENTAL RIGHTS}
+
+% General provisions - Path-aware article inclusion
+\IfFileExists{articles/article_014.tex}{\input{articles/article_014}}{\IfFileExists{../articles/article_014.tex}{\input{../articles/article_014}}{\input{../../articles/article_014}}}
+\IfFileExists{articles/article_015.tex}{\input{articles/article_015}}{\IfFileExists{../articles/article_015.tex}{\input{../articles/article_015}}{\input{../../articles/article_015}}}
+
+% Right to life and personal liberty
+\IfFileExists{articles/article_021a.tex}{\input{articles/article_021a}}{\IfFileExists{../articles/article_021a.tex}{\input{../articles/article_021a}}{\input{../../articles/article_021a}}}
+
+% Note: Additional articles would be included here
+% Articles 12, 13, 16-20, 21, 22-32 etc.
+
+\@ifundefined{documentclass}{}{\end{document}}

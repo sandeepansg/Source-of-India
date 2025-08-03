@@ -3,6 +3,36 @@
 ## The LaTeX Project Public License
 ## LPPL Version 1.3c  2008-05-04
 
-Copyright 2023 Sandeepan Sengupta
+Copyright 2025 Sandeepan Sengupta
 
-This work may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3c of this license
+This work may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3c of this license or (at your option) any later version.
+
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3c or later is part of all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Sandeepan Sengupta.
+
+This work consists of the files:
+- constitution.cls
+- main.tex
+- config.tex
+- toc.tex
+- All files in content/ directory
+
+and the derived files:
+- main.pdf (when compiled)
+
+## Distribution and Modification
+
+You may distribute and/or modify this work under the terms of the LaTeX Project Public License, either version 1.3c of this license or (at your option) any later version.
+
+## Warranty
+
+This work is provided "as is" without warranty of any kind, either expressed or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
+
+## Attribution
+
+When redistributing this work, you must include this license file and maintain attribution to the original author.

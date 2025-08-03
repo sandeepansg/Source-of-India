@@ -1,0 +1,34 @@
+%% Article 1: Name and territory of the Union
+%% Can be compiled independently from any directory level
+
+% Check if this is being compiled as a standalone document
+\ifx\documentclass\undefined\else
+    % Standalone compilation
+    \documentclass[a4paper,showamendments]{soi}
+    
+    % Path-aware config loading
+    \IfFileExists{config.tex}{\input{config.tex}}{%
+        \IfFileExists{../config.tex}{\input{../config.tex}}{%
+            \IfFileExists{../../config.tex}{\input{../../config.tex}}{%
+                % Use default config if none found
+            }%
+        }%
+    }
+    
+    \begin{document}
+    \def\soistandalone{true}
+\fi
+
+\soiArticle{Name and territory of the Union}{%
+    \soiClause{India, that is Bharat, shall be a Union of States.}
+    
+    \soiClause{The States and the territories thereof shall be as specified in the \soiAmendment{First Schedule}\soiAmendmentData{Constitution (Seventh Amendment) Act, 1956, s. 2 \soiWef{1-11-1956}}.}
+    
+    \soiClause{The territory of India shall comprise—
+        \soiSubClause{the territories of the States;}
+        \soiSubClause{the Union territories specified in the First Schedule; and}
+        \soiSubClause{such other territories as may be acquired.}
+    }
+}
+
+\ifdefined\soistandalone\end{document}\fi

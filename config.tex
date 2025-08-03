@@ -1,231 +1,74 @@
-%% Configuration for SoI LaTeX Class v1.1 - Fixed Version
-%% This file contains document-wide configuration settings with enhancements
+%% Configuration file for Source of India LaTeX class
+%% This file contains customizable settings and preferences
 
-%% Amendment display settings
-\showamendmentstrue     % Show amendment footnotes
-\showomittedfalse       % Hide omitted articles by default
+%% Amendment display preferences
+% Uncomment the following to hide amendments globally
+% \@soishowamendmentsfalse
 
-%% Custom amendment bracket styles (optional)
-% \renewcommand{\amendmentopen}{\{}
-% \renewcommand{\amendmentclose}{\}}
-
-%% Typography customization with improved spacing
-% \renewcommand{\partsize}{\huge}
-% \renewcommand{\articlesize}{\large}
-
-%% Enhanced spacing adjustments for better readability
-\setlength{\parskip}{0.6em plus 0.1em minus 0.1em}
+%% Typography fine-tuning
+\setlength{\parskip}{\baselineskip}
 \setlength{\parindent}{0pt}
 
-%% Improved footnote customization with better spacing
-\setlength{\footnotesep}{0.8em}
-\setlength{\skip\footins}{1.2em plus 0.4em minus 0.2em}
-\renewcommand{\footnotesize}{\small}
+%% Footnote spacing adjustments
+\setlength{\footnotesep}{0.75em}
+\addtolength{\skip\footins}{0.25em}
 
-%% Enhanced page break preferences
-\clubpenalty=10000
-\widowpenalty=10000
-\raggedbottom
+%% Enhanced spacing for constitutional elements
+\newlength{\articlespacing}
+\setlength{\articlespacing}{1.5\baselineskip}
 
-%% Two-sided document enhancements
-\geometry{
-    twoside,
-    bindingoffset=0.5cm,
-    inner=3cm,
-    outer=2.5cm
+\newlength{\clausespacing}
+\setlength{\clausespacing}{0.75\baselineskip}
+
+%% Custom formatting for special constitutional terms
+\newcommand{\soiConstitutionTerm}[1]{\textsc{#1}}
+\newcommand{\soiActCitation}[1]{\textit{#1}}
+
+%% Header customization
+\newcommand{\soiHeaderFont}{\small\itshape}
+
+%% Page layout fine adjustments
+\addtolength{\textheight}{0.5cm}
+\addtolength{\textwidth}{0.25cm}
+
+%% Constitutional document metadata
+\newcommand{\soiConstitutionTitle}{THE CONSTITUTION OF INDIA}
+\newcommand{\soiConstitutionSubtitle}{As amended up to the One Hundred and Fifth Amendment Act, 2021}
+\newcommand{\soiConstitutionDate}{26th November, 1949}
+
+%% Amendment citation formatting
+\newcommand{\soiAmendmentCite}[2]{%
+    Constitution (#1 Amendment) Act, #2%
 }
 
-%% Development mode settings with two-sided support
-\makeatletter
-\if@draftmode
-    % Additional debug information in draft mode
-    \AtEndDocument{%
-        \clearpage
-        \section*{Document Statistics}
-        \begin{tabular}{ll}
-        Total Articles: & \thetotalarticles \\
-        Total Amendments: & \thetotalamendments \\
-        Omitted Articles: & \thetotalomitted \\
-        Document Pages: & \pageref{LastPage} \\
-        Layout: & Two-sided \\
-        \end{tabular}
-    }
-\fi
-\makeatother
+%% Effective date formatting
+\newcommand{\soiEffectiveDate}[1]{%
+    \textit{w.e.f.} #1%
+}
 
-%% Table of contents depth
+%% Development mode settings
+\if@soidraftmode
+    % Show additional information in draft mode
+    \fancyfoot[LE]{\tiny Draft Mode}
+    \fancyfoot[RO]{\tiny \today}
+\fi
+
+%% Conditional compilation settings
+% Uncomment to compile only specific parts
+% \newif\ifcompilepart@i\compilepart@itrue
+% \newif\ifcompilepart@iii\compilepart@iiitrue
+% \newif\ifcompilepart@iv\compilepart@ivfalse
+
+%% Table of contents depth control
 \setcounter{tocdepth}{3}
 
-%% Custom colors (requires xcolor package if used)
-\definecolor{amendmentcolor}{rgb}{0,0,0.8}
-
-%% Custom commands for specific constitutional elements
-\newcommand{\ArticleRef}[1]{Article~#1}
-\newcommand{\PartRef}[1]{Part~#1}
-\newcommand{\ScheduleRef}[1]{Schedule~#1}
-
-%% Enhanced amendment citation standards
-\newcommand{\ConstitutionAmendment}[3]{%
-    Constitution (#1 Amendment) Act, #2, s.~#3%
-}
-
-%% Conditional compilation helpers
-\newif\ifcompilepart
-\newif\ifcompileschedules
-\compileparttrue
-\compileschedulestrue
-
-%% Memory optimization for large documents
-\setcounter{totalnumber}{50}
-\setcounter{topnumber}{50}
-\setcounter{bottomnumber}{50}
-\renewcommand{\topfraction}{0.85}
-\renewcommand{\bottomfraction}{0.85}
-\renewcommand{\textfraction}{0.15}
-\renewcommand{\floatpagefraction}{0.7}
-
-%% Error handling and validation
-\newcommand{\ValidateArticleNumber}[1]{%
-    \ifnum#1<1\relax
-        \ClassError{soi}{Invalid article number: #1}{Article numbers must be positive integers}%
-    \fi%
-    \ifnum#1>395\relax
-        \ClassWarning{soi}{Article number #1 exceeds known range}%
-    \fi%
-}
-
 %% Cross-reference formatting
-\newcommand{\xref}[1]{\hyperref[#1]{#1}}
+\newcommand{\soiArtRef}[1]{Article~\ref{art:#1}}
+\newcommand{\soiPartRef}[1]{Part~\ref{part:#1}}
+\newcommand{\soiSchedRef}[1]{Schedule~\ref{sched:#1}}
 
-%% Special formatting for constitutional quotes
-\newenvironment{constitutionalquote}
-    {\begin{quote}\itshape}
-    {\end{quote}}
-
-%% Amendment history tracking (optional)
-\newcommand{\AmendmentHistory}[1]{%
-    % This could be expanded to track complete amendment history
-    % Currently just passes through to standard Amendment command
-    \Amendment{#1}%
-}
-
-%% Debug mode helpers
-\newcommand{\DebugInfo}[1]{%
-    \if@draftmode
-        \marginpar{\tiny\textcolor{red}{#1}}%
-    \fi
-}
-
-%% Enhanced page styles for different sections with two-sided support
-\RequirePackage{fancyhdr}
-
-\fancypagestyle{partpage}{%
-    \fancyhf{}%
-    \fancyfoot[C]{\thepage}%
-    \renewcommand{\headrulewidth}{0pt}%
-}
-
-\fancypagestyle{schedulepage}{%
-    \fancyhf{}%
-    \fancyhead[LE]{\small\leftmark}%
-    \fancyhead[RO]{\small\leftmark}%
-    \fancyhead[LO,RE]{\small\itshape Schedules}%
-    \fancyfoot[C]{\thepage}%
-}
-
-%% Enhanced page management settings
-\RequirePackage{needspace}
-
-%% Prevent page breaks within constitutional elements
-\newcommand{\keepwithfootnote}[1]{%
-    \needspace{4\baselineskip}%
-    #1%
-}
-
-%% Enhanced footnote management for amendments with improved spacing
-\makeatletter
-\renewcommand\@makefntext[1]{%
-    \parindent 1em%
-    \noindent
-    \hb@xt@1.8em{\hss\@makefnmark}%
-    \raggedright #1%
-}
-\makeatother
-
-%% Ensure amendments and their footnotes stay together
-\newcommand{\amendmentwithfootnote}[2]{%
-    \needspace{3\baselineskip}%
-    #1\footnote{#2}%
-}
-
-%% Enhanced page layout optimization for text-footnote balance
-\RequirePackage{geometry}
-\geometry{
-    footnotesep=0.8em,
-    marginparsep=0.5em
-}
-
-%% Enhanced list formatting for constitutional elements
-\RequirePackage{enumitem}
-\setlist{nosep, leftmargin=2em}
-\setlist[enumerate,1]{label=(\arabic*)}
-\setlist[enumerate,2]{label=(\alph*)}
-\setlist[enumerate,3]{label=(\roman*)}
-
-%% Special handling for long constitutional provisions
-\newenvironment{longprovision}
-    {\par\needspace{4\baselineskip}\begin{adjustwidth}{1em}{1em}\small}
-    {\end{adjustwidth}\par}
-
-%% Enhanced amendment tracking
-\newcounter{amendmentcount}
-\newcommand{\trackamendment}[1]{%
-    \stepcounter{amendmentcount}%
-    \label{amendment:\theamendmentcount}%
-}
-
-%% Ensure proper spacing around constitutional elements
-\newcommand{\constitutionalspacing}{%
-    \setlength{\parskip}{0.6em plus 0.2em minus 0.1em}%
-    \setlength{\itemsep}{0.3em plus 0.1em minus 0.1em}%
-}
-
-%% Enhanced section heading management
-\newcommand{\sectionheadingspacing}{%
-    \setlength{\parskip}{1em plus 0.3em minus 0.2em}%
-}
-
-%% Apply constitutional spacing
-\AtBeginDocument{\constitutionalspacing}
-
-%% Two-sided layout helpers
-\newcommand{\cleardoublepage}{%
-    \clearpage
-    \if@twoside
-        \ifodd\c@page
-        \else
-            \hbox{}%
-            \vspace*{\fill}%
-            \begin{center}%
-                \textit{[This page intentionally left blank]}%
-            \end{center}%
-            \vspace{\fill}%
-            \thispagestyle{empty}%
-            \newpage
-        \fi
-    \fi
-}
-
-%% Enhanced footnote spacing control
-\renewcommand{\footnoterule}{%
-    \kern-3pt
-    \vspace{0.5em}%
-    \hrule width 0.4\columnwidth height 0.4pt
-    \vspace{0.3em}%
-    \kern 2.6pt
-}
-
-%% Note: ConstitutionalSection is defined in the main class file
-%% No need to redefine here - it's already available
+%% Special constitutional formatting
+\newcommand{\soiPreambleFormat}{\centering\large\itshape}
+\newcommand{\soiSignatureFormat}{\raggedleft\normalsize}
 
 %% End of configuration

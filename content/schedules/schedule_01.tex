@@ -1,0 +1,41 @@
+%% First Schedule: The States
+%% Can be compiled independently from any directory level
+
+% Path-aware configuration loading
+\@ifundefined{documentclass}{
+    \documentclass[a4paper,showamendments]{soi}
+    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \begin{document}
+}{}
+
+\soiSchedule{FIRST}{THE STATES}{%
+
+\textbf{I. THE STATES}
+
+\begin{enumerate}
+    \item Andhra Pradesh.—The territories specified in sub-section (1) of section 3 of the Andhra State Act, 1953, \soiAmendment{sub-section (1) of section 3 of the States Reorganisation Act, 1956, the First Schedule to the Andhra Pradesh and Madras (Alteration of Boundaries) Act, 1959, and the First Schedule to the Andhra Pradesh and Mysore (Transfer of Territory) Act, 1968, but excluding the territories specified in the Second Schedule to the Andhra Pradesh and Madras (Alteration of Boundaries) Act, 1959}\soiAmendmentData{Constitution (Seventh Amendment) Act, 1956, Sch. \soiWef{1-11-1956}}.
+
+    \item \soiAmendment{Assam.—The territories which immediately before the commencement of this Constitution were comprised in the Province of Assam, the Khasi States and the Assam Tribal Areas, but excluding the territories specified in the Schedule to the Assam (Alteration of Boundaries) Act, 1951}\soiAmendmentData{Constitution (One Hundred and First Amendment) Act, 2016, s. 16 \soiWef{16-9-2016}}.
+
+    \item Bihar.—The territories which immediately before the commencement of this Constitution were \soiAmendment{either comprised in the Province of Bihar or were being administered as if they formed part of that Province}\soiAmendmentData{Constitution (Twelfth Amendment) Act, 1962, s. 3 \soiWef{20-12-1961}}, \soiAmendment{but excluding the territories specified in sub-section (1) of section 3 of the Bihar Reorganisation Act, 2000}\soiAmendmentData{Bihar Reorganisation Act, 2000 \soiWef{15-11-2000}}.
+
+    % Additional states would continue here...
+    
+\end{enumerate}
+
+\textbf{II. THE UNION TERRITORIES}
+
+\begin{enumerate}
+    \item \soiAmendment{Delhi.—The territory which immediately before the commencement of this Constitution was comprised in the Chief Commissioner's Province of Delhi}\soiAmendmentData{Constitution (Seventh Amendment) Act, 1956, Sch. \soiWef{1-11-1956}}.
+
+    \item \soiAmendment{The Andaman and Nicobar Islands.—The territory which immediately before the commencement of this Constitution was comprised in the Chief Commissioner's Province of the Andaman and Nicobar Islands}\soiAmendmentData{Constitution (Seventh Amendment) Act, 1956, Sch. \soiWef{1-11-1956}}.
+
+    \item \soiAmendment{Lakshadweep.—The territory which immediately before the commencement of this Constitution was comprised in the Chief Commissioner's Province of the Laccadive, Minicoy and Amindivi Islands}\soiAmendmentData{Constitution (Tenth Amendment) Act, 1961, s. 2 \soiWef{16-8-1961}}.
+
+    % Additional union territories...
+
+\end{enumerate}
+
+}
+
+\@ifundefined{documentclass}{}{\end{document}}

@@ -1,31 +1,42 @@
-%% Source of India LaTeX Document Class v1.1
+%% Source of India LaTeX Document Class v1.0
 %% For typesetting the Constitution of India
 %% Author: Sandeepan Sengupta
 %% License: LaTeX Project Public License v1.3c
 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{soi}[2023/08/01 v1.1 Source of India Constitution Class - Fixed Version]
+\ProvidesClass{soi}[2025/08/01 v1.0 Source of India Constitution Document Class]
 
 %% Class options processing
-\newif\if@showamendments\@showamendmentstrue
-\newif\if@showomitted\@showomittedfalse
-\newif\if@globalfootnotes\@globalfootnotestrue
-\newif\if@draftmode\@draftmodefalse
+\newif\if@soishowamendments\@soishowamendmentstrue
+\newif\if@soidraftmode\@soidraftmodefalse
+\newif\if@soivalidpapersize\@soivalidpapersizefalse
 
-\DeclareOption{showamendments}{\@showamendmentstrue}
-\DeclareOption{hideamendments}{\@showamendmentsfalse}
-\DeclareOption{showomitted}{\@showomittedtrue}
-\DeclareOption{hideomitted}{\@showomittedfalse}
-\DeclareOption{globalfootnotes}{\@globalfootnotestrue}
-\DeclareOption{pagefootnotes}{\@globalfootnotesfalse}
-\DeclareOption{draft}{\@draftmodetrue\PassOptionsToClass{\CurrentOption}{article}}
-\DeclareOption{final}{\@draftmodefalse\PassOptionsToClass{\CurrentOption}{article}}
+%% Paper size validation
+\DeclareOption{a4paper}{\@soivalidpapersizetrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{a5paper}{\@soivalidpapersizetrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{letterpaper}{\ClassWarning{soi}{Only A4 and A5 paper sizes supported. Using A4 instead.}\PassOptionsToClass{a4paper}{article}}
+\DeclareOption{legalpaper}{\ClassWarning{soi}{Only A4 and A5 paper sizes supported. Using A4 instead.}\PassOptionsToClass{a4paper}{article}}
+\DeclareOption{executivepaper}{\ClassWarning{soi}{Only A4 and A5 paper sizes supported. Using A4 instead.}\PassOptionsToClass{a4paper}{article}}
+
+%% Amendment and mode options
+\DeclareOption{showamendments}{\@soishowamendmentstrue}
+\DeclareOption{hideamendments}{\@soishowamendmentsfalse}
+\DeclareOption{draft}{\@soidraftmodetrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{final}{\@soidraftmodefalse\PassOptionsToClass{\CurrentOption}{article}}
+
+%% Pass other options to article class
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 
 \ProcessOptions\relax
 
-%% Load base class with two-sided layout
-\LoadClass[12pt,a4paper,twoside]{article}
+%% Issue warning if no valid paper size was specified
+\if@soivalidpapersize\else
+    \ClassWarning{soi}{No valid paper size specified. Only A4 and A5 are supported. Using A4.}
+    \PassOptionsToClass{a4paper}{article}
+\fi
+
+%% Load base class
+\LoadClass[12pt,twoside]{article}
 
 %% Engine detection and font setup
 \RequirePackage{iftex}
@@ -58,25 +69,18 @@
 \RequirePackage{geometry}
 \RequirePackage{xparse}
 \RequirePackage{fancyhdr}
-\RequirePackage{array}
-\RequirePackage{longtable}
-\RequirePackage{booktabs}
-\RequirePackage{footnote}
-\RequirePackage{hyperref}
-\RequirePackage{xstring}
+\RequirePackage{needspace}
+\RequirePackage{footmisc}
 \RequirePackage{etoolbox}
-\RequirePackage{afterpage}
-\RequirePackage{changepage}
 \RequirePackage{calc}
 \RequirePackage{enumitem}
 \RequirePackage{titletoc}
-\RequirePackage{needspace}
-\RequirePackage{footmisc}
-\RequirePackage{perpage}
-\RequirePackage{lastpage}
-\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{afterpage}
+\RequirePackage{changepage}
+\RequirePackage{ifthen}
 
-%% Two-sided page geometry with binding offset
+%% Geometry setup for two-sided layout
 \geometry{
     twoside,
     bindingoffset=0.5cm,
@@ -95,11 +99,11 @@
 \setlength{\parindent}{0pt}
 \renewcommand{\baselinestretch}{1.1}
 
-%% Enhanced footnote configuration with improved spacing
+%% Enhanced footnote configuration
 \setlength{\footnotesep}{0.8em}
 \setlength{\skip\footins}{1.2em plus 0.4em minus 0.2em}
 
-%% Improved footnote rule with proper spacing
+%% Improved footnote rule
 \renewcommand{\footnoterule}{%
     \kern-3pt
     \vspace{0.5em}%
@@ -108,246 +112,201 @@
     \kern 2.6pt
 }
 
-%% Footnote numbering per page for amendments
-\if@globalfootnotes
-    % Global footnote numbering (default)
-\else
-    \MakePerPage{footnote}
-\fi
-
-%% Enhanced footnote formatting for amendments
-\renewcommand{\footnotelayout}{\footnotesize\raggedright}
-\setlength{\footnotemargin}{1em}
-
 %% Counters
-\newcounter{articlenumber}
-\newcounter{partnumber}
-\newcounter{schedulenumber}
-\newcounter{totalarticles}
-\newcounter{totalamendments}
-\newcounter{totalomitted}
+\newcounter{soipartnumber}
+\newcounter{soiarticlenumber} 
+\newcounter{soischedulenumber}
+\newcounter{soiamendmentcounter}
 
-%% Internal variables
-\def\@currentarticlenum{}
-\def\@currentarticlesuffix{}
-\def\@currentarticledisplay{}
-\def\@currentparttitle{}
-\def\@currentarticletitle{}
+%% Current context variables for headers (two-sided aware)
+\def\@soicurrentpart{}
+\def\@soicurrentarticle{}
+\def\@soicurrentschedule{}
+\def\@soicurrentcontext{}
 
-%% Amendment display configuration
-\newcommand{\amendmentopen}{[}
-\newcommand{\amendmentclose}{]}
+%% Amendment footnote counter
+\newcounter{soiamendmentfootnote}
 
-%% Size commands
-\newcommand{\partsize}{\LARGE}
-\newcommand{\articlesize}{\normalsize}
-\newcommand{\headingsize}{\normalsize}
-\newcommand{\tagsize}{\normalsize}
+%% Clause counters with proper resetting
+\newcounter{soiclausecounter}
+\newcounter{soisubclausecounter}[soiclausecounter]
+\newcounter{soisubsubclausecounter}[soisubclausecounter]
 
-%% Utility functions
-\newcommand{\toroman}[1]{%
-    \ifcase#1\or I\or II\or III\or IV\or V\or VI\or VII\or VIII\or IX\or X%
-    \or XI\or XII\or XIII\or XIV\or XV\or XVI\or XVII\or XVIII\or XIX\or XX%
-    \or XXI\or XXII\else\@ctrerr\fi%
-}
-
-%% Enhanced page break management for constitutional elements
-\newcommand{\constitutionalbreak}[1]{%
-    \needspace{#1\baselineskip}%
-}
-
-%% Article declaration system
-\newcommand{\DeclareArticle}[3]{%
-    \stepcounter{totalarticles}%
-    \def\@currentarticlenum{#1}%
-    \def\@currentarticlesuffix{#2}%
-    \ifx\@currentarticlesuffix\empty
-        \def\@currentarticledisplay{Article #1}%
-    \else
-        \def\@currentarticledisplay{Article #1#2}%
-    \fi
-    % Reset clause counters for each article
-    \setcounter{clausecounter}{0}%
-}
-
-%% Part declaration system
-\newcommand{\DeclarePart}[2]{%
-    \stepcounter{partnumber}%
-    \def\@currentparttitle{#2}%
-}
-
-%% Schedule declaration system
-\newcommand{\DeclareSchedule}[2]{%
-    \stepcounter{schedulenumber}%
-}
-
-%% FIXED AMENDMENT SYSTEM - Corrected logic and positioning
-
-%% General amendment command
-\newcommand{\Amendment}[3][]{%
-    \if@showamendments
-        #2\footnote{#3}%
-        \stepcounter{totalamendments}%
-    \else
-        #2%
-    \fi
-}
-
-%% Fixed Inserted command - text in main, citation in footnote
-\newcommand{\Inserted}[2]{%
-    \if@showamendments
-        \amendmentopen#1\amendmentclose\footnote{Inserted by: #2}%
-        \stepcounter{totalamendments}%
+%% Core amendment system with modern naming
+\newcommand{\soiAmendment}[1]{%
+    \if@soishowamendments
+        \stepcounter{soiamendmentfootnote}%
+        [{#1}\footnotemark[\thesoiamendmentfootnote]%
     \else
         #1%
     \fi
 }
 
-%% Fixed Substituted command - new text in main, old text and citation in footnote
-\newcommand{\Substituted}[3]{%
-    \if@showamendments
-        \amendmentopen#1\amendmentclose\footnote{Substituted for ``#2'' by: #3}%
-        \stepcounter{totalamendments}%
+\newcommand{\soiAmendmentData}[1]{%
+    \if@soishowamendments
+        \footnotetext[\thesoiamendmentfootnote]{#1}%
+    \fi
+}
+
+%% Sophisticated page management for amendments
+\newcommand{\soiAmendmentBlock}[2]{%
+    \if@soishowamendments
+        \needspace{4\baselineskip}%
+        \stepcounter{soiamendmentfootnote}%
+        [{#1}\footnotemark[\thesoiamendmentfootnote]]%
+        \footnotetext[\thesoiamendmentfootnote]{#2}%
     \else
         #1%
     \fi
 }
 
-%% Fixed Omitted command - shows only citation in footnote when showing omitted
-\newcommand{\Omitted}[1]{%
-    \if@showomitted
-        \amendmentopen\textit{Omitted}\amendmentclose\footnote{Omitted by: #1}%
-        \stepcounter{totalomitted}%
-    \fi
-}
+%% Utility for space management
+\newcommand{\soiNeedSpace}[1]{\needspace{#1}}
 
-%% Fixed Repealed command
-\newcommand{\Repealed}[1]{%
-    \if@showomitted
-        \amendmentopen\textit{Repealed}\amendmentclose\footnote{Repealed by: #1}%
-        \stepcounter{totalomitted}%
-    \fi
-}
-
-%% Constitutional section heading command with proper spacing and typography
-\newcommand{\ConstitutionalSection}[1]{%
-    \needspace{4\baselineskip}%
-    \vspace{1em plus 0.3em minus 0.2em}%
-    {\centering\normalsize\bfseries #1\par}%
-    \nopagebreak[4]%
-    \vspace{0.7em plus 0.2em minus 0.1em}%
-}
-
-%% Structural commands with enhanced page management
-\newcommand{\Part}[2]{%
-    \clearpage%
-    \constitutionalbreak{5}%
-    \vspace{2\baselineskip}%
-    {\centering\partsize\bfseries PART #1\\[0.5\baselineskip]#2\par}%
+%% Part command with header updating
+\newcommand{\soiPart}[2]{%
+    \cleardoublepage
+    \stepcounter{soipartnumber}%
+    \def\@soicurrentpart{PART #1}%
+    \def\@soicurrentarticle{}%
+    \def\@soicurrentschedule{}%
+    \def\@soicurrentcontext{PART #1}%
+    \vspace*{2\baselineskip}%
+    {\centering\LARGE\bfseries PART #1\\[0.5\baselineskip]#2\par}%
     \vspace{\baselineskip}%
-    \def\@currentparttitle{#2}%
-    \markboth{PART #1: #2}{PART #1: #2}%
+    \markboth{PART #1}{PART #1}%
     \addcontentsline{toc}{part}{PART #1: #2}%
 }
 
-%% Enhanced Article command with better page break management
-\newcommand{\Article}[2]{%
-    \needspace{6\baselineskip}% Ensure article and potential heading stay together
+%% Article command with header updating and page management
+\newcommand{\soiArticle}[2]{%
+    \needspace{6\baselineskip}%
+    \stepcounter{soiarticlenumber}%
+    \def\@soicurrentarticle{Art. \thesoiarticlenumber}%
     \vspace{\baselineskip}%
-    {\articlesize\bfseries\@currentarticledisplay. #1}\par%
+    {\normalsize\bfseries\thesoiarticlenumber. #1}\par%
     \nopagebreak[4]%
     \vspace{0.5\baselineskip}%
+    \setcounter{soiclausecounter}{0}% Reset clause counter for each article
     #2\par%
-    \def\@currentarticletitle{#1}%
-    \markright{\@currentarticledisplay: #1}%
-    \addcontentsline{toc}{subsection}{\@currentarticledisplay. #1}%
+    \markright{Art. \thesoiarticlenumber}%
+    \addcontentsline{toc}{subsection}{Article \thesoiarticlenumber. #1}%
 }
 
-\newcommand{\Schedule}[3]{%
-    \clearpage%
-    \constitutionalbreak{5}%
-    \vspace{2\baselineskip}%
-    {\centering\partsize\bfseries #1 SCHEDULE\\[0.5\baselineskip]#2\par}%
+%% Schedule command with header updating
+\newcommand{\soiSchedule}[2]{%
+    \cleardoublepage
+    \stepcounter{soischedulenumber}%
+    \def\@soicurrentschedule{Sch. \soiToRoman{\thesoischedulenumber}}%
+    \def\@soicurrentarticle{}%
+    \def\@soicurrentcontext{#1 SCHEDULE}%
+    \vspace*{2\baselineskip}%
+    {\centering\LARGE\bfseries #1 SCHEDULE\\[0.5\baselineskip]#2\par}%
     \vspace{\baselineskip}%
-    #3\par%
+    \markboth{#1 SCHEDULE}{#1 SCHEDULE}%
     \addcontentsline{toc}{section}{#1 SCHEDULE: #2}%
 }
 
-%% Clause and sub-clause commands with enhanced page management
-\newcounter{clausecounter}
-\newcounter{subclausecounter}[clausecounter]
-\newcounter{subsubclausecounter}[subclausecounter]
+%% Roman numeral converter for schedules
+\newcommand{\soiToRoman}[1]{%
+    \ifcase#1\or I\or II\or III\or IV\or V\or VI\or VII\or VIII\or IX\or X%
+    \or XI\or XII\or XIII\or XIV\or XV\or XVI\or XVII\or XVIII\or XIX\or XX%
+    \else\@ctrerr\fi%
+}
 
-\newcommand{\Clause}[1]{%
+%% Clause commands with proper indentation
+\newcommand{\soiClause}[1]{%
     \needspace{3\baselineskip}%
-    \stepcounter{clausecounter}%
-    \par(\theclausecounter) #1\par%
+    \stepcounter{soiclausecounter}%
+    \par\hangindent=2em\hangafter=1 (\thesoiclausecounter) #1\par%
 }
 
-\newcommand{\SubClause}[1]{%
+\newcommand{\soiSubClause}[1]{%
     \needspace{2\baselineskip}%
-    \stepcounter{subclausecounter}%
-    \par(\alph{subclausecounter}) #1\par%
+    \stepcounter{soisubclausecounter}%
+    \par\hangindent=3em\hangafter=1\hspace{1em}(\alph{soisubclausecounter}) #1\par%
 }
 
-\newcommand{\SubSubClause}[1]{%
+\newcommand{\soiSubSubClause}[1]{%
     \needspace{2\baselineskip}%
-    \stepcounter{subsubclausecounter}%
-    \par(\roman{subsubclausecounter}) #1\par%
+    \stepcounter{soisubsubclausecounter}%
+    \par\hangindent=4em\hangafter=1\hspace{2em}(\roman{soisubsubclausecounter}) #1\par%
 }
 
-%% Special amendment commands for clauses with bracket positioning
-
-%% Inserted clause with clause number in brackets
-\newcommand{\InsertedClause}[2]{%
-    \if@showamendments
-        \needspace{3\baselineskip}%
-        \stepcounter{clausecounter}%
-        \par\amendmentopen(\theclausecounter)\amendmentclose\ #1\footnote{Inserted by: #2}\par%
-        \stepcounter{totalamendments}%
-    \else
-        \Clause{#1}%
-    \fi
+%% Special constitutional elements
+\newcommand{\soiProviso}[1]{%
+    \needspace{3\baselineskip}%
+    \par\hangindent=2em\hangafter=1\textit{Provided that} #1\par%
 }
 
-%% Omitted clause showing clause number in brackets
-\newcommand{\OmittedClause}[1]{%
-    \if@showomitted
-        \needspace{2\baselineskip}%
-        \stepcounter{clausecounter}%
-        \par\amendmentopen(\theclausecounter)\amendmentclose\footnote{Omitted by: #1}\par%
-        \stepcounter{totalomitted}%
-    \fi
+\newcommand{\soiExplanation}[1]{%
+    \needspace{3\baselineskip}%
+    \par\hangindent=2em\hangafter=1\textit{Explanation.---}#1\par%
 }
 
-%% Two-sided header and footer setup
+\newcommand{\soiException}[1]{%
+    \needspace{3\baselineskip}%
+    \par\hangindent=2em\hangafter=1\textit{Exception.---}#1\par%
+}
+
+%% Header and footer setup with proper two-sided layout
 \pagestyle{fancy}
 \fancyhf{}
 
-%% Two-sided headers with article names on outer margins
-\fancyhead[LE]{\small\leftmark}    % Left header on even pages (part info)
-\fancyhead[RO]{\small\rightmark}   % Right header on odd pages (article info)
-\fancyhead[LO,RE]{\small\itshape Constitution of India}  % Inner headers
+%% Two-sided header system - left page (even) and right page (odd)
+\fancyhead[LE]{%
+    \small\ifx\@soicurrentpart\empty%
+        \ifx\@soicurrentschedule\empty%
+            Constitution of India%
+        \else%
+            \@soicurrentschedule%
+        \fi%
+    \else%
+        \@soicurrentpart%
+    \fi%
+}
 
-%% Footer with page numbers
+\fancyhead[RE]{\small\itshape Constitution of India}
+
+\fancyhead[LO]{\small\itshape Constitution of India}
+
+\fancyhead[RO]{%
+    \small\ifx\@soicurrentarticle\empty%
+        \ifx\@soicurrentcontext\empty%
+            Constitution of India%
+        \else%
+            \@soicurrentcontext%
+        \fi%
+    \else%
+        \@soicurrentarticle%
+    \fi%
+}
+
+%% Page number at bottom center
 \fancyfoot[C]{\thepage}
-
-\if@draftmode
-    \fancyfoot[LE]{\tiny Articles: \thetotalarticles}
-    \fancyfoot[RO]{\tiny Amendments: \thetotalamendments}
-\fi
 
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
+%% Enhanced page break control
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\interfootnotelinepenalty=10000
+
+%% List environment setup for constitutional clauses
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em, itemsep=0.2em}
+\setlist[enumerate,2]{label=(\alph*), leftmargin=3em, itemsep=0.2em}
+\setlist[enumerate,3]{label=(\roman*), leftmargin=4em, itemsep=0.2em}
+
 %% Table of contents customization
-\renewcommand{\contentsname}{Contents}
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
 \setcounter{tocdepth}{2}
 
 %% Part entries in TOC
 \titlecontents{part}[0pt]
     {\addvspace{1.5pc}\large\bfseries}
-    {PART \thecontentslabel\quad}
+    {}
     {}
     {\hfill\contentspage}
     [\addvspace{0.5pc}]
@@ -369,7 +328,7 @@
 %% Hyperref setup
 \AtEndOfClass{%
     \hypersetup{
-        colorlinks=true,
+        colorlinks=false,
         linkcolor=black,
         filecolor=black,
         urlcolor=black,
@@ -383,58 +342,32 @@
     }
 }
 
-%% Warning and error commands
-\newcommand{\soiwarning}[1]{\ClassWarning{soi}{#1}}
-\newcommand{\soierror}[2]{\ClassError{soi}{#1}{#2}}
+%% Utility commands with soi prefix
+\newcommand{\soiWef}[1]{(w.e.f.~#1)}
+\newcommand{\soiEtc}{\textit{etc.}}
+\newcommand{\soiViz}{\textit{viz.}}
+\newcommand{\soiIe}{\textit{i.e.}}
 
-%% Boolean flags for user control
-\newif\ifshowamendments
-\newif\ifshowomitted
-
-% Initialize based on class options
-\if@showamendments\showamendmentstrue\else\showamendmentsfalse\fi
-\if@showomitted\showomittedtrue\else\showomittedfalse\fi
-
-%% Special constitutional formatting helpers
-\newcommand{\Proviso}[1]{%
-    \needspace{3\baselineskip}%
-    \par\textit{Provided that} #1%
+%% Path detection for independent compilation
+\newcommand{\soiInputPath}[1]{%
+    \IfFileExists{#1}{%
+        \input{#1}%
+    }{%
+        \IfFileExists{../#1}{%
+            \input{../#1}%
+        }{%
+            \IfFileExists{../../#1}{%
+                \input{../../#1}%
+            }{%
+                \ClassError{soi}{Cannot find file #1}{Check the file path and directory structure}%
+            }%
+        }%
+    }%
 }
 
-\newcommand{\Explanation}[1]{%
-    \needspace{3\baselineskip}%
-    \par\textit{Explanation.---}#1%
+%% Independent compilation helper
+\newcommand{\soiIfStandalone}[2]{%
+    \ifx\@currname\@empty#1\else#2\fi%
 }
-
-\newcommand{\Exception}[1]{%
-    \needspace{3\baselineskip}%
-    \par\textit{Exception.---}#1%
-}
-
-%% Special constitutional symbols and abbreviations
-\newcommand{\etc}{\textit{etc.}}
-\newcommand{\viz}{\textit{viz.}}
-\newcommand{\ie}{\textit{i.e.}}
-\newcommand{\eg}{\textit{e.g.}}
-
-%% Date formatting for constitutional amendments
-\newcommand{\wef}[1]{(w.e.f.~#1)}  % "with effect from"
-
-%% List environment customization for constitutional text
-\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em}
-\setlist[enumerate,2]{label=(\alph*), leftmargin=2em}
-\setlist[enumerate,3]{label=(\roman*), leftmargin=2em}
-
-%% Enhanced page break control for footnotes
-\interfootnotelinepenalty=10000
-
-%% Enhanced widow and orphan control
-\clubpenalty=10000
-\widowpenalty=10000
-\displaywidowpenalty=10000
-
-%% Enhanced space management between text and footnotes
-\addtolength{\textheight}{-\footskip}
-\addtolength{\textheight}{\footnotesep}
 
 %% End of class

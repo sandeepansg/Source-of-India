@@ -1,0 +1,15 @@
+%% Article 21A: Right to education
+%% Can be compiled independently from any directory level
+
+% Path-aware configuration loading
+\@ifundefined{documentclass}{
+    \documentclass[a4paper,showamendments]{soi}
+    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
+    \begin{document}
+}{}
+
+\soiArticle{\soiAmendment{Right to education}\soiAmendmentData{Constitution (Eighty-sixth Amendment) Act, 2002, s. 2 \soiWef{1-4-2010}}}{%
+    \soiAmendment{The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine.}\soiAmendmentData{Constitution (Eighty-sixth Amendment) Act, 2002, s. 2 \soiWef{1-4-2010}}
+}
+
+\@ifundefined{documentclass}{}{\end{document}}

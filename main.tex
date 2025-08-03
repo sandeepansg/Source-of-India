@@ -1,38 +1,101 @@
-%% Main compilation file for Constitution of India LaTeX project
-%% This file demonstrates the complete modular structure
-\documentclass[showamendments,twoside]{soi}
+    {\Huge\bfseries THE CONSTITUTION OF INDIA}
+    
+    \vspace{1cm}
+    {\Large As amended up to the One Hundred and Fifth Amendment Act, 2021}
+    
+    \vspace{2cm}
+    {\large Adopted by the Constituent Assembly on 26th November, 1949}
+    
+    \vfill
+    
+    {\large Government of India\\Ministry of Law and Justice}
+    
+    \vspace{%% Main document for Source of India Constitution
+%% Work in progress - currently includes selected parts and schedules
 
-%% Load configuration
+\documentclass[a4paper,showamendments]{soi}
+
+% Load configuration settings
 \input{config}
 
 \begin{document}
 
-%% Front matter
-\frontmatter
-\pagenumbering{roman}
+% Title page and preliminaries
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries THE CONSTITUTION OF INDIA}
+    
+    \vspace{1cm}
+    {\Large As amended up to the One Hundred and Fifth Amendment Act, 2021}
+    
+    \vspace{2cm}
+    {\large Adopted by the Constituent Assembly on 26th November, 1949}
+    
+    \vfill
+    
+    {\large Government of India\\Ministry of Law and Justice}
+    
+    \vspace{1cm}
+    {\normalsize Source of India LaTeX Project - Work in Progress}
+\end{titlepage}
 
-%% Table of Contents
-\input{content/toc}
-\tableofcontents
+% Table of contents
+\input{toc}
+
+% Preamble would go here
+% \input{content/preamble}
+
+% Part I: The Union and Its Territory
+\input{content/parts/part_01}
+
+% Part III: Fundamental Rights (selected articles)
+\input{content/parts/part_03}
+
+% Part IV: Directive Principles of State Policy (selected articles)
+\input{content/parts/part_04}
+
+% Note: Additional parts would be included as work progresses
+% Part II: Citizenship
+% Part V: The Union
+% Part VI: The States
+% Part VII: [Repealed]
+% Part VIII: The Union Territories
+% Part IX: The Panchayats
+% Part IXA: The Municipalities
+% Part IXB: The Co-operative Societies
+% Part X: The Scheduled and Tribal Areas
+% Part XI: Relations between the Union and the States
+% Part XII: Finance, Property, Contracts and Suits
+% Part XIII: Trade, Commerce and Intercourse within the territory of India
+% Part XIV: Services under the Union and the States
+% Part XIVA: Tribunals
+% Part XV: Elections
+% Part XVI: Special Provisions Relating to Certain Classes
+% Part XVII: Official Language
+% Part XVIII: Emergency Provisions
+% Part XIX: Miscellaneous
+% Part XX: Amendment of the Constitution
+% Part XXI: Temporary, Transitional and Special Provisions
+% Part XXII: Short Title, Commencement, Authoritative Text in Hindi and Repeals
+
 \clearpage
 
-%% Main content
-\mainmatter
-\pagenumbering{arabic}
+% Selected Schedules
+\input{content/schedules/schedule_01}
+\input{content/schedules/schedule_12}
 
-%% Preamble
-\input{content/preamble}
-
-%% Parts
-\input{content/parts/part_i}
-\input{content/parts/part_ii}
-\input{content/parts/part_iii}
-
-%% Back matter - Schedules
-\backmatter
-\appendix
-
-%% Schedules
-\input{content/schedules/schedule_i}
+% Note: Additional schedules would be included as work progresses
+% Second Schedule: Provisions as to the President and the Governors
+% Third Schedule: Forms of Oaths or Affirmations
+% Fourth Schedule: Allocation of seats in the Council of States
+% Fifth Schedule: Provisions as to the Administration and Control of Scheduled Areas and Scheduled Tribes
+% Sixth Schedule: Provisions as to the Administration of Tribal Areas in Assam, Meghalaya, Tripura and Mizoram
+% Seventh Schedule: Distribution of Legislative Powers
+% Eighth Schedule: Languages
+% Ninth Schedule: Validation of certain Acts and Regulations
+% Tenth Schedule: Provisions as to Disqualification on ground of defection
+% Eleventh Schedule: Powers, authority and responsibilities of Panchayats
 
 \end{document}
