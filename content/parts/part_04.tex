@@ -1,30 +1,9 @@
 %% Part IV: Directive Principles of State Policy
-%% Can be compiled independently from any directory level
-
-% Check if this is being compiled as a standalone document
-\ifx\documentclass\undefined\else
-    \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config.tex}}{%
-        \IfFileExists{../config.tex}{\input{../config.tex}}{%
-            \IfFileExists{../../config.tex}{\input{../../config.tex}}{}%
-        }%
-    }
-    \begin{document}
-    \def\soistandalone{true}
-\fi
 
 \soiPart{IV}{DIRECTIVE PRINCIPLES OF STATE POLICY}
 
-% Path-aware article inclusion
-\IfFileExists{../articles/article_045.tex}{\input{../articles/article_045.tex}}{%
-    \IfFileExists{articles/article_045.tex}{\input{articles/article_045.tex}}{%
-        \IfFileExists{content/articles/article_045.tex}{\input{content/articles/article_045.tex}}{%
-            \ClassWarning{soi}{Cannot find article_045.tex}%
-        }%
-    }%
-}
+% Include selected articles
+\input{content/articles/article_045}
 
 % Note: Additional articles would be included here
 % Articles 36-44, 46-51 etc.
-
-\ifdefined\soistandalone\end{document}\fi

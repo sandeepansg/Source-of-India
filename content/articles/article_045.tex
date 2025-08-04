@@ -1,16 +1,5 @@
 %% Article 45: Provision for early childhood care and education to children below the age of six years
-%% Can be compiled independently from any directory level
-
-% Path-aware configuration loading
-\ifx\documentclass\undefined\else
-    \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
-    \begin{document}
-    \def\soistandalone{true}
-\fi
 
 \soiArticle{\soiAmendment{Provision for early childhood care and education to children below the age of six years}\soiAmendmentData{Constitution (Eighty-sixth Amendment) Act, 2002, s. 3 \soiWef{1-4-2010}}}{%
     \soiAmendment{The State shall endeavour to provide early childhood care and education for all children until they complete the age of six years.}\soiAmendmentData{Constitution (Eighty-sixth Amendment) Act, 2002, s. 3 \soiWef{1-4-2010}}
 }
-
-\ifdefined\soistandalone\end{document}\fi

@@ -1,17 +1,4 @@
 %% Table of Contents for Source of India Constitution
-%% Can be compiled independently from any directory level
-
-% Check if this is being compiled as a standalone document
-\ifx\documentclass\undefined\else
-    \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config.tex}}{%
-        \IfFileExists{../config.tex}{\input{../config.tex}}{%
-            \IfFileExists{../../config.tex}{\input{../../config.tex}}{}%
-        }%
-    }
-    \begin{document}
-    \def\soistandalone{true}
-\fi
 
 \clearpage
 \phantomsection
@@ -26,5 +13,3 @@
 \tableofcontents
 
 \clearpage
-
-\ifdefined\soistandalone\end{document}\fi

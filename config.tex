@@ -13,16 +13,12 @@
 \setlength{\footnotesep}{0.75em}
 \addtolength{\skip\footins}{0.25em}
 
-%% Enhanced spacing for constitutional elements - avoid redefinition
-\@ifundefined{articlespacing}{%
-    \newlength{\articlespacing}%
-    \setlength{\articlespacing}{1.5\baselineskip}%
-}{}
+%% Enhanced spacing for constitutional elements
+\newlength{\articlespacing}
+\setlength{\articlespacing}{1.5\baselineskip}
 
-\@ifundefined{clausespacing}{%
-    \newlength{\clausespacing}%
-    \setlength{\clausespacing}{0.75\baselineskip}%
-}{}
+\newlength{\clausespacing}
+\setlength{\clausespacing}{0.75\baselineskip}
 
 %% Custom formatting for special constitutional terms
 \providecommand{\soiConstitutionTerm}[1]{\textsc{#1}}

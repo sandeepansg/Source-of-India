@@ -1,36 +1,11 @@
 %% Part I: The Union and Its Territory
-%% Can be compiled independently from any directory level
-
-% Check if this is being compiled as a standalone document
-\ifx\documentclass\undefined\else
-    % Standalone compilation
-    \documentclass[a4paper,showamendments]{soi}
-    
-    % Path-aware config loading
-    \IfFileExists{config.tex}{\input{config.tex}}{%
-        \IfFileExists{../config.tex}{\input{../config.tex}}{%
-            \IfFileExists{../../config.tex}{\input{../../config.tex}}{%
-                % Use default config if none found
-            }%
-        }%
-    }
-    
-    \begin{document}
-    \def\soistandalone{true}
-\fi
 
 \soiPart{I}{THE UNION AND ITS TERRITORY}
 
-% Path-aware article inclusion - try different relative paths
-\IfFileExists{../articles/article_001.tex}{\input{../articles/article_001.tex}}{%
-    \IfFileExists{articles/article_001.tex}{\input{articles/article_001.tex}}{%
-        \IfFileExists{content/articles/article_001.tex}{\input{content/articles/article_001.tex}}{%
-            \ClassError{soi}{Cannot find article_001.tex}{Check the file path}%
-        }%
-    }%
-}
+% Include Article 1
+\input{content/articles/article_001}
 
 % Note: Additional articles 2, 3, 4 would be included here
-% Similar pattern for other articles
-
-\ifdefined\soistandalone\end{document}\fi
+% \input{content/articles/article_002}
+% \input{content/articles/article_003}
+% \input{content/articles/article_004}

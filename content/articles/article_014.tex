@@ -1,16 +1,5 @@
 %% Article 14: Equality before law
-%% Can be compiled independently from any directory level
-
-% Path-aware configuration loading
-\ifx\documentclass\undefined\else
-    \documentclass[a4paper,showamendments]{soi}
-    \IfFileExists{config.tex}{\input{config}}{\IfFileExists{../config.tex}{\input{../config}}{\IfFileExists{../../config.tex}{\input{../../config}}{}}}
-    \begin{document}
-    \def\soistandalone{true}
-\fi
 
 \soiArticle{Equality before law}{%
     The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India.
 }
-
-\ifdefined\soistandalone\end{document}\fi

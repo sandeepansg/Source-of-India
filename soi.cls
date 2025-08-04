@@ -118,9 +118,11 @@
 \newcounter{soiarticlenumber} 
 \newcounter{soischedulenumber}
 \newcounter{soiamendmentcounter}
+\newcounter{soichapternumber}
 
 %% Current context variables for headers (two-sided aware)
 \def\@soicurrentpart{}
+\def\@soicurrentchapter{}
 \def\@soicurrentarticle{}
 \def\@soicurrentschedule{}
 \def\@soicurrentcontext{}
@@ -169,6 +171,7 @@
     \cleardoublepage
     \stepcounter{soipartnumber}%
     \def\@soicurrentpart{PART #1}%
+    \def\@soicurrentchapter{}%
     \def\@soicurrentarticle{}%
     \def\@soicurrentschedule{}%
     \def\@soicurrentcontext{PART #1}%
@@ -177,6 +180,36 @@
     \vspace{\baselineskip}%
     \markboth{PART #1}{PART #1}%
     \addcontentsline{toc}{part}{PART #1: #2}%
+}
+
+%% NEW: Chapter heading commands for constitutional themes
+\newcommand{\soiChapter}[1]{%
+    \needspace{4\baselineskip}%
+    \stepcounter{soichapternumber}%
+    \def\@soicurrentchapter{#1}%
+    \vspace{1.5\baselineskip}%
+    {\centering\large\bfseries #1\par}%
+    \vspace{0.75\baselineskip}%
+    \addcontentsline{toc}{subsection}{#1}%
+}
+
+%% NEW: Major chapter headings (alternative styling)
+\newcommand{\soiChapterMajor}[1]{%
+    \needspace{5\baselineskip}%
+    \stepcounter{soichapternumber}%
+    \def\@soicurrentchapter{#1}%
+    \vspace{2\baselineskip}%
+    {\centering\Large\bfseries #1\par}%
+    \vspace{\baselineskip}%
+    \addcontentsline{toc}{subsection}{#1}%
+}
+
+%% NEW: Sub-chapter headings for administrative groupings
+\newcommand{\soiSubChapter}[1]{%
+    \needspace{3\baselineskip}%
+    \vspace{\baselineskip}%
+    {\centering\normalsize\bfseries #1\par}%
+    \vspace{0.5\baselineskip}%
 }
 
 %% Article command with header updating and page management
@@ -191,7 +224,7 @@
     \setcounter{soiclausecounter}{0}% Reset clause counter for each article
     #2\par%
     \markright{Art. \thesoiarticlenumber}%
-    \addcontentsline{toc}{subsection}{Article \thesoiarticlenumber. #1}%
+    \addcontentsline{toc}{subsubsection}{Article \thesoiarticlenumber. #1}%
 }
 
 %% Schedule command with header updating
@@ -199,6 +232,7 @@
     \cleardoublepage
     \stepcounter{soischedulenumber}%
     \def\@soicurrentschedule{Sch. \soiToRoman{\thesoischedulenumber}}%
+    \def\@soicurrentchapter{}%
     \def\@soicurrentarticle{}%
     \def\@soicurrentcontext{#1 SCHEDULE}%
     \vspace*{2\baselineskip}%
@@ -274,10 +308,14 @@
 
 \fancyhead[RO]{%
     \small\ifx\@soicurrentarticle\empty%
-        \ifx\@soicurrentcontext\empty%
-            Constitution of India%
+        \ifx\@soicurrentchapter\empty%
+            \ifx\@soicurrentcontext\empty%
+                Constitution of India%
+            \else%
+                \@soicurrentcontext%
+            \fi%
         \else%
-            \@soicurrentcontext%
+            \@soicurrentchapter%
         \fi%
     \else%
         \@soicurrentarticle%
@@ -303,7 +341,7 @@
 
 %% Table of contents customization
 \renewcommand{\contentsname}{TABLE OF CONTENTS}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 
 %% Part entries in TOC
 \titlecontents{part}[0pt]
@@ -320,11 +358,18 @@
     {\hspace*{-1.5em}}
     {\titlerule*[0.5pc]{.}\contentspage}
 
-%% Subsection entries (for articles)
+%% Subsection entries (for chapters)
 \titlecontents{subsection}[3.8em]
-    {\normalsize}
+    {\normalsize\bfseries}
     {\contentslabel{3.8em}}
     {\hspace*{-3.8em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%% Subsubsection entries (for articles)
+\titlecontents{subsubsection}[6.1em]
+    {\normalsize}
+    {\contentslabel{6.1em}}
+    {\hspace*{-6.1em}}
     {\titlerule*[0.5pc]{.}\contentspage}
 
 %% Hyperref setup
